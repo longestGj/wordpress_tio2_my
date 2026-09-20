@@ -28,13 +28,13 @@ def uses_values(value):
 
 ci = load(CI_PATH)
 deploy = load(DEPLOY_PATH)
-assert ci['on']['pull_request']['branches'] == ['develop', 'main']
-assert ci['on']['push']['branches'] == ['develop']
-assert 'workflow_call' in ci['on']
+assert set(ci['on']) == {'workflow_call'}
 assert deploy['on']['push']['branches'] == ['main']
+assert deploy['jobs']['quality']['uses'] == './.github/workflows/ci.yml'
+assert deploy['jobs']['image']['needs'] == 'quality'
+assert deploy['jobs']['deploy']['needs'] == ['quality', 'image']
 assert deploy['concurrency'] == {'group': 'production', 'cancel-in-progress': False}
 assert deploy['permissions'] == {'contents': 'read', 'packages': 'write'}
-assert deploy['jobs']['deploy']['needs'] == ['quality', 'image']
 assert 'environment' not in deploy['jobs']['deploy']
 
 image_steps = deploy['jobs']['image']['steps']
@@ -54,7 +54,7 @@ assert qemu_index < buildx_index
 assert image_build['with']['platforms'] == 'linux/arm64'
 
 expected_names = {
-    'Main source guard', 'PHP and content', 'Browser integration', 'Production deployment contract',
+    'PHP and content', 'Browser integration', 'Production deployment contract',
 }
 assert {job['name'] for job in ci['jobs'].values()} == expected_names
 

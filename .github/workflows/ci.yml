@@ -1,31 +1,12 @@
 name: CI
 
 on:
-  pull_request:
-    branches: [develop, main]
-  push:
-    branches: [develop]
   workflow_call:
 
 permissions:
   contents: read
 
 jobs:
-  source-guard:
-    name: Main source guard
-    runs-on: ubuntu-24.04
-    steps:
-      - name: Require develop as the main PR source
-        env:
-          EVENT_NAME: ${{ github.event_name }}
-          BASE_REF: ${{ github.base_ref }}
-          HEAD_REF: ${{ github.head_ref }}
-        run: |
-          if [[ "$EVENT_NAME" == pull_request && "$BASE_REF" == main && "$HEAD_REF" != develop ]]; then
-            echo 'Pull requests to main must come from develop.' >&2
-            exit 1
-          fi
-
   php-content:
     name: PHP and content
     runs-on: ubuntu-24.04

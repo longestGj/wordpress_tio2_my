@@ -1,0 +1,4 @@
+<?php defined('ABSPATH') || exit; ?>
+<section class="shell page-rfq" data-module="page-rfq" data-visible-min="768">
+<p class="eyebrow"><?php echo esc_html(tio2_field('page-rfq.eyebrow.1')); ?></p><h2><?php echo esc_html(tio2_field('page-rfq.heading.1')); ?></h2><p><?php echo esc_html(tio2_field('page-rfq.paragraph.1')); ?></p><div class="rfq-fields"><span><?php echo esc_html(tio2_field('page-rfq.span.1')); ?></span><span><?php echo esc_html(tio2_field('page-rfq.span.2')); ?></span><span><?php echo esc_html(tio2_field('page-rfq.span.3')); ?></span><span><?php echo esc_html(tio2_field('page-rfq.span.4')); ?></span><span><?php echo esc_html(tio2_field('page-rfq.span.5')); ?></span><span><?php echo esc_html(tio2_field('page-rfq.span.6')); ?></span></div><a class="primary" href="<?php echo esc_url(tio2_field('page-rfq.link.1')); ?>"><?php echo esc_html(tio2_field('page-rfq.link-label.1')); ?></a>
+</section>

@@ -1,0 +1,13 @@
+{
+  "name": "tio2-malaysia-wordpress",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test:browser": "playwright test",
+    "test:http": "python tests/http-contract.py"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
+    "@playwright/test": "^1.63.0"
+  }
+}

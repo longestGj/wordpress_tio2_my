@@ -1,0 +1,202 @@
+[
+  {
+    "path": "/",
+    "instances": 6,
+    "status": 200,
+    "owner": "D32 homepage",
+    "dependency": null,
+    "interpretation": "Implemented homepage"
+  },
+  {
+    "path": "/about/",
+    "instances": 4,
+    "status": 404,
+    "owner": "Subsequent page owner",
+    "dependency": "HOME-VU-DEP-03",
+    "interpretation": "Not implemented in this authorized batch; preserved approved href"
+  },
+  {
+    "path": "/applications/",
+    "instances": 3,
+    "status": 404,
+    "owner": "Subsequent page owner",
+    "dependency": "HOME-VU-DEP-03",
+    "interpretation": "Not implemented in this authorized batch; preserved approved href"
+  },
+  {
+    "path": "/applications/titanium-dioxide-for-coatings/",
+    "instances": 1,
+    "status": 404,
+    "owner": "Subsequent page owner",
+    "dependency": "HOME-VU-DEP-03",
+    "interpretation": "Not implemented in this authorized batch; preserved approved href"
+  },
+  {
+    "path": "/applications/titanium-dioxide-for-masterbatch/",
+    "instances": 1,
+    "status": 404,
+    "owner": "Subsequent page owner",
+    "dependency": "HOME-VU-DEP-03",
+    "interpretation": "Not implemented in this authorized batch; preserved approved href"
+  },
+  {
+    "path": "/applications/titanium-dioxide-for-paper/",
+    "instances": 1,
+    "status": 404,
+    "owner": "Subsequent page owner",
+    "dependency": "HOME-VU-DEP-03",
+    "interpretation": "Not implemented in this authorized batch; preserved approved href"
+  },
+  {
+    "path": "/applications/titanium-dioxide-for-plastics/",
+    "instances": 1,
+    "status": 404,
+    "owner": "Subsequent page owner",
+    "dependency": "HOME-VU-DEP-03",
+    "interpretation": "Not implemented in this authorized batch; preserved approved href"
+  },
+  {
+    "path": "/applications/titanium-dioxide-for-printing-inks/",
+    "instances": 1,
+    "status": 404,
+    "owner": "Subsequent page owner",
+    "dependency": "HOME-VU-DEP-03",
+    "interpretation": "Not implemented in this authorized batch; preserved approved href"
+  },
+  {
+    "path": "/cookie-policy/",
+    "instances": 1,
+    "status": 404,
+    "owner": "Subsequent page owner",
+    "dependency": "HOME-VU-DEP-03",
+    "interpretation": "Not implemented in this authorized batch; preserved approved href"
+  },
+  {
+    "path": "/documents/",
+    "instances": 5,
+    "status": 404,
+    "owner": "Subsequent page owner",
+    "dependency": "HOME-VU-DEP-03",
+    "interpretation": "Not implemented in this authorized batch; preserved approved href"
+  },
+  {
+    "path": "/markets/",
+    "instances": 6,
+    "status": 404,
+    "owner": "Subsequent page owner",
+    "dependency": "HOME-VU-DEP-03",
+    "interpretation": "Not implemented in this authorized batch; preserved approved href"
+  },
+  {
+    "path": "/markets/brazil/",
+    "instances": 1,
+    "status": 404,
+    "owner": "Subsequent page owner",
+    "dependency": "HOME-VU-DEP-03",
+    "interpretation": "Not implemented in this authorized batch; preserved approved href"
+  },
+  {
+    "path": "/markets/european-union/",
+    "instances": 1,
+    "status": 404,
+    "owner": "Subsequent page owner",
+    "dependency": "HOME-VU-DEP-03",
+    "interpretation": "Not implemented in this authorized batch; preserved approved href"
+  },
+  {
+    "path": "/markets/india/",
+    "instances": 1,
+    "status": 404,
+    "owner": "Subsequent page owner",
+    "dependency": "HOME-VU-DEP-03",
+    "interpretation": "Not implemented in this authorized batch; preserved approved href"
+  },
+  {
+    "path": "/markets/united-kingdom/",
+    "instances": 1,
+    "status": 404,
+    "owner": "Subsequent page owner",
+    "dependency": "HOME-VU-DEP-03",
+    "interpretation": "Not implemented in this authorized batch; preserved approved href"
+  },
+  {
+    "path": "/ms/privacy-policy/",
+    "instances": 1,
+    "status": 404,
+    "owner": "Subsequent page owner",
+    "dependency": "HOME-VU-DEP-03",
+    "interpretation": "Not implemented in this authorized batch; preserved approved href"
+  },
+  {
+    "path": "/privacy-policy/",
+    "instances": 1,
+    "status": 404,
+    "owner": "Subsequent page owner",
+    "dependency": "HOME-VU-DEP-03",
+    "interpretation": "Not implemented in this authorized batch; preserved approved href"
+  },
+  {
+    "path": "/products/",
+    "instances": 7,
+    "status": 404,
+    "owner": "Subsequent page owner",
+    "dependency": "HOME-VU-DEP-03",
+    "interpretation": "Not implemented in this authorized batch; preserved approved href"
+  },
+  {
+    "path": "/products/chloride-process-titanium-dioxide/",
+    "instances": 1,
+    "status": 404,
+    "owner": "Subsequent page owner",
+    "dependency": "HOME-VU-DEP-03",
+    "interpretation": "Not implemented in this authorized batch; preserved approved href"
+  },
+  {
+    "path": "/products/sulfate-process-titanium-dioxide/",
+    "instances": 1,
+    "status": 404,
+    "owner": "Subsequent page owner",
+    "dependency": "HOME-VU-DEP-03",
+    "interpretation": "Not implemented in this authorized batch; preserved approved href"
+  },
+  {
+    "path": "/request-a-quote/",
+    "instances": 8,
+    "status": 404,
+    "owner": "Subsequent page owner",
+    "dependency": "HOME-VU-DEP-03",
+    "interpretation": "Not implemented in this authorized batch; preserved approved href"
+  },
+  {
+    "path": "/request-documents/",
+    "instances": 1,
+    "status": 404,
+    "owner": "Subsequent page owner",
+    "dependency": "HOME-VU-DEP-03",
+    "interpretation": "Not implemented in this authorized batch; preserved approved href"
+  },
+  {
+    "path": "/resources/",
+    "instances": 3,
+    "status": 404,
+    "owner": "Subsequent page owner",
+    "dependency": "HOME-VU-DEP-03",
+    "interpretation": "Not implemented in this authorized batch; preserved approved href"
+  },
+  {
+    "path": "/resources/chloride-vs-sulfate-titanium-dioxide/",
+    "instances": 1,
+    "status": 404,
+    "owner": "Subsequent page owner",
+    "dependency": "HOME-VU-DEP-03",
+    "interpretation": "Not implemented in this authorized batch; preserved approved href"
+  },
+  {
+    "path": "/resources/non-china-titanium-dioxide/",
+    "instances": 1,
+    "status": 404,
+    "owner": "Subsequent page owner",
+    "dependency": "HOME-VU-DEP-03",
+    "interpretation": "Not implemented in this authorized batch; preserved approved href"
+  }
+]

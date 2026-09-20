@@ -1,0 +1,66 @@
+{
+  "capturedAt": "2026-09-20T03:08:28.092139+00:00",
+  "results": [
+    {
+      "command": "npx playwright test",
+      "exitCode": 0,
+      "stats": {
+        "startTime": "2026-09-20T03:06:29.396Z",
+        "duration": 35934.991,
+        "expected": 11,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      }
+    },
+    {
+      "command": "docker compose exec -T wordpress php /workspace/tests/php/content-test.php",
+      "exitCode": 0,
+      "output": "21 content contract assertions passed"
+    },
+    {
+      "command": "python tests/http-contract.py",
+      "exitCode": 0,
+      "output": "HTTP content, editable seed, links, identity and SEO assertions passed"
+    },
+    {
+      "command": "python tests/identity.py",
+      "exitCode": 0,
+      "output": "Actual live theme/plugin fingerprint matches source: wp-f576fa2d7a74ab057e5878765db4187ae7b2689aaf921f8c5d6f5ab0bac6fc3e\nLive content fingerprint matches database and restored snapshot: ee6a324ea68ada21e9424f930ed52f87800cea9e982c0feb4fd9ef456b71a992"
+    },
+    {
+      "command": "python scripts/capture-contract.py",
+      "exitCode": 0,
+      "output": "Approved source parity passed; 59 link instances; 25 targets; unimplemented targets return actual 404."
+    },
+    {
+      "command": "PHP lint of every custom plugin/theme PHP file",
+      "exitCode": 0,
+      "output": "No syntax errors detected in /workspace/wp-content/plugins/tio2-content/includes/admin.php\nNo syntax errors detected in /workspace/wp-content/plugins/tio2-content/includes/identity.php\nNo syntax errors detected in /workspace/wp-content/plugins/tio2-content/includes/validation.php\nNo syntax errors detected in /workspace/wp-content/plugins/tio2-content/tio2-content.php\nNo syntax errors detected in /workspace/wp-content/themes/tio2-malaysia/footer.php\nNo syntax errors detected in /workspace/wp-content/themes/tio2-malaysia/front-page.php\nNo syntax errors detected in /workspace/wp-content/themes/tio2-malaysia/functions.php\nNo syntax errors detected in /workspace/wp-content/themes/tio2-malaysia/header.php\nNo syntax errors detected in /workspace/wp-content/themes/tio2-malaysia/inc/seo.php\nNo syntax errors detected in /workspace/wp-content/themes/tio2-malaysia/index.php\nNo syntax errors detected in /workspace/wp-content/themes/tio2-malaysia/template-parts/applications.php\nNo syntax errors detected in /workspace/wp-content/themes/tio2-malaysia/template-parts/company.php\nNo syntax errors detected in /workspace/wp-content/themes/tio2-malaysia/template-parts/documents.php\nNo syntax errors detected in /workspace/wp-content/themes/tio2-malaysia/template-parts/hero.php\nNo syntax errors detected in /workspace/wp-content/themes/tio2-malaysia/template-parts/markets.php\nNo syntax errors detected in /workspace/wp-content/themes/tio2-malaysia/template-parts/page-rfq.php\nNo syntax errors detected in /workspace/wp-content/themes/tio2-malaysia/template-parts/products.php\nNo syntax errors detected in /workspace/wp-content/themes/tio2-malaysia/template-parts/resources.php\nNo syntax errors detected in /workspace/wp-content/themes/tio2-malaysia/template-parts/start-here.php"
+    },
+    {
+      "command": "python tests/negative-runtime.py",
+      "exitCode": 0,
+      "result": {
+        "cases": [
+          {
+            "mode": "wrong-scope",
+            "status": 503,
+            "noCrossSiteFallback": true
+          },
+          {
+            "mode": "missing-content",
+            "status": 503,
+            "noCrossSiteFallback": true
+          },
+          {
+            "mode": "foreign-media",
+            "status": 503,
+            "noCrossSiteFallback": true
+          }
+        ],
+        "restoredExactly": true
+      }
+    }
+  ]
+}

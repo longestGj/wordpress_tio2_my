@@ -1,0 +1,63 @@
+{
+  "source": "D:\\23MySec\\pages\\home\\04_planning\\visual-designs\\home-root-page-hero-v1.4\\homepage-root-page-hero-preview-v1.4.html",
+  "sourceSha256": "1abe07bcd941a05295a26194ca7ce3ea81f5dec2074f717bcef58ef62d891de6",
+  "modules": [
+    {
+      "module": "hero",
+      "orderedTextMatch": true,
+      "orderedLinksMatch": true,
+      "textNodes": 5
+    },
+    {
+      "module": "start-here",
+      "orderedTextMatch": true,
+      "orderedLinksMatch": true,
+      "textNodes": 11
+    },
+    {
+      "module": "markets",
+      "orderedTextMatch": true,
+      "orderedLinksMatch": true,
+      "textNodes": 20
+    },
+    {
+      "module": "products",
+      "orderedTextMatch": true,
+      "orderedLinksMatch": true,
+      "textNodes": 30
+    },
+    {
+      "module": "applications",
+      "orderedTextMatch": true,
+      "orderedLinksMatch": true,
+      "textNodes": 23
+    },
+    {
+      "module": "company",
+      "orderedTextMatch": true,
+      "orderedLinksMatch": true,
+      "textNodes": 11
+    },
+    {
+      "module": "documents",
+      "orderedTextMatch": true,
+      "orderedLinksMatch": true,
+      "textNodes": 11
+    },
+    {
+      "module": "resources",
+      "orderedTextMatch": true,
+      "orderedLinksMatch": true,
+      "textNodes": 18
+    },
+    {
+      "module": "page-rfq",
+      "orderedTextMatch": true,
+      "orderedLinksMatch": true,
+      "textNodes": 10
+    }
+  ],
+  "linkInstances": 59,
+  "uniqueTargets": 25,
+  "linkMultisetMatch": true
+}

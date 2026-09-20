@@ -1,0 +1,14 @@
+{
+  "metrics": {
+    "width": 390,
+    "scrollWidth": 390,
+    "h1Size": "36px",
+    "h1Weight": "700",
+    "lines": 3,
+    "headerHeight": 64,
+    "heroBorder": "0px",
+    "startColumns": 1,
+    "rfqDisplay": "none"
+  },
+  "violations": []
+}

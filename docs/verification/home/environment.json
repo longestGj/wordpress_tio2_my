@@ -1,0 +1,83 @@
+{
+  "wordpress": "7.1",
+  "php": "8.3.33",
+  "scope": "tio2-my",
+  "environment": "local",
+  "home": "http://127.0.0.1:8232/",
+  "blog_public": "0",
+  "hero": {
+    "attachment": 4,
+    "scope": "tio2-my",
+    "sha256": "7308472e4e633584fe4d7761afd7ed9ea4ea4c622576e2d7736c105f13cf50a5"
+  },
+  "plugins": [
+    {
+      "name": "akismet",
+      "status": "inactive",
+      "update": "none",
+      "version": "5.7.2",
+      "update_version": "",
+      "auto_update": "off"
+    },
+    {
+      "name": "hello",
+      "status": "inactive",
+      "update": "none",
+      "version": "1.7.2",
+      "update_version": "",
+      "auto_update": "off"
+    },
+    {
+      "name": "tio2-content",
+      "status": "active",
+      "update": "none",
+      "version": "1.0.0",
+      "update_version": "",
+      "auto_update": "off"
+    }
+  ],
+  "themes": [
+    {
+      "name": "tio2-malaysia",
+      "status": "active",
+      "update": "none",
+      "version": "1.0.0",
+      "update_version": "",
+      "auto_update": "off"
+    },
+    {
+      "name": "twentytwentyfive",
+      "status": "inactive",
+      "update": "none",
+      "version": "1.5",
+      "update_version": "",
+      "auto_update": "off"
+    },
+    {
+      "name": "twentytwentyfour",
+      "status": "inactive",
+      "update": "none",
+      "version": "1.6",
+      "update_version": "",
+      "auto_update": "off"
+    },
+    {
+      "name": "twentytwentythree",
+      "status": "inactive",
+      "update": "none",
+      "version": "1.7",
+      "update_version": "",
+      "auto_update": "off"
+    }
+  ],
+  "runtimeStartedAt": "2026-09-20T03:06:07.038809722Z",
+  "images": {
+    "d32-tio2-my-wordpress-1": "wordpress:php8.3-apache",
+    "d32-tio2-my-db-1": "mariadb:11.4@sha256:4f1d8d202fcf7bcb3902f63af09f9c1a050c2922a89652f22abaec0d4f015e83"
+  },
+  "databaseServer": "mariadbd  Ver 11.4.12-MariaDB-ubu2404 for debian-linux-gnu on x86_64 (mariadb.org binary distribution)",
+  "portBinding": "127.0.0.1:8232:80",
+  "analytics": "none",
+  "secrets": "Excluded; local .env ignored",
+  "composeSha256": "a03b28168c43494628efc97b122fefd863eab1601ba3ce0c7ac55c2aae695aad"
+}

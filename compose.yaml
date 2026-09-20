@@ -1,0 +1,54 @@
+name: d32-tio2-my
+services:
+  db:
+    image: mariadb:11.4@sha256:4f1d8d202fcf7bcb3902f63af09f9c1a050c2922a89652f22abaec0d4f015e83
+    restart: unless-stopped
+    environment:
+      MARIADB_DATABASE: wordpress
+      MARIADB_USER: wordpress
+      MARIADB_PASSWORD: ${DB_PASSWORD:?Set local DB password}
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:?Set local root password}
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: [CMD, healthcheck.sh, --connect, --innodb_initialized]
+      interval: 3s
+      timeout: 5s
+      retries: 30
+  wordpress:
+    image: wordpress:php8.3-apache@sha256:65919a9ca10940feb10d9400fead0d639bf86241f47c91e2b9ea4703aa8452cf
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - 127.0.0.1:8232:80
+    environment: &wp-environment
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: ${DB_PASSWORD}
+      WORDPRESS_CONFIG_EXTRA: |
+        define('WP_ENVIRONMENT_TYPE', 'local');
+        define('TIO2_SITE_SCOPE', 'tio2-my');
+        define('DISALLOW_FILE_EDIT', true);
+        define('WP_AUTO_UPDATE_CORE', false);
+    volumes: &wp-volumes
+      - wp_data:/var/www/html
+      - ./wp-content/plugins/tio2-content:/var/www/html/wp-content/plugins/tio2-content:ro
+      - ./wp-content/themes/tio2-malaysia:/var/www/html/wp-content/themes/tio2-malaysia:ro
+      - ./:/workspace:ro
+  wpcli:
+    image: wordpress:cli-php8.3@sha256:2b5e9d4d3e51909dca1aaa4732e9f5e5bf0377c2114dbd8ff39f060bff202586
+    user: '33:33'
+    profiles: [tools]
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      <<: *wp-environment
+      D32_ADMIN_PASSWORD: ${D32_ADMIN_PASSWORD}
+    volumes: *wp-volumes
+volumes:
+  db_data:
+  wp_data:

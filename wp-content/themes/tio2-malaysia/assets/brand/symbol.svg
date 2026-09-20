@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" role="img" aria-labelledby="title desc">
+  <title id="title">TiO2 Malaysia full-color symbol candidate</title>
+  <desc id="desc">Vector particle sphere and orbit symbol with simplified Malaysia geography.</desc>
+  <defs>
+    <linearGradient id="n" x1="35" y1="120" x2="270" y2="220" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#0B5FA5"/><stop offset="0.55" stop-color="#062B5B"/><stop offset="1" stop-color="#031B3A"/></linearGradient>
+    <linearGradient id="t" x1="85" y1="55" x2="270" y2="200" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#14B8A6"/><stop offset="0.58" stop-color="#00A99D"/><stop offset="1" stop-color="#007F77"/></linearGradient>
+    <radialGradient id="s" cx="38%" cy="30%" r="72%"><stop offset="0" stop-color="#FFFFFF"/><stop offset="0.65" stop-color="#F5F8FB"/><stop offset="1" stop-color="#D9E2EC"/></radialGradient>
+    <radialGradient id="p" cx="34%" cy="28%" r="72%"><stop offset="0" stop-color="#FFFFFF"/><stop offset="0.7" stop-color="#E8EEF5"/><stop offset="1" stop-color="#9FB2C7"/></radialGradient>
+  </defs>
+  <circle cx="72" cy="88" r="16" fill="url(#p)" stroke="#9FB2C7" stroke-width="2"/>
+  <circle cx="98" cy="52" r="22" fill="url(#p)" stroke="#9FB2C7" stroke-width="2"/>
+  <circle cx="134" cy="33" r="12" fill="url(#p)" stroke="#9FB2C7" stroke-width="2"/>
+  <circle cx="160" cy="55" r="18" fill="url(#p)" stroke="#9FB2C7" stroke-width="2"/>
+  <circle cx="57" cy="125" r="11" fill="url(#p)" stroke="#9FB2C7" stroke-width="2"/>
+  <circle cx="119" cy="88" r="10" fill="url(#p)" stroke="#9FB2C7" stroke-width="2"/>
+  <circle cx="145" cy="155" r="72" fill="url(#s)" stroke="#B9C8D8" stroke-width="3"/>
+  <path d="M104 127l10-9 13 7 7 12-5 10 7 9-5 15 7 12-8 8-11-9-2-13-9-9 2-12-7-10z" fill="#0B5FA5"/>
+  <path d="M158 151l16-14 18-2 12-10 18 5-4 11 9 7-12 6-14 1-12 10-15-5-11 8-11-6 9-9z" fill="#062B5B"/>
+  <path d="M42 186C76 224 145 237 211 207C250 189 273 157 266 122" fill="none" stroke="url(#n)" stroke-width="27" stroke-linecap="round"/>
+  <path d="M70 91C122 42 214 46 252 86C278 113 280 146 260 176" fill="none" stroke="url(#t)" stroke-width="20" stroke-linecap="round"/>
+  <path d="M44 184C84 210 150 214 211 181C242 164 261 142 266 122" fill="none" stroke="#D9E2EC" stroke-width="7" stroke-linecap="round"/>
+  <path d="M84 230C146 249 222 218 268 169" fill="none" stroke="url(#t)" stroke-width="14" stroke-linecap="round"/>
+</svg>

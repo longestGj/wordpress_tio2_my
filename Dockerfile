@@ -19,10 +19,15 @@ COPY wp-content/themes/tio2-malaysia /usr/src/wordpress/wp-content/themes/tio2-m
 COPY wp-content/plugins/tio2-content /usr/src/wordpress/wp-content/plugins/tio2-content
 COPY content /opt/tio2/content
 COPY scripts/bootstrap-production.php /opt/tio2/bin/bootstrap-production.php
+COPY deploy/docker-entrypoint.sh /usr/local/bin/tio2-entrypoint.sh
 
 RUN test -x /usr/local/bin/wp \
  && test -f /usr/src/wordpress/wp-content/themes/tio2-malaysia/style.css \
  && test -f /usr/src/wordpress/wp-content/plugins/tio2-content/tio2-content.php \
  && test -f /opt/tio2/content/initial-home.json \
  && test -f /opt/tio2/content/media/hero.png \
+ && chmod 0755 /usr/local/bin/tio2-entrypoint.sh \
  && chown -R www-data:www-data /usr/src/wordpress/wp-content /opt/tio2
+
+ENTRYPOINT ["/usr/local/bin/tio2-entrypoint.sh"]
+CMD ["apache2-foreground"]

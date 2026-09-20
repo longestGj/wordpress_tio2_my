@@ -11,3 +11,6 @@
 !content/**
 !scripts/
 !scripts/bootstrap-production.php
+!deploy/
+deploy/*
+!deploy/docker-entrypoint.sh

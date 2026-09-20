@@ -9,7 +9,9 @@ ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
 cd "$ROOT"
 
 VALID_SHA=0123456789abcdef0123456789abcdef01234567
-IMAGE="tio2-production-test:${VALID_SHA}"
+TIO2_IMAGE_TEST_TAG="${TIO2_IMAGE_TEST_TAG:-tio2-production-test:${VALID_SHA}-bootstrap-$$}"
+export TIO2_IMAGE_TEST_TAG
+IMAGE="$TIO2_IMAGE_TEST_TAG"
 PROJECT="tio2-bootstrap-$$"
 COMPOSE_FILE=.runtime/bootstrap-compose.yaml
 
@@ -110,5 +112,33 @@ test "$(wp eval 'echo get_option("tio2_content")["fields"]["hero.heading.1"];')"
 test "$(wp eval 'echo get_option("tio2_products_content")["fields"]["directory.grade.1.summary"];')" = 'Preserved Products production edit'
 test "$(wp eval '$page=get_page_by_path("products",OBJECT,"page");echo $page?(int)$page->ID:0;')" = "$product_page_id"
 test "$(wp post list --post_type=attachment --format=count)" = "$media_before"
+
+compose exec -T wordpress sh -ec "
+  mkdir -p /var/www/html/wp-content/uploads/runtime-sync-test \
+    /var/www/html/wp-content/plugins/external-test \
+    /var/www/html/wp-content/themes/external-test
+  printf '%s\n' '<?php // stale persisted plugin' > /var/www/html/wp-content/plugins/tio2-content/includes/products.php
+  printf '%s\n' 'obsolete owned plugin file' > /var/www/html/wp-content/plugins/tio2-content/obsolete.php
+  printf '%s\n' 'stale owned theme file' > /var/www/html/wp-content/themes/tio2-malaysia/style.css
+  printf '%s\n' 'obsolete owned theme file' > /var/www/html/wp-content/themes/tio2-malaysia/obsolete.css
+  printf '%s\n' 'preserved core file' > /var/www/html/runtime-sync-core-marker.txt
+  printf '%s\n' 'preserved upload' > /var/www/html/wp-content/uploads/runtime-sync-test/marker.txt
+  printf '%s\n' 'preserved third-party plugin' > /var/www/html/wp-content/plugins/external-test/marker.txt
+  printf '%s\n' 'preserved third-party theme' > /var/www/html/wp-content/themes/external-test/marker.txt
+"
+compose up -d --force-recreate wordpress
+for _ in $(seq 1 60); do
+  if wp core version >/dev/null 2>&1; then break; fi
+  sleep 2
+done
+compose exec -T wordpress sh -ec '
+  diff -qr /usr/src/wordpress/wp-content/plugins/tio2-content /var/www/html/wp-content/plugins/tio2-content || { echo "owned plugin was not refreshed exactly" >&2; exit 1; }
+  diff -qr /usr/src/wordpress/wp-content/themes/tio2-malaysia /var/www/html/wp-content/themes/tio2-malaysia || { echo "owned theme was not refreshed exactly" >&2; exit 1; }
+  test "$(cat /var/www/html/runtime-sync-core-marker.txt)" = "preserved core file" || { echo "WordPress core was not preserved" >&2; exit 1; }
+  test "$(cat /var/www/html/wp-content/uploads/runtime-sync-test/marker.txt)" = "preserved upload" || { echo "upload was not preserved" >&2; exit 1; }
+  test "$(cat /var/www/html/wp-content/plugins/external-test/marker.txt)" = "preserved third-party plugin" || { echo "third-party plugin was not preserved" >&2; exit 1; }
+  test "$(cat /var/www/html/wp-content/themes/external-test/marker.txt)" = "preserved third-party theme" || { echo "third-party theme was not preserved" >&2; exit 1; }
+'
+test "$(wp eval 'echo function_exists("tio2_products_migrate")?"available":"missing";')" = 'available'
 
 echo 'production bootstrap idempotency contract passed'

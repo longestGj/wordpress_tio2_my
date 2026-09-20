@@ -23,7 +23,11 @@ DEFAULT_RECEIPT = ROOT / "docs/handoffs/PRODUCT-000-gate8.md"
 DEFAULT_MANIFEST = ROOT / ".runtime/handoff/products/gate8_evidence_manifest.json"
 BASELINE_COMMIT = "f520678e723fe040c2e3b2cb5f9bd219e33d8fb9"
 NPX = "npx.cmd" if os.name == "nt" else "npx"
-ACCEPTANCE_IDS = ["PRODUCT-G6-B02", "PRODUCT-G6-B03", "PRODUCT-G6-TDS-I02", "PRODUCT-G7-B05", "PRODUCT-G7-B06", "PRODUCT-G7-B07"]
+ACCEPTANCE_IDS = [
+    "PRODUCT-G6-B02", "PRODUCT-G6-B03", "PRODUCT-G6-TDS-I02", "PRODUCT-G7-B05", "PRODUCT-G7-B06", "PRODUCT-G7-B07",
+    "PRODUCT-D32-AC-CONTENT", "PRODUCT-D32-AC-SEO", "PRODUCT-D32-AC-SCHEMA-PREVIEW", "PRODUCT-D32-AC-MIGRATION",
+    "PRODUCT-D32-AC-DOMAIN", "PRODUCT-D32-AC-CHROME-REGRESSION",
+]
 REQUIRED_EVIDENCE = {
     "acceptance.md", "acceptance-mapping.json", "artifact.json", "dependencies.json", "editor-changed.png",
     "editor-results.json", "environment.json", "faq-keyboard-768.png", "home-content.json", "home-response.html",
@@ -99,6 +103,27 @@ def check_directory(evidence: Path) -> None:
     missing = sorted(REQUIRED_EVIDENCE - present)
     if missing:
         raise RuntimeError("Missing required evidence: " + ", ".join(missing))
+
+
+def acceptance_mapping(implementation: str) -> dict:
+    return {
+        "pageId":"PRODUCT-000", "implementationCommit":implementation,
+        "conditions":[
+            {"id":"PRODUCT-G6-B02","hubStatus":"PASS","externalStatus":"OPEN","evidence":["products-response.html","dependencies.json"],"commands":["python tests/products-http.py"],"result":"Seven clean RFQ links are present; receiver remains external.","boundary":"Fixed clean RFQ links are visible; receiver/form is external and not claimed."},
+            {"id":"PRODUCT-G6-B03","hubStatus":"PASS","externalStatus":"OPEN","evidence":["readiness-matrix.json","dependencies.json"],"commands":["python tests/products-readiness.py"],"result":"Zero, partial, full, wrong-scope, removal, and restoration states pass.","boundary":"All fail-closed route states pass; actual target pages remain external."},
+            {"id":"PRODUCT-G6-TDS-I02","hubStatus":"PASS","externalStatus":"NOT_APPLICABLE","evidence":["products-response.html","products-content.json","seo-schema.json"],"commands":["python tests/products-http.py","npx playwright test tests/products-editor.spec.mjs"],"result":"Fourteen visible summaries and Product descriptions are identical and editable from one source.","boundary":"Machine descriptions do not add claims beyond visible summaries."},
+            {"id":"PRODUCT-G7-B05","hubStatus":"PASS","externalStatus":"RELEASE_OPEN","evidence":["seo-schema.json","products-response.html"],"commands":["python tests/products-http.py","docker compose exec -T wordpress php /workspace/tests/php/runtime-config-test.php"],"result":"Local robots are noindex,nofollow and sitemap returns 404; indexing requires explicit authorization.","boundary":"Gate10 indexing is not authorized."},
+            {"id":"PRODUCT-G7-B06","hubStatus":"PASS","externalStatus":"OPEN","evidence":["readiness-matrix.json","identity.json","dependencies.json"],"commands":["python tests/products-readiness.py","python tests/identity.py","python tests/negative-runtime.py"],"result":"Malaysia scope and exact route identity fail closed and restore exactly.","boundary":"External target readiness remains open."},
+            {"id":"PRODUCT-G7-B07","hubStatus":"PASS","externalStatus":"GATE9_REVIEW","evidence":["layout-1440.json","layout-1024.json","layout-768.json","layout-390.json","faq-keyboard-768.png","menu-390.png","cookie-390.png"],"commands":["npx playwright test tests/products-browser.spec.mjs"],"result":"Four viewports, keyboard/focus, 44px targets, overflow, reduced motion, and axe pass.","boundary":"Independent Gate9 remains required."},
+            {"id":"PRODUCT-D32-AC-CONTENT","hubStatus":"PASS","externalStatus":"NOT_APPLICABLE","evidence":["products-response.html","products-content.json","readiness-matrix.json","selector-not-sure-1024.png","test-results.json"],"commands":["python tests/products-http.py","npx playwright test tests/products-browser.spec.mjs","python tests/products-readiness.py"],"result":"Approved modules, 14 rows, six selector sets, five steps, five FAQs, clean public payload, and conditional actions pass.","boundary":"No internal Page ID or route key appears in zero, partial, or full public payloads."},
+            {"id":"PRODUCT-D32-AC-SEO","hubStatus":"PASS","externalStatus":"NOT_APPLICABLE","evidence":["products-response.html","seo-schema.json","test-results.json"],"commands":["python tests/products-http.py"],"result":"Exact title, description, canonical, language, single H1, and approved JSON-LD graph pass.","boundary":"No Offer, price, inventory, comparison, or unapproved social image is emitted."},
+            {"id":"PRODUCT-D32-AC-SCHEMA-PREVIEW","hubStatus":"PASS","externalStatus":"RELEASE_OPEN","evidence":["seo-schema.json","readiness-matrix.json","products-response.html"],"commands":["python tests/products-http.py","python tests/products-readiness.py"],"result":"Fourteen ordered identities persist while URL and product @id appear only for ready routes.","boundary":"All target URLs require release-time revalidation."},
+            {"id":"PRODUCT-D32-AC-MIGRATION","hubStatus":"PASS","externalStatus":"NOT_APPLICABLE","evidence":["migration-results.json","editor-results.json","products-content-before.json","products-content-restored.json","home-content.json","test-results.json"],"commands":["python tests/products-migration.py","npx playwright test tests/products-editor.spec.mjs"],"result":"Migration is compatible, idempotent, edit-preserving, reversible, resumable, and isolated from Home.","boundary":"Tests run only in the dedicated local data environment and restore exactly."},
+            {"id":"PRODUCT-D32-AC-DOMAIN","hubStatus":"PASS","externalStatus":"RELEASE_OPEN","evidence":["identity.json","home-response.html","products-response.html","seo-schema.json","source-hashes.json"],"commands":["docker compose exec -T wordpress php /workspace/tests/php/runtime-config-test.php","python tests/http-contract.py","python tests/products-http.py","python tests/identity.py"],"result":"Home and Products canonical, OG, Schema, build, content, and scope identities use the approved formal origin.","boundary":"Local asset URLs remain preview-local; Gate10 is not authorized."},
+            {"id":"PRODUCT-D32-AC-CHROME-REGRESSION","hubStatus":"PASS","externalStatus":"GATE9_REVIEW","evidence":["products-1440.png","products-1024.png","products-768.png","products-390.png","menu-390.png","cookie-390.png","home-response.html","test-results.json"],"commands":["npx playwright test tests/products-browser.spec.mjs","npx playwright test tests/browser.spec.mjs","npx playwright test tests/editor.spec.mjs"],"result":"Shared Header, Footer, Menu, Cookie, RootPageHero, current navigation, and Home regressions pass.","boundary":"Independent Gate9 visual verdict remains separate."},
+        ],
+        "qualityStatus":"GATE8_CANDIDATE_READY_FOR_GATE9", "integrationStatus":"OPEN_EXTERNAL_DEPENDENCIES", "releaseStatus":"NOT_AUTHORIZED",
+    }
 
 
 def suite(evidence: Path) -> None:
@@ -213,6 +238,7 @@ def capture(evidence: Path) -> None:
         Path("D:/23MySec/pages/products/05_review/PRODUCT-000_D32_GATE4_GATE5_HANDOFF_V0.1.md"),
         Path("D:/23MySec/pages/products/04_planning/d32-gate4-v0.1/product-visual.html"),
         Path("D:/23MySec/pages/products/06_handoff/PRODUCT-000_GATE7_ACCEPTANCE_AND_BLOCKERS_V0.3.md"),
+        Path("D:/23MySec/pages/products/05_review/PRODUCT-000_D32_GATE9_RUNTIME_INDEPENDENT_REVIEW_V0.1.md"),
     ]
     source_hashes = [{"path":path.as_posix(), "sha256":sha(path)} for path in sources]
     (evidence / "source-hashes.json").write_text(json.dumps(source_hashes, indent=2) + "\n", encoding="utf-8")
@@ -238,20 +264,9 @@ def capture(evidence: Path) -> None:
         "branch":git("branch","--show-current"), "implementationCommit":implementation,
     }
     (evidence / "environment.json").write_text(json.dumps(environment, indent=2) + "\n", encoding="utf-8")
-    mapping = {
-        "pageId":"PRODUCT-000", "implementationCommit":implementation,
-        "conditions":[
-            {"id":"PRODUCT-G6-B02","hubStatus":"PASS","externalStatus":"OPEN","evidence":["products-response.html","dependencies.json"],"boundary":"Fixed clean RFQ links are visible; receiver/form is external and not claimed."},
-            {"id":"PRODUCT-G6-B03","hubStatus":"PASS","externalStatus":"OPEN","evidence":["readiness-matrix.json","seo-schema.json"],"boundary":"All fail-closed route states pass; actual target pages remain external."},
-            {"id":"PRODUCT-G6-TDS-I02","hubStatus":"PASS","externalStatus":"NOT_APPLICABLE","evidence":["products-response.html","seo-schema.json"],"boundary":"14 visible summaries and Product descriptions share one server source."},
-            {"id":"PRODUCT-G7-B05","hubStatus":"PASS","externalStatus":"RELEASE_OPEN","evidence":["seo-schema.json","products-response.html"],"boundary":"Local candidate remains noindex; Gate10 is not authorized."},
-            {"id":"PRODUCT-G7-B06","hubStatus":"PASS","externalStatus":"OPEN","evidence":["readiness-matrix.json","identity.json","dependencies.json"],"boundary":"Malaysia scope is fail-closed; external target readiness remains open."},
-            {"id":"PRODUCT-G7-B07","hubStatus":"PASS","externalStatus":"GATE9_REVIEW","evidence":["layout-1440.json","layout-1024.json","layout-768.json","layout-390.json","faq-keyboard-768.png","menu-390.png","cookie-390.png"],"boundary":"Automated and browser evidence passed; independent Gate9 remains pending."},
-        ],
-        "qualityStatus":"GATE8_CANDIDATE_READY_FOR_GATE9", "integrationStatus":"OPEN_EXTERNAL_DEPENDENCIES", "releaseStatus":"NOT_AUTHORIZED",
-    }
+    mapping = acceptance_mapping(implementation)
     (evidence / "acceptance-mapping.json").write_text(json.dumps(mapping, indent=2) + "\n", encoding="utf-8")
-    acceptance = """# PRODUCT-000 Gate 8 acceptance evidence\n\n- Candidate: `{implementation}`\n- Page quality: `GATE8_CANDIDATE_READY_FOR_GATE9`\n- Integration: `OPEN_EXTERNAL_DEPENDENCIES` (14 Grade, 2 Process, 3 Support, and RFQ receiver owners)\n- Release: `NOT_AUTHORIZED`; local runtime remains `noindex, nofollow`.\n- Scope: PRODUCT-000 Hub only. No child target page or RFQ receiver was created.\n\nThe complete automated suite passed against the isolated `d32-product-000` runtime. Browser evidence covers 1440/1024/768/390, exact content/module order, selector, FAQ, shared menu/cookie focus, 44px targets, overflow, and axe. Real WordPress fixtures cover zero/partial/full readiness and restore exactly. Page quality is reported separately from integration and release.\n""".format(implementation=implementation)
+    acceptance = """# PRODUCT-000 Gate 8 acceptance evidence\n\n- Candidate: `{implementation}`\n- Page quality: `GATE8_CANDIDATE_READY_FOR_GATE9`\n- Integration: `OPEN_EXTERNAL_DEPENDENCIES` (14 Grade, 2 Process, 3 Support, and RFQ receiver owners)\n- Release: `NOT_AUTHORIZED`; local runtime remains `noindex, nofollow`.\n- Scope: PRODUCT-000 Hub only. No child target page or RFQ receiver was created.\n- Gate 9 return: `PRODUCT-000-D32-G9-RUNTIME-F01` and `F02` addressed by clean public payload checks across zero/partial/full readiness and a complete twelve-condition evidence mapping.\n\nThe complete automated suite passed against the isolated `d32-product-000` runtime. Browser evidence covers 1440/1024/768/390, exact content/module order, selector, FAQ, shared menu/cookie focus, 44px targets, overflow, and axe. Real WordPress fixtures cover zero/partial/full readiness and restore exactly. Page quality is reported separately from integration and release.\n""".format(implementation=implementation)
     (evidence / "acceptance.md").write_text(acceptance, encoding="utf-8")
     check_directory(evidence)
 
@@ -267,6 +282,7 @@ def write_receipt(evidence: Path, receipt: Path) -> None:
         "- Runtime: `http://127.0.0.1:8232/products/` (`site_scope=tio2-my`, local preview)",
         "- Hold: `GATE9_PASS_OR_RETURN_NOTICE`", "- Page quality: `GATE8_CANDIDATE_READY_FOR_GATE9`",
         "- Integration: `OPEN_EXTERNAL_DEPENDENCIES`", "- Release: `NOT_AUTHORIZED`", "",
+        "Gate 9 return findings `PRODUCT-000-D32-G9-RUNTIME-F01` and `F02` are addressed in this replacement candidate: public runtime payloads contain no internal Page ID/route key across readiness states, and all twelve current acceptance IDs are mapped to evidence, commands, and results.", "",
         "The Hub implementation, editable CMS data, scoped resolver, responsive interactions, and metadata are complete for Gate 9 review. External Grade/Process/Support targets and the RFQ receiver remain owned by their separate tasks; this receipt does not claim them ready. Gate 10/public deployment is outside scope.", "",
         "## Evidence", "",
     ]
@@ -286,12 +302,19 @@ def evidence_type(path: Path) -> str:
 
 def proves(path: Path) -> list[str]:
     name = path.name
-    if name in {"dependencies.json","readiness-matrix.json"}: return ["PRODUCT-G6-B03","PRODUCT-G7-B06"]
-    if name in {"products-response.html","seo-schema.json","products-content.json","products-content-before.json","products-content-restored.json"}: return ["PRODUCT-G6-TDS-I02","PRODUCT-G7-B05"]
-    if name in {"artifact.json","identity.json","environment.json","source-hashes.json","home-response.html","home-content.json"}: return ["PRODUCT-G7-B06"]
+    if name == "dependencies.json": return ["PRODUCT-G6-B03","PRODUCT-G7-B06","PRODUCT-D32-AC-SCHEMA-PREVIEW"]
+    if name == "readiness-matrix.json": return ["PRODUCT-G6-B03","PRODUCT-G7-B06","PRODUCT-D32-AC-CONTENT","PRODUCT-D32-AC-SCHEMA-PREVIEW"]
+    if name == "products-response.html": return ["PRODUCT-G6-TDS-I02","PRODUCT-G7-B05","PRODUCT-D32-AC-CONTENT","PRODUCT-D32-AC-SEO","PRODUCT-D32-AC-DOMAIN"]
+    if name == "seo-schema.json": return ["PRODUCT-G6-TDS-I02","PRODUCT-G7-B05","PRODUCT-D32-AC-SEO","PRODUCT-D32-AC-SCHEMA-PREVIEW","PRODUCT-D32-AC-DOMAIN"]
+    if name in {"products-content.json","products-content-before.json","products-content-restored.json"}: return ["PRODUCT-G6-TDS-I02","PRODUCT-D32-AC-CONTENT","PRODUCT-D32-AC-MIGRATION"]
+    if name in {"artifact.json","environment.json","source-hashes.json"}: return ["PRODUCT-G7-B06","PRODUCT-D32-AC-DOMAIN"]
+    if name == "identity.json": return ["PRODUCT-G7-B06","PRODUCT-D32-AC-DOMAIN"]
+    if name in {"home-response.html","home-content.json"}: return ["PRODUCT-D32-AC-MIGRATION","PRODUCT-D32-AC-DOMAIN","PRODUCT-D32-AC-CHROME-REGRESSION"]
     if name in {"acceptance.md","acceptance-mapping.json","test-results.json"}: return ACCEPTANCE_IDS
-    if "editor" in name or "migration" in name: return ["PRODUCT-G6-TDS-I02","PRODUCT-G7-B06"]
-    return ["PRODUCT-G7-B07"]
+    if "editor" in name: return ["PRODUCT-G6-TDS-I02","PRODUCT-G7-B06","PRODUCT-D32-AC-CONTENT","PRODUCT-D32-AC-MIGRATION"]
+    if "migration" in name: return ["PRODUCT-D32-AC-MIGRATION","PRODUCT-D32-AC-CHROME-REGRESSION"]
+    if name in {"menu-390.png","cookie-390.png"}: return ["PRODUCT-G7-B07","PRODUCT-D32-AC-CHROME-REGRESSION"]
+    return ["PRODUCT-G7-B07","PRODUCT-D32-AC-CONTENT","PRODUCT-D32-AC-CHROME-REGRESSION"]
 
 
 def manifest(evidence: Path, receipt: Path, output: Path) -> None:

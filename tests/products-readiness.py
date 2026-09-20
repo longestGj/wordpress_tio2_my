@@ -1,6 +1,7 @@
 import hashlib
 import json
 import os
+import re
 import subprocess
 import urllib.error
 import urllib.request
@@ -48,17 +49,19 @@ def capture(label: str) -> dict:
     state = {
         "label": label,
         "modules": [node["data-module"] for node in soup.select("main > section")],
-        "directoryActions": len(soup.select(".product-grade-row a[data-route-key]")),
+        "directoryActions": len(soup.select(".product-grade-row a")),
         "processCards": len(soup.select(".product-process-cards .product-route-card")),
         "supportCards": len(soup.select(".product-support-cards .product-route-card")),
         "supportPresent": bool(soup.select_one('[data-module="support"]')),
-        "crAction": bool(soup.select_one('.product-special-process a[data-route-key="GRADE-CR901"]')),
+        "crAction": bool(soup.select_one('.product-special-process a')),
         "itemNames": [item["item"]["name"] for item in items],
         "schemaUrls": [item["item"].get("url") for item in items if item["item"].get("url")],
         "schemaIds": [item["item"].get("@id") for item in items if item["item"].get("@id")],
+        "publicInternalIds": sorted(set(re.findall(r"\b(?:PRODUCT-000|GRADE-[A-Z0-9-]+|PRODUCT-PROC-(?:CL|SU)|APP-000|DOC-000|MARKET-000)\b", html))),
     }
     assert state["itemNames"] == EXPECTED_NAMES
     assert len(items) == 14 and [item["position"] for item in items] == list(range(1, 15))
+    assert state["publicInternalIds"] == []
     return state
 
 

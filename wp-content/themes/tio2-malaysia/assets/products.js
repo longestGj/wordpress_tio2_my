@@ -34,7 +34,6 @@
         if (grade.url) {
           const link = document.createElement('a');
           link.href = grade.url;
-          link.dataset.routeKey = grade.routeKey;
           link.textContent = data.ctaLabel;
           link.setAttribute('aria-label', `${data.ctaLabel} ${grade.name}`);
           row.append(link);

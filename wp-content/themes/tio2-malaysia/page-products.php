@@ -29,7 +29,6 @@ $selector_applications = [];
 foreach ($model['applications'] as $application => $route_keys) {
     $selector_applications[$application] = array_map(static function($route_key) use ($grade_by_route, $resolved) {
         return [
-            'routeKey' => $route_key,
             'name' => $grade_by_route[$route_key]['name'],
             'url' => $resolved[$route_key]['path'] ?? null,
         ];
@@ -46,7 +45,7 @@ $selector_data = [
 ];
 get_header();
 ?>
-<main id="main" class="products-page" tabindex="-1" data-page-id="PRODUCT-000">
+<main id="main" class="products-page" tabindex="-1">
   <section class="product-breadcrumb shell" data-module="breadcrumb">
     <nav aria-label="Breadcrumb"><ol><li><a href="/"><?php echo esc_html($fields['breadcrumb.home-label']); ?></a></li><li aria-current="page"><?php echo esc_html($fields['breadcrumb.current-label']); ?></li></ol></nav>
   </section>
@@ -84,7 +83,7 @@ get_header();
           <div id="product-results">
             <?php foreach (reset($model['applications']) as $route_key): $grade = $grade_by_route[$route_key]; ?>
               <div class="product-selector-result"><strong><?php echo esc_html($grade['name']); ?></strong>
-                <?php if ($resolved[$route_key]): ?><a data-route-key="<?php echo esc_attr($route_key); ?>" aria-label="<?php echo esc_attr($grade['cta'] . ' ' . $grade['name']); ?>" href="<?php echo esc_url($resolved[$route_key]['path']); ?>"><?php echo esc_html($fields['selector.result-cta-label']); ?></a><?php endif; ?>
+                <?php if ($resolved[$route_key]): ?><a aria-label="<?php echo esc_attr($grade['cta'] . ' ' . $grade['name']); ?>" href="<?php echo esc_url($resolved[$route_key]['path']); ?>"><?php echo esc_html($fields['selector.result-cta-label']); ?></a><?php endif; ?>
               </div>
             <?php endforeach; ?>
           </div>
@@ -102,11 +101,11 @@ get_header();
     <?php if ($ready_process): ?><div class="product-process-cards">
       <?php foreach ($ready_process as $route_key => $card): ?><article class="product-route-card">
         <h3><?php echo esc_html($card['title']); ?></h3><p><?php echo esc_html($card['body']); ?></p>
-        <a data-route-key="<?php echo esc_attr($route_key); ?>" href="<?php echo esc_url($resolved[$route_key]['path']); ?>"><?php echo esc_html($card['cta']); ?></a>
+        <a href="<?php echo esc_url($resolved[$route_key]['path']); ?>"><?php echo esc_html($card['cta']); ?></a>
       </article><?php endforeach; ?>
     </div><?php endif; ?>
     <div class="product-special-process"><strong><?php echo esc_html($fields['process.special.grade-label'] . ' · ' . $fields['process.special.process-label']); ?></strong>
-      <?php if ($resolved['GRADE-CR901']): ?><a data-route-key="GRADE-CR901" aria-label="<?php echo esc_attr($fields['process.special.cta'] . ' ' . $fields['process.special.grade-label']); ?>" href="<?php echo esc_url($resolved['GRADE-CR901']['path']); ?>"><?php echo esc_html($fields['process.special.cta']); ?></a><?php endif; ?>
+      <?php if ($resolved['GRADE-CR901']): ?><a aria-label="<?php echo esc_attr($fields['process.special.cta'] . ' ' . $fields['process.special.grade-label']); ?>" href="<?php echo esc_url($resolved['GRADE-CR901']['path']); ?>"><?php echo esc_html($fields['process.special.cta']); ?></a><?php endif; ?>
     </div>
   </section>
   <section class="product-directory-band" id="all-grades" data-module="directory" aria-labelledby="directory-heading">
@@ -118,7 +117,7 @@ get_header();
           <h3><?php echo esc_html($group_label); ?></h3>
           <?php foreach ($grades as $grade): ?><div class="product-grade-row" data-grade="<?php echo esc_attr($grade['name']); ?>">
             <strong class="product-grade-name"><?php echo esc_html($grade['name']); ?></strong><p><?php echo esc_html($grade['summary']); ?></p>
-            <?php if ($resolved[$grade['route_key']]): ?><a data-route-key="<?php echo esc_attr($grade['route_key']); ?>" aria-label="<?php echo esc_attr($grade['cta'] . ' ' . $grade['name']); ?>" href="<?php echo esc_url($resolved[$grade['route_key']]['path']); ?>"><?php echo esc_html($grade['cta']); ?> <span aria-hidden="true">→</span></a><?php endif; ?>
+            <?php if ($resolved[$grade['route_key']]): ?><a aria-label="<?php echo esc_attr($grade['cta'] . ' ' . $grade['name']); ?>" href="<?php echo esc_url($resolved[$grade['route_key']]['path']); ?>"><?php echo esc_html($grade['cta']); ?> <span aria-hidden="true">→</span></a><?php endif; ?>
           </div><?php endforeach; ?>
         </article><?php endforeach; ?>
       </div>
@@ -132,7 +131,7 @@ get_header();
   </section>
   <?php if ($ready_support): ?><section class="product-support-band" id="support" data-module="support" aria-labelledby="support-heading">
     <div class="shell product-section"><h2 id="support-heading"><?php echo esc_html($fields['support.heading']); ?></h2><div class="product-support-cards">
-      <?php foreach ($ready_support as $route_key => $card): ?><article class="product-route-card"><h3><?php echo esc_html($card['title']); ?></h3><p><?php echo esc_html($card['body']); ?></p><a data-route-key="<?php echo esc_attr($route_key); ?>" href="<?php echo esc_url($resolved[$route_key]['path']); ?>"><?php echo esc_html($card['cta']); ?></a></article><?php endforeach; ?>
+      <?php foreach ($ready_support as $route_key => $card): ?><article class="product-route-card"><h3><?php echo esc_html($card['title']); ?></h3><p><?php echo esc_html($card['body']); ?></p><a href="<?php echo esc_url($resolved[$route_key]['path']); ?>"><?php echo esc_html($card['cta']); ?></a></article><?php endforeach; ?>
     </div></div>
   </section><?php endif; ?>
   <section class="shell product-section" id="faq" data-module="faq" aria-labelledby="faq-heading">

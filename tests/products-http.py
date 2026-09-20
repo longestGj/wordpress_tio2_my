@@ -1,5 +1,6 @@
 import json
 import os
+import re
 import urllib.error
 import urllib.request
 from pathlib import Path
@@ -26,6 +27,7 @@ except urllib.error.HTTPError as error:
 
 assert home_response.status == products_response.status == 200
 assert sitemap_response.status == 404
+assert re.search(r"\b(?:PRODUCT-000|GRADE-[A-Z0-9-]+|PRODUCT-PROC-(?:CL|SU)|APP-000|DOC-000|MARKET-000)\b", products_html) is None
 assert home.select_one('link[rel="canonical"]')["href"] == "https://tio2products.com/"
 assert home.select_one('meta[property="og:url"]')["content"] == "https://tio2products.com/"
 assert "tio2malaysia.com" not in home_html

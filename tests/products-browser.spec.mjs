@@ -45,6 +45,8 @@ test('selector: all approved sets, focus, neutral default and Not Sure',async({p
   const original=page.url();
   const data=JSON.parse(await page.locator('#products-selector-data').textContent());
   expect(data.explicitSelection).toBe(false);
+  expect(JSON.stringify(data)).not.toMatch(/\b(?:PRODUCT-000|GRADE-[A-Z0-9-]+|PRODUCT-PROC-(?:CL|SU)|APP-000|DOC-000|MARKET-000)\b/);
+  expect(Object.values(data.applications).flat().every(grade=>Object.keys(grade).sort().join(',')==='name,url')).toBe(true);
   await expect(page.locator('.product-selector')).toHaveAttribute('data-explicit-selection','false');
   for(const [label,count] of expected){
     const button=page.getByRole('button',{name:label,exact:true});await button.focus();await page.keyboard.press('Enter');

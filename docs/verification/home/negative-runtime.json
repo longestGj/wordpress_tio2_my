@@ -1,0 +1,20 @@
+{
+  "cases": [
+    {
+      "mode": "wrong-scope",
+      "status": 503,
+      "noCrossSiteFallback": true
+    },
+    {
+      "mode": "missing-content",
+      "status": 503,
+      "noCrossSiteFallback": true
+    },
+    {
+      "mode": "foreign-media",
+      "status": 503,
+      "noCrossSiteFallback": true
+    }
+  ],
+  "restoredExactly": true
+}

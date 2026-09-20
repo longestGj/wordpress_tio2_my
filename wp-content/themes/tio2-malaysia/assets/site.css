@@ -1,0 +1,24 @@
+/* Production behaviour and current approved shared-surface overrides. */
+.skip-link{position:absolute;left:16px;top:-100px;padding:12px 18px;background:white;z-index:100}
+.skip-link:focus{top:8px}
+.footer-logo img{display:block;width:180px;height:60px}
+.page-rfq .primary{background:var(--functional);border-color:var(--functional);color:white}
+dialog:not([open]){display:none!important}
+.mobile-menu{margin:0;padding:0;border:0;max-width:none;max-height:none;width:100%;height:100dvh;background:transparent;color:var(--white)}
+.mobile-menu::backdrop{background:transparent}
+.mobile-menu[open]{display:block}
+body:has(dialog[open]){overflow:hidden}
+.cookie-dialog{width:min(560px,calc(100% - 40px));padding:32px;border:1px solid var(--line);border-radius:12px;color:var(--ink);background:white;max-height:calc(100dvh - 40px);overflow:auto}
+.cookie-dialog::backdrop{background:rgba(3,27,58,.48)}
+.cookie-dialog h2{font-size:28px}
+.cookie-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
+button{font-family:inherit;cursor:pointer}
+.product-group summary .disclosure-sign{display:none}
+@media(min-width:1025px){
+ .mobile-menu[open]{display:none}.global-header{height:84px}.header-inner{height:83px;width:min(1200px,calc(100% - 64px));gap:24px}
+ .desktop-bar{display:flex}.mobile-bar{display:none}
+}
+@media(max-width:1100px){.mobile-menu{background:transparent}.mobile-menu nav>a[aria-current=page]::before{background:var(--functional)}}
+@media(max-width:767px){.page-rfq{display:none!important}.start-grid{grid-template-columns:1fr}.product-group summary .disclosure-sign{display:inline}}
+@media(max-width:560px){.cookie-dialog{padding:24px}.cookie-actions{display:grid}.cookie-actions>*{width:100%}.product-group summary .disclosure-sign{display:inline}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}

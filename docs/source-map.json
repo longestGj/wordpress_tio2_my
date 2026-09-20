@@ -1,0 +1,37 @@
+{
+  "prototype": "D:\\23MySec\\pages\\home\\04_planning\\visual-designs\\home-root-page-hero-v1.4\\homepage-root-page-hero-preview-v1.4.html",
+  "prototype_sha256": "1abe07bcd941a05295a26194ca7ce3ea81f5dec2074f717bcef58ef62d891de6",
+  "assets": [
+    {
+      "source": "D:\\23MySec\\brand\\logo\\candidates\\v0.1\\tio2-malaysia-primary-horizontal-v0.1.svg",
+      "target": "wp-content/themes/tio2-malaysia/assets/brand/logo-primary.svg",
+      "sha256": "eeed3a758e7ae1b847238d1c88e86eee7a8e67b863969af4d286747e9a72487c"
+    },
+    {
+      "source": "D:\\23MySec\\brand\\logo\\candidates\\v0.1\\tio2-malaysia-reverse-monochrome-v0.1.svg",
+      "target": "wp-content/themes/tio2-malaysia/assets/brand/logo-reverse.svg",
+      "sha256": "7cfaeafa02ac8469a006c9489db2f92b15b2621e4151b04efe1b30fc734c1b5e"
+    },
+    {
+      "source": "D:\\23MySec\\brand\\logo\\candidates\\v0.1\\tio2-malaysia-symbol-v0.1.svg",
+      "target": "wp-content/themes/tio2-malaysia/assets/brand/symbol.svg",
+      "sha256": "9fd1fafafad4bc6fef0c05f499c27baf1051eef084d1b834b1061caf3b8b85a0"
+    },
+    {
+      "source": "D:\\23MySec\\brand\\logo\\candidates\\v0.1\\tio2-malaysia-favicon-safe-v0.1.svg",
+      "target": "wp-content/themes/tio2-malaysia/assets/brand/favicon.svg",
+      "sha256": "f1d1b97ff66211410a50279eed16414b5a6e888c27c11419e41265168d08692c"
+    },
+    {
+      "source": "D:\\23MySec\\pages\\home\\04_planning\\visual-designs\\assets\\homepage-hero-tio2-material-v0.6.png",
+      "target": "content/media/hero.png",
+      "sha256": "7308472e4e633584fe4d7761afd7ed9ea4ea4c622576e2d7736c105f13cf50a5"
+    },
+    {
+      "source": "D:\\23MySec\\pages\\home\\04_planning\\visual-designs\\home-applications-aligned-v1.1\\dependencies\\Inter-Variable.ttf",
+      "target": "wp-content/themes/tio2-malaysia/assets/fonts/Inter-Variable.ttf",
+      "sha256": "29160a80ff49ddcab2c97711247e08b1fab27a484a329ce8b813d820dc559031"
+    }
+  ],
+  "field_count": 218
+}

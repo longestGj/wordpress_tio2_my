@@ -1,0 +1,6 @@
+<?php defined('ABSPATH') || exit; ?>
+<section class="section section-soft" data-module="documents">
+<div class="shell"><p class="eyebrow"><?php echo esc_html(tio2_field('documents.eyebrow.1')); ?></p><h2 class="section-title"><?php echo esc_html(tio2_field('documents.heading.1')); ?></h2><p class="section-intro"><?php echo esc_html(tio2_field('documents.paragraph.1')); ?></p>
+<div class="cards document-grid"><article class="card document-card"><span class="document-icon"><?php echo esc_html(tio2_field('documents.span.1')); ?></span><h3><?php echo esc_html(tio2_field('documents.card-title.1')); ?></h3><p><?php echo esc_html(tio2_field('documents.paragraph.2')); ?></p><a class="text-link" href="<?php echo esc_url(tio2_field('documents.link.1')); ?>"><?php echo esc_html(tio2_field('documents.link-label.1')); ?></a></article><article class="card document-card"><span class="document-icon"><?php echo esc_html(tio2_field('documents.span.2')); ?></span><h3><?php echo esc_html(tio2_field('documents.card-title.2')); ?></h3><p><?php echo esc_html(tio2_field('documents.paragraph.3')); ?></p><a class="text-link" href="<?php echo esc_url(tio2_field('documents.link.2')); ?>"><?php echo esc_html(tio2_field('documents.link-label.2')); ?></a></article></div>
+</div>
+</section>

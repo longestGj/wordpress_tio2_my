@@ -28,6 +28,47 @@ function tio2_logo(string $placement): void {
 function tio2_navigation(bool $mobile=false): void {
     for($i=0;$i<($mobile?8:7);$i++) {
         $href=tio2_field("header.nav.$i.href");
-        ?><a href="<?php echo esc_url($href); ?>"<?php echo is_front_page() && $i===0 ? ' aria-current="page"' : ''; ?><?php echo $i===7?' class="menu-rfq"':''; ?>><?php echo esc_html(tio2_field("header.nav.$i.label")); ?></a><?php
+        $current=(is_front_page() && $i===0) || (function_exists('tio2_is_rfq_page') && tio2_is_rfq_page() && $i===7);
+        ?><a href="<?php echo esc_url($href); ?>"<?php echo $current ? ' aria-current="page"' : ''; ?><?php echo $i===7?' class="menu-rfq"':''; ?>><?php echo esc_html(tio2_field("header.nav.$i.label")); ?></a><?php
     }
+}
+
+function tio2_rfq_page_is_owned(int $page_id): bool {
+    return $page_id > 0
+        && get_post_type($page_id) === 'page'
+        && get_post_status($page_id) === 'publish'
+        && get_post_field('post_name', $page_id) === 'request-a-quote'
+        && get_post_meta($page_id, '_tio2_managed_page', true) === '1'
+        && get_post_meta($page_id, '_tio2_page_id', true) === 'CONV-RFQ'
+        && get_post_meta($page_id, '_tio2_site_scope', true) === 'tio2-my';
+}
+
+function tio2_is_rfq_page(): bool {
+    return is_page() && tio2_rfq_page_is_owned((int) get_queried_object_id());
+}
+
+function tio2_rfq_prefill(array $query): array {
+    $contract=tio2_rfq_form_contract(tio2_rfq_content());
+    $controls=array_column($contract['controls'],null,'name');
+    $prefill=[];
+    foreach(['grade_id','application_id'] as $name) {
+        $value=$query[$name] ?? null;
+        if (is_string($value)) {
+            $value=tio2_rfq_text(wp_unslash($value));
+            if ($value!==null && in_array($value,$controls[$name]['option_values'],true)) $prefill[$name]=$value;
+        }
+    }
+    $country=$query['destination_country'] ?? null;
+    if (is_string($country)) {
+        $country=tio2_rfq_text(wp_unslash($country));
+        $broad=['eu','european union','asean','europe','asia','southeast asia','middle east','africa','global','worldwide'];
+        if ($country!==null && $country!=='' && tio2_rfq_length($country)<=100 && !in_array(strtolower($country),$broad,true)) {
+            $prefill['destination_country']=$country;
+        }
+    }
+    $process=$query['process_context'] ?? null;
+    if (is_string($process) && strtolower(trim(wp_unslash($process)))==='sulfate') {
+        $prefill['additional_requirements']='Sulfate';
+    }
+    return $prefill;
 }

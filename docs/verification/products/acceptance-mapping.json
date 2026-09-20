@@ -1,0 +1,75 @@
+{
+  "pageId": "PRODUCT-000",
+  "implementationCommit": "7eacb2ae1dd37ba445a4937e0a42e437768007de",
+  "conditions": [
+    {
+      "id": "PRODUCT-G6-B02",
+      "hubStatus": "PASS",
+      "externalStatus": "OPEN",
+      "evidence": [
+        "products-response.html",
+        "dependencies.json"
+      ],
+      "boundary": "Fixed clean RFQ links are visible; receiver/form is external and not claimed."
+    },
+    {
+      "id": "PRODUCT-G6-B03",
+      "hubStatus": "PASS",
+      "externalStatus": "OPEN",
+      "evidence": [
+        "readiness-matrix.json",
+        "seo-schema.json"
+      ],
+      "boundary": "All fail-closed route states pass; actual target pages remain external."
+    },
+    {
+      "id": "PRODUCT-G6-TDS-I02",
+      "hubStatus": "PASS",
+      "externalStatus": "NOT_APPLICABLE",
+      "evidence": [
+        "products-response.html",
+        "seo-schema.json"
+      ],
+      "boundary": "14 visible summaries and Product descriptions share one server source."
+    },
+    {
+      "id": "PRODUCT-G7-B05",
+      "hubStatus": "PASS",
+      "externalStatus": "RELEASE_OPEN",
+      "evidence": [
+        "seo-schema.json",
+        "products-response.html"
+      ],
+      "boundary": "Local candidate remains noindex; Gate10 is not authorized."
+    },
+    {
+      "id": "PRODUCT-G7-B06",
+      "hubStatus": "PASS",
+      "externalStatus": "OPEN",
+      "evidence": [
+        "readiness-matrix.json",
+        "identity.json",
+        "dependencies.json"
+      ],
+      "boundary": "Malaysia scope is fail-closed; external target readiness remains open."
+    },
+    {
+      "id": "PRODUCT-G7-B07",
+      "hubStatus": "PASS",
+      "externalStatus": "GATE9_REVIEW",
+      "evidence": [
+        "layout-1440.json",
+        "layout-1024.json",
+        "layout-768.json",
+        "layout-390.json",
+        "faq-keyboard-768.png",
+        "menu-390.png",
+        "cookie-390.png"
+      ],
+      "boundary": "Automated and browser evidence passed; independent Gate9 remains pending."
+    }
+  ],
+  "qualityStatus": "GATE8_CANDIDATE_READY_FOR_GATE9",
+  "integrationStatus": "OPEN_EXTERNAL_DEPENDENCIES",
+  "releaseStatus": "NOT_AUTHORIZED"
+}

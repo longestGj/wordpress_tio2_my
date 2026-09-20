@@ -1,0 +1,12 @@
+{
+  "beforeSha256": "53a38504808ec64e09fa163c9ef6b8164715cb9f8234395f608fa692f4d83e75",
+  "changedSha256": "9a44ec67fe5bfee9a4fd371579c47466ce135d122aaa30c3e592f225fc3a9db5",
+  "restoredSha256": "53a38504808ec64e09fa163c9ef6b8164715cb9f8234395f608fa692f4d83e75",
+  "homepageUnchanged": true,
+  "invalidPathStatus": 422,
+  "incompleteFieldsStatus": 422,
+  "staleRevisionStatus": 409,
+  "missingNonceStatus": 403,
+  "unauthenticatedRejected": true,
+  "restored": true
+}

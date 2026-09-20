@@ -6,7 +6,8 @@ if($action==='export') {
 } elseif($action==='restore') {
     $path=$args[1] ?? '';
     $resolved=realpath($path);
-    if(!$resolved || !str_starts_with($resolved,'/workspace/docs/verification/home/')) throw new RuntimeException('Snapshot must be in local evidence directory');
+    $allowed=['/workspace/.runtime/','/workspace/docs/verification/home/'];
+    if(!$resolved || !array_filter($allowed,static fn($prefix)=>str_starts_with($resolved,$prefix))) throw new RuntimeException('Snapshot must be in an allowed local evidence directory');
     $data=json_decode(file_get_contents($resolved),true,512,JSON_THROW_ON_ERROR);
     $valid=tio2_validate_content($data['content']??null,tio2_schema(),'tio2_owned_image');
     if(is_wp_error($valid)) throw new RuntimeException($valid->get_error_message());

@@ -83,12 +83,23 @@ fi
 first=$(wp eval-file /opt/tio2/bin/bootstrap-production.php)
 echo "$first" | grep -q '"content":"imported"'
 test "$(wp option get tio2_content_init_version)" = 'home-v1'
+test "$(wp option get tio2_products_migration_version)" = '2'
+product_page_id=$(wp eval '$page=get_page_by_path("products",OBJECT,"page");echo $page?(int)$page->ID:0;')
+test "$product_page_id" -gt 0
+test "$(wp post get "$product_page_id" --field=post_status)" = 'publish'
+test "$(wp post meta get "$product_page_id" _tio2_page_id)" = 'PRODUCT-000'
+test "$(wp post meta get "$product_page_id" _tio2_site_scope)" = 'tio2-my'
+test "$(wp post meta get "$product_page_id" _tio2_managed_page)" = '1'
+test "$(wp post meta get "$product_page_id" _wp_page_template)" = 'page-products.php'
 media_before=$(wp post list --post_type=attachment --format=count)
 
 wp eval '$content=get_option("tio2_content");$content["fields"]["hero.heading.1"]="Preserved production edit";update_option("tio2_content",$content,false);'
+wp eval '$content=get_option("tio2_products_content");$content["fields"]["directory.grade.1.summary"]="Preserved Products production edit";update_option("tio2_products_content",$content,false);'
 second=$(wp eval-file /opt/tio2/bin/bootstrap-production.php)
 echo "$second" | grep -q '"content":"already-initialized"'
 test "$(wp eval 'echo get_option("tio2_content")["fields"]["hero.heading.1"];')" = 'Preserved production edit'
+test "$(wp eval 'echo get_option("tio2_products_content")["fields"]["directory.grade.1.summary"];')" = 'Preserved Products production edit'
+test "$(wp eval '$page=get_page_by_path("products",OBJECT,"page");echo $page?(int)$page->ID:0;')" = "$product_page_id"
 test "$(wp post list --post_type=attachment --format=count)" = "$media_before"
 
 wp option delete tio2_content_init_version >/dev/null
@@ -96,6 +107,8 @@ adopted=$(wp eval-file /opt/tio2/bin/bootstrap-production.php)
 echo "$adopted" | grep -q '"content":"preserved-existing"'
 test "$(wp option get tio2_content_init_version)" = 'adopted-existing'
 test "$(wp eval 'echo get_option("tio2_content")["fields"]["hero.heading.1"];')" = 'Preserved production edit'
+test "$(wp eval 'echo get_option("tio2_products_content")["fields"]["directory.grade.1.summary"];')" = 'Preserved Products production edit'
+test "$(wp eval '$page=get_page_by_path("products",OBJECT,"page");echo $page?(int)$page->ID:0;')" = "$product_page_id"
 test "$(wp post list --post_type=attachment --format=count)" = "$media_before"
 
 echo 'production bootstrap idempotency contract passed'

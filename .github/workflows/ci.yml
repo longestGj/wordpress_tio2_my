@@ -99,6 +99,7 @@ jobs:
         run: |
           python tests/workflow-contract.py
           python tests/production-config-test.py
+          python tests/provision-contract.py
       - name: Validate release scripts
         run: |
           for file in deploy/scripts/*.sh; do bash -n "$file"; done

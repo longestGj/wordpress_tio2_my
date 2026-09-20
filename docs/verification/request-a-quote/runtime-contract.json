@@ -1,0 +1,42 @@
+{
+  "status": 200,
+  "siteScopeHeader": "tio2-my",
+  "lang": "en",
+  "h1": [
+    "Request a Titanium Dioxide Quote"
+  ],
+  "modules": [
+    "rfq-hero",
+    "rfq-form",
+    "rfq-other"
+  ],
+  "editableControls": [
+    "grade_id",
+    "application_id",
+    "quantity_mt",
+    "destination_country",
+    "destination_port_city",
+    "company_name",
+    "contact_name",
+    "business_email",
+    "phone_whatsapp",
+    "website",
+    "additional_requirements"
+  ],
+  "fixedQuantityUnit": "Metric tonnes (MT)",
+  "canonical": "https://tio2products.com/request-a-quote/",
+  "robots": "noindex, nofollow",
+  "title": "Request a Titanium Dioxide Quote | TiO2 Malaysia",
+  "description": "Request a titanium dioxide quotation from TiO2 Malaysia by providing your grade, application, quantity in metric tonnes and destination for review.",
+  "schemaTypes": [
+    "WebPage",
+    "BreadcrumbList"
+  ],
+  "externalLinks": {
+    "Privacy Policy": "/privacy-policy/",
+    "Request a Sample": "/request-sample/",
+    "Request Documents": "/request-documents/"
+  },
+  "containsInternalIdentifiers": false,
+  "optionalAnalyticsPresent": false
+}

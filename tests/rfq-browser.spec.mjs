@@ -78,7 +78,7 @@ test('RFQ pending prevents duplicate and explicit receipt alone clears values',a
   await page.goto('/request-a-quote/');await fill(page);
   const submit=page.getByRole('button',{name:'REQUEST QUOTE'});await submit.click();
   await expect(page.getByRole('button',{name:'SUBMITTING…'})).toBeDisabled();
-  await page.locator('.rfq-form-surface').screenshot({path:output('pending.png')});
+  await page.getByRole('button',{name:'SUBMITTING…'}).screenshot({path:output('pending.png')});
   await page.getByRole('button',{name:'SUBMITTING…'}).click({force:true});
   await expect(page.locator('.rfq-state')).toContainText('Thank you. We’ve received your quotation request.');
   await expect(page.locator('.rfq-state')).toBeFocused();
@@ -86,7 +86,7 @@ test('RFQ pending prevents duplicate and explicit receipt alone clears values',a
   await expect(page.locator('[name=company_name]')).toHaveValue('');
   await expect(page.locator('#rfq-form')).toBeHidden();
   await expect(page.locator('.header-rfq')).toBeEnabled();
-  await page.locator('.rfq-form-surface').screenshot({path:output('success.png')});
+  await page.locator('.rfq-state').screenshot({path:output('success.png')});
 });
 
 test('RFQ receiver field error is registered, focused, and values remain',async({page})=>{
@@ -109,7 +109,7 @@ for(const [name,status,state,heading] of [
     await expect(page.locator('.rfq-state')).toBeFocused();await expect(page.locator('.rfq-state')).toContainText(heading);
     await expect(page.locator('[name=company_name]')).toHaveValue(valid.company_name);expect(calls).toBe(1);
     if(name==='failure') await expect(page.getByRole('button',{name:'TRY AGAIN'})).toBeVisible();
-    await page.locator('.rfq-form-surface').screenshot({path:output(`${name}.png`)});
+    await page.locator('.rfq-state').screenshot({path:output(`${name}.png`)});
   });
 }
 
@@ -130,6 +130,7 @@ test('RFQ long values, 200 percent reflow proxy, reduced motion, and focus remai
   const country=page.locator('[name=destination_country]');await country.focus();
   expect(await country.evaluate(el=>getComputedStyle(el).outlineStyle)).not.toBe('none');
   await page.setViewportSize({width:320,height:900});expect(await page.evaluate(()=>document.documentElement.scrollWidth)).toBe(320);
+  await page.locator('[name=additional_requirements]').evaluate(node=>node.style.color='transparent');
   await page.screenshot({path:output('long-320.png'),fullPage:true,animations:'disabled'});
 });
 

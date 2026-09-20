@@ -1,0 +1,13 @@
+{
+  "mode": "local fake only",
+  "externalRequests": 0,
+  "realEmailOrSubmission": false,
+  "explicitReceiptRequired": true,
+  "noAutomaticRetry": true,
+  "publicEnvelope": [
+    "state",
+    "fieldErrors"
+  ],
+  "productionConfiguration": "fail-closed unless production-only mode, enable flag and runtime key are all present",
+  "recipientOrSecretInEvidence": false
+}

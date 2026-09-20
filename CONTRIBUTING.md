@@ -92,7 +92,9 @@ python tests/identity.py
 python tests/negative-runtime.py
 ```
 
-这些是当前首页本地检查，不是未来所有页面的通用验收套件：
+CONV-RFQ 使用独立的 `d32-conv-rfq-gate8` Compose project、`8242` 端口和本地 fake receiver。配置这四个环境变量后，`python scripts/rfq-evidence.py --run-suite` 执行其完整 PHP、HTTP、迁移、隔离、浏览器、后台和首页回归检查；`--generate` 与 `--validate-dir docs/verification/request-a-quote` 生成并校验证据。不得把该套件指向共享验收站或生产环境，也不得为验证发送真实外部表单或邮件。
+
+这些是当前首页和 RFQ 的本地检查，不是未来所有页面的通用验收套件：
 
 - 当前脚本包含固定本地地址、恢复快照及本机来源路径。接入 GitHub Actions 前必须处理可移植性，并在干净环境实跑。
 - 编辑测试和隔离异常测试会修改数据，只能在专用验证环境运行，不在共享验收站或线上直接执行。

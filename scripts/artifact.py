@@ -1,5 +1,6 @@
 """Package the actual custom WordPress files; no synthetic Next.js build identity."""
 import hashlib
+import argparse
 import json
 import shutil
 import subprocess
@@ -21,6 +22,9 @@ def identity(files):
 
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--evidence-dir', default='docs/verification/home')
+    args = parser.parse_args()
     files = entries()
     build_id = identity(files)
     commit = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
@@ -41,7 +45,9 @@ if __name__ == '__main__':
     record = dict(build_id=build_id, implementation_commit=commit,
                   directory=directory.relative_to(ROOT).as_posix(), files=dict(files))
     (directory / 'artifact.json').write_text(json.dumps(record, indent=2) + '\n', encoding='utf-8')
-    evidence = ROOT / 'docs/verification/home'
+    evidence = ROOT / args.evidence_dir
+    if evidence.resolve() != ROOT.resolve() and ROOT.resolve() not in evidence.resolve().parents:
+        raise RuntimeError('Evidence directory must remain inside the repository')
     evidence.mkdir(parents=True, exist_ok=True)
     (evidence / 'artifact.json').write_text(json.dumps(record, indent=2) + '\n', encoding='utf-8')
     print(build_id)

@@ -2,6 +2,7 @@
 defined('ABSPATH') || exit;
 add_action('admin_menu', static function() {
     add_menu_page('Site content','Site content','manage_options','tio2-content','tio2_admin_page','dashicons-layout',21);
+    add_submenu_page('tio2-content','RFQ content','RFQ content','manage_options','tio2-rfq-content','tio2_rfq_admin_page');
 });
 add_action('admin_enqueue_scripts', static function($hook) {
     if ($hook !== 'toplevel_page_tio2-content') return;
@@ -9,6 +10,7 @@ add_action('admin_enqueue_scripts', static function($hook) {
     wp_enqueue_script('tio2-content-admin',plugins_url('../assets/admin.js',__FILE__),[], '1.0.0',true);
 });
 add_action('admin_post_tio2_save', 'tio2_admin_save');
+add_action('admin_post_tio2_rfq_save', 'tio2_rfq_admin_save');
 function tio2_admin_save(): void {
     if (!current_user_can('manage_options')) wp_die('Not allowed.', 'Not allowed', ['response'=>403]);
     check_admin_referer('tio2_save_content');
@@ -61,6 +63,63 @@ function tio2_admin_page(): void {
         <?php endforeach; ?></tbody></table>
       </details><?php endforeach; ?>
       <?php submit_button('Save site content'); ?>
+    </form></div>
+    <?php
+}
+
+function tio2_rfq_admin_save(): void {
+    if (!current_user_can('manage_options')) wp_die('Not allowed.', 'Not allowed', ['response'=>403]);
+    check_admin_referer('tio2_rfq_save_content');
+    if (!tio2_site_ready()) wp_die('Site identity mismatch.', 'Invalid site', ['response'=>409]);
+    try { $page=tio2_rfq_managed_page(); }
+    catch (Throwable $error) { wp_die('RFQ page ownership mismatch.', 'Invalid page', ['response'=>409]); }
+    if (!$page) wp_die('RFQ page is unavailable.', 'Invalid page', ['response'=>409]);
+    try { $current=tio2_rfq_content(); }
+    catch (Throwable $error) { wp_die('RFQ content is unavailable.', 'Invalid content', ['response'=>409]); }
+    $revision=hash('sha256',wp_json_encode($current));
+    if (!isset($_POST['revision']) || !is_string($_POST['revision']) || !hash_equals($revision,wp_unslash($_POST['revision']))) {
+        wp_die('RFQ content changed in another session. Reload before editing.', 'Edit conflict', ['response'=>409]);
+    }
+    $posted=isset($_POST['fields']) && is_array($_POST['fields']) ? wp_unslash($_POST['fields']) : [];
+    $candidate=['site_scope'=>'tio2-my','schema_version'=>1,'fields'=>$posted];
+    $validated=tio2_validate_content($candidate,tio2_rfq_schema(),static fn()=>false);
+    if (is_wp_error($validated)) wp_die(esc_html($validated->get_error_message()),'Invalid RFQ content',['response'=>422,'back_link'=>true]);
+    update_option(TIO2_RFQ_OPTION,$validated,false);
+    wp_safe_redirect(admin_url('admin.php?page=tio2-rfq-content&saved=1'));
+    exit;
+}
+
+function tio2_rfq_admin_page(): void {
+    if (!current_user_can('manage_options')) return;
+    try { $data=tio2_rfq_content(); }
+    catch (Throwable $error) { echo '<div class="notice notice-error"><p>Initialize the RFQ page before editing.</p></div>'; return; }
+    $groups=[];
+    foreach(tio2_rfq_schema() as $key=>$definition) {
+        $prefix=explode('.',$key,2)[0];
+        $group=in_array($prefix,['failure','success','unavailable','submit'],true)?'submission states':$prefix;
+        $groups[$group][$key]=$definition;
+    }
+    ?>
+    <div class="wrap"><h1>RFQ content</h1>
+    <p>Edit the Request a Quote page copy, form labels, validation messages, states, routes, and SEO. The field structure and design stay fixed.</p>
+    <?php if (isset($_GET['saved'])): ?><div class="notice notice-success"><p>RFQ content saved.</p></div><?php endif; ?>
+    <p><a class="button" href="<?php echo esc_url(home_url('/request-a-quote/')); ?>" target="_blank" rel="noopener">Preview Request a Quote</a></p>
+    <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>">
+      <input type="hidden" name="action" value="tio2_rfq_save">
+      <input type="hidden" name="revision" value="<?php echo esc_attr(hash('sha256',wp_json_encode($data))); ?>">
+      <?php wp_nonce_field('tio2_rfq_save_content'); ?>
+      <?php foreach($groups as $group=>$items): ?>
+      <details class="tio2-editor-group" style="background:white;border:1px solid #ccd0d4;padding:16px;margin:12px 0" <?php echo $group==='hero' ? 'open' : ''; ?>>
+        <summary style="font-size:18px;font-weight:600;cursor:pointer"><?php echo esc_html(ucwords(str_replace(['-','.'],' ',$group))); ?></summary>
+        <table class="form-table"><tbody>
+        <?php foreach($items as $key=>$definition): $id='rfq-field-'.str_replace(['.','_'],'-',$key); $value=$data['fields'][$key] ?? ''; ?>
+          <tr><th scope="row"><label for="<?php echo esc_attr($id); ?>"><?php echo esc_html(ucwords(str_replace(['.','-'],' ',$key))); ?></label></th><td>
+            <textarea style="width:min(100%,850px)" rows="<?php echo strlen($value)>120?3:1; ?>" required maxlength="12000" id="<?php echo esc_attr($id); ?>" name="fields[<?php echo esc_attr($key); ?>]"><?php echo esc_textarea($value); ?></textarea>
+            <?php if($definition['type']==='path'): ?><p class="description">Local path with a trailing slash. Changing a link does not create its destination.</p><?php endif; ?>
+          </td></tr>
+        <?php endforeach; ?></tbody></table>
+      </details><?php endforeach; ?>
+      <?php submit_button('Save RFQ content'); ?>
     </form></div>
     <?php
 }

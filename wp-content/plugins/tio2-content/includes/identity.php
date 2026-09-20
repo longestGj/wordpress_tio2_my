@@ -38,4 +38,7 @@ add_action('wp_head',static function() {
     if(wp_get_environment_type()!=='local') return;
     echo '<meta name="tio2-artifact" content="'.esc_attr(tio2_runtime_artifact()).'">'.PHP_EOL;
     echo '<meta name="tio2-content-sha256" content="'.hash('sha256',wp_json_encode(tio2_content(),JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES)).'">'.PHP_EOL;
+    if (function_exists('tio2_is_rfq_page') && tio2_is_rfq_page()) {
+        echo '<meta name="tio2-rfq-content-sha256" content="'.hash('sha256',wp_json_encode(tio2_rfq_content(),JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES)).'">'.PHP_EOL;
+    }
 },2);

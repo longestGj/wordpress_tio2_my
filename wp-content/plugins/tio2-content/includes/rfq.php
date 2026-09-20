@@ -145,6 +145,7 @@ function tio2_rfq_migrate(): array {
     $installed_version = (int) get_option(TIO2_RFQ_VERSION_OPTION, 0);
     if ($installed_version === TIO2_RFQ_MIGRATION_VERSION && $page && is_array($existing_content)) {
         tio2_rfq_assign_template((int) $page->ID);
+        delete_option(TIO2_RFQ_ERROR_OPTION);
         return tio2_rfq_migration_status();
     }
     $backup = get_option(TIO2_RFQ_BACKUP_OPTION, null);

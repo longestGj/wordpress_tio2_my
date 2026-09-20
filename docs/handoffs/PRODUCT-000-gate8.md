@@ -2,13 +2,15 @@
 
 - Handoff: `PRODUCT-D32-G8-01`
 - Gate 8 task: `01a0bd3a-a7ba-7632-bda0-fad444f654db`
-- Implementation commit: `7d4875a778401d0ecd118f5935c6392571a6d13c`
-- Build ID: `wp-fb45d8677fec877ae499976fdfa96491c03bf9c9c062d35c98f70b10eb7cea9b`
+- Implementation commit: `95ed4c4c47481ef78f64fa90b95a1096ea45bfae`
+- Build ID: `wp-9fcfb835a0e8b3709924a3d05cfe0bf5173fcd4db200308e0c4edf96845b68df`
 - Runtime: `http://127.0.0.1:8232/products/` (`site_scope=tio2-my`, local preview)
 - Hold: `GATE9_PASS_OR_RETURN_NOTICE`
 - Page quality: `GATE8_CANDIDATE_READY_FOR_GATE9`
 - Integration: `OPEN_EXTERNAL_DEPENDENCIES`
 - Release: `NOT_AUTHORIZED`
+
+Gate 9 return findings `PRODUCT-000-D32-G9-RUNTIME-F01` and `F02` are addressed in this replacement candidate: public runtime payloads contain no internal Page ID/route key across readiness states, and all twelve current acceptance IDs are mapped to evidence, commands, and results.
 
 The Hub implementation, editable CMS data, scoped resolver, responsive interactions, and metadata are complete for Gate 9 review. External Grade/Process/Support targets and the RFQ receiver remain owned by their separate tasks; this receipt does not claim them ready. Gate 10/public deployment is outside scope.
 

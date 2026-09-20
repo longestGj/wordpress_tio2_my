@@ -34,7 +34,8 @@
         "CR-901"
       ],
       "schemaUrls": [],
-      "schemaIds": []
+      "schemaIds": [],
+      "publicInternalIds": []
     },
     {
       "label": "wrong-scope",
@@ -70,7 +71,8 @@
         "CR-901"
       ],
       "schemaUrls": [],
-      "schemaIds": []
+      "schemaIds": [],
+      "publicInternalIds": []
     },
     {
       "label": "cr-ready-independent",
@@ -110,7 +112,8 @@
       ],
       "schemaIds": [
         "https://tio2products.com/products/cr-901/#product"
-      ]
+      ],
+      "publicInternalIds": []
     },
     {
       "label": "three-grades",
@@ -154,7 +157,8 @@
         "https://tio2products.com/products/m-350/#product",
         "https://tio2products.com/products/m-510/#product",
         "https://tio2products.com/products/m-896/#product"
-      ]
+      ],
+      "publicInternalIds": []
     },
     {
       "label": "fourteen-grades",
@@ -220,7 +224,8 @@
         "https://tio2products.com/products/m-52/#product",
         "https://tio2products.com/products/m-2377/#product",
         "https://tio2products.com/products/cr-901/#product"
-      ]
+      ],
+      "publicInternalIds": []
     },
     {
       "label": "process-one",
@@ -286,7 +291,8 @@
         "https://tio2products.com/products/m-52/#product",
         "https://tio2products.com/products/m-2377/#product",
         "https://tio2products.com/products/cr-901/#product"
-      ]
+      ],
+      "publicInternalIds": []
     },
     {
       "label": "process-two",
@@ -352,7 +358,8 @@
         "https://tio2products.com/products/m-52/#product",
         "https://tio2products.com/products/m-2377/#product",
         "https://tio2products.com/products/cr-901/#product"
-      ]
+      ],
+      "publicInternalIds": []
     },
     {
       "label": "support-1",
@@ -419,7 +426,8 @@
         "https://tio2products.com/products/m-52/#product",
         "https://tio2products.com/products/m-2377/#product",
         "https://tio2products.com/products/cr-901/#product"
-      ]
+      ],
+      "publicInternalIds": []
     },
     {
       "label": "support-2",
@@ -486,7 +494,8 @@
         "https://tio2products.com/products/m-52/#product",
         "https://tio2products.com/products/m-2377/#product",
         "https://tio2products.com/products/cr-901/#product"
-      ]
+      ],
+      "publicInternalIds": []
     },
     {
       "label": "support-3",
@@ -553,7 +562,8 @@
         "https://tio2products.com/products/m-52/#product",
         "https://tio2products.com/products/m-2377/#product",
         "https://tio2products.com/products/cr-901/#product"
-      ]
+      ],
+      "publicInternalIds": []
     },
     {
       "label": "full-registry",
@@ -620,7 +630,8 @@
         "https://tio2products.com/products/m-52/#product",
         "https://tio2products.com/products/m-2377/#product",
         "https://tio2products.com/products/cr-901/#product"
-      ]
+      ],
+      "publicInternalIds": []
     }
   ],
   "restored": {
@@ -657,6 +668,7 @@
       "CR-901"
     ],
     "schemaUrls": [],
-    "schemaIds": []
+    "schemaIds": [],
+    "publicInternalIds": []
   }
 }

@@ -1,7 +1,7 @@
 {
-  "build_id": "wp-fb45d8677fec877ae499976fdfa96491c03bf9c9c062d35c98f70b10eb7cea9b",
-  "implementation_commit": "7d4875a778401d0ecd118f5935c6392571a6d13c",
-  "directory": ".runtime/artifacts/wp-fb45d8677fec877ae499976fdfa96491c03bf9c9c062d35c98f70b10eb7cea9b",
+  "build_id": "wp-9fcfb835a0e8b3709924a3d05cfe0bf5173fcd4db200308e0c4edf96845b68df",
+  "implementation_commit": "95ed4c4c47481ef78f64fa90b95a1096ea45bfae",
+  "directory": ".runtime/artifacts/wp-9fcfb835a0e8b3709924a3d05cfe0bf5173fcd4db200308e0c4edf96845b68df",
   "files": {
     "wp-content/plugins/tio2-content/assets/admin.js": "453a1d8bf02078c735223d1f202c4d9ce140eda4c51c1416dd7a5aff69f0f879",
     "wp-content/plugins/tio2-content/includes/admin.php": "efa465bf66fc8208c82397753da5b1380bd3a674cd3af6d7a5f9e0c029a190e1",
@@ -20,7 +20,7 @@
     "wp-content/themes/tio2-malaysia/assets/fonts/Inter-Variable.ttf": "29160a80ff49ddcab2c97711247e08b1fab27a484a329ce8b813d820dc559031",
     "wp-content/themes/tio2-malaysia/assets/fonts/LICENSE.txt": "262481e844521b326f5ecd053e59b98c8b2da78c8ee1bdbb6e8174305e54935a",
     "wp-content/themes/tio2-malaysia/assets/products.css": "3aff03ec13a71ac28a4845383d24860edd2e898f9674fe085bbc1f931519347b",
-    "wp-content/themes/tio2-malaysia/assets/products.js": "f82a81b56b6da8bc7e1482de9986de7d15b27e3da811966cea513d8c800c595c",
+    "wp-content/themes/tio2-malaysia/assets/products.js": "a84adea5f67c37d1cda9df87019910f7d9d6ab743b5fbadcb212909fb96e4cda",
     "wp-content/themes/tio2-malaysia/assets/site.css": "d15854e99963cd4e09744ec2c79cdf3f69c1c3e8ede0c26e7282eb34befe3d11",
     "wp-content/themes/tio2-malaysia/assets/site.js": "0b1c81499811efbbdaecd27d78ba42bdbcb479c5405dfbc5acddcffe4627356f",
     "wp-content/themes/tio2-malaysia/footer.php": "8cb83ad0d30fe3c4058b6da01592c90775b9df92e56393af5ac5a96aea0c577d",
@@ -29,7 +29,7 @@
     "wp-content/themes/tio2-malaysia/header.php": "a44219feb8d1443ed2958873abc470ee37ce3d21b2aa7123a3287473c363345c",
     "wp-content/themes/tio2-malaysia/inc/seo.php": "311fe894c47553e4ad5e758ebc5095044bcff45867aed5bacbcab41a9f402d2e",
     "wp-content/themes/tio2-malaysia/index.php": "f6b3be5bb3c9068db54b43e5d7115467aedc9059e1ac4efb4bd933c6052efa52",
-    "wp-content/themes/tio2-malaysia/page-products.php": "8d39a447cae74076783e58e06870c1980b90ea8e2ee3ced9ba6669b2e99458b2",
+    "wp-content/themes/tio2-malaysia/page-products.php": "09a32872d3f67e82cc531f58a711270299e0a253541fbcf6dcd6a6604f2424cf",
     "wp-content/themes/tio2-malaysia/style.css": "4ebb69b87669e20c41d02d18913ba40ed3f29223fe13b18593cdd711ba68edfe",
     "wp-content/themes/tio2-malaysia/template-parts/applications.php": "f025927dce417ab78a3a3cb17bc7327f4e0bd2673c46cdba6f3657cb5bea3c40",
     "wp-content/themes/tio2-malaysia/template-parts/company.php": "0ea84d18d45d97b5c49e4dd12b8ea3fd32c7adce12330803c3763404cf45d198",

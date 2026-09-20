@@ -6,11 +6,11 @@ import urllib.error
 import urllib.request
 from pathlib import Path
 
-from support.runtime import runtime_settings, workspace_container_path
+from support.runtime import is_isolated_runtime, runtime_settings, workspace_container_path
 
 ROOT = Path(__file__).resolve().parents[1]
 RUNTIME = runtime_settings()
-if RUNTIME["base_url"] != "http://127.0.0.1:8242" or os.environ.get("COMPOSE_PROJECT_NAME") != "d32-conv-rfq-gate8":
+if not is_isolated_runtime(RUNTIME["base_url"], os.environ.get("COMPOSE_PROJECT_NAME", ""), "d32-conv-rfq-gate8"):
     raise RuntimeError("RFQ isolation test refuses a non-isolated runtime")
 OUT = Path(RUNTIME["output_dir"])
 OUT.mkdir(parents=True, exist_ok=True)

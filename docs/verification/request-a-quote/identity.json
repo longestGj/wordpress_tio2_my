@@ -1,0 +1,10 @@
+{
+  "build_id": "wp-815f8debd4b2129b21a8cc67d8c410dea58e8986b4e3d38b2450ebbeeaaaeb58",
+  "content_sha256": "ee6a324ea68ada21e9424f930ed52f87800cea9e982c0feb4fd9ef456b71a992",
+  "rfq_content_sha256": "02f88b1ca3d539e406d2f020a550e2b327229e90b57d234787400742d7aff398",
+  "site_scope": "tio2-my",
+  "liveSourceAndDatabaseMatch": true,
+  "implementationCommit": "f407f0ee526ac3d8fe1dc3efefa31364dc191030",
+  "branch": "codex/conv-rfq-gate8",
+  "runtime": "http://127.0.0.1:8242/request-a-quote/"
+}

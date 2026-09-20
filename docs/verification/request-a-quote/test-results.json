@@ -1,0 +1,142 @@
+{
+  "candidateCommit": "f407f0ee526ac3d8fe1dc3efefa31364dc191030",
+  "environment": "d32-conv-rfq-gate8 at http://127.0.0.1:8242; local fake receiver only",
+  "results": [
+    {
+      "command": "docker compose exec -T wordpress sh -lc \"find /workspace/wp-content/plugins/tio2-content /workspace/wp-content/themes/tio2-malaysia -name '*.php' -print0 | xargs -0 -n1 php -l\"",
+      "startedAt": "2026-09-20T09:59:58.748773+00:00",
+      "durationSeconds": 1.047,
+      "exitCode": 0,
+      "log": ".runtime/rfq-final/php-lint.log",
+      "id": "php-lint"
+    },
+    {
+      "command": "docker compose exec -T wordpress php /workspace/tests/php/content-test.php",
+      "startedAt": "2026-09-20T09:59:59.806342+00:00",
+      "durationSeconds": 0.453,
+      "exitCode": 0,
+      "log": ".runtime/rfq-final/home-model.log",
+      "id": "home-model"
+    },
+    {
+      "command": "docker compose exec -T wordpress php /workspace/tests/php/rfq-model-test.php",
+      "startedAt": "2026-09-20T10:00:00.252947+00:00",
+      "durationSeconds": 0.469,
+      "exitCode": 0,
+      "log": ".runtime/rfq-final/rfq-model.log",
+      "id": "rfq-model"
+    },
+    {
+      "command": "docker compose run --rm --no-deps --entrypoint php wpcli /workspace/tests/php/rfq-submission-test.php",
+      "startedAt": "2026-09-20T10:00:00.728855+00:00",
+      "durationSeconds": 1.406,
+      "exitCode": 0,
+      "log": ".runtime/rfq-final/rfq-submission.log",
+      "id": "rfq-submission"
+    },
+    {
+      "command": "docker compose run --rm wpcli eval-file /workspace/tests/php/rfq-route-test.php",
+      "startedAt": "2026-09-20T10:00:02.123937+00:00",
+      "durationSeconds": 2.063,
+      "exitCode": 0,
+      "log": ".runtime/rfq-final/rfq-route.log",
+      "id": "rfq-route"
+    },
+    {
+      "command": "C:\\Users\\longe\\AppData\\Local\\Programs\\Python\\Python312\\python.exe tests/rfq-migration.py",
+      "startedAt": "2026-09-20T10:00:04.192635+00:00",
+      "durationSeconds": 46.781,
+      "exitCode": 0,
+      "log": ".runtime/rfq-final/rfq-migration.log",
+      "id": "rfq-migration"
+    },
+    {
+      "command": "C:\\Users\\longe\\AppData\\Local\\Programs\\Python\\Python312\\python.exe tests/rfq-http.py",
+      "startedAt": "2026-09-20T10:00:50.976804+00:00",
+      "durationSeconds": 1.219,
+      "exitCode": 0,
+      "log": ".runtime/rfq-final/rfq-http.log",
+      "id": "rfq-http"
+    },
+    {
+      "command": "C:\\Users\\longe\\AppData\\Local\\Programs\\Python\\Python312\\python.exe tests/rfq-endpoint.py",
+      "startedAt": "2026-09-20T10:00:52.194527+00:00",
+      "durationSeconds": 63.875,
+      "exitCode": 0,
+      "log": ".runtime/rfq-final/rfq-endpoint.log",
+      "id": "rfq-endpoint"
+    },
+    {
+      "command": "C:\\Users\\longe\\AppData\\Local\\Programs\\Python\\Python312\\python.exe tests/rfq-isolation.py",
+      "startedAt": "2026-09-20T10:01:56.065242+00:00",
+      "durationSeconds": 47.875,
+      "exitCode": 0,
+      "log": ".runtime/rfq-final/rfq-isolation.log",
+      "id": "rfq-isolation"
+    },
+    {
+      "command": "C:\\Users\\longe\\AppData\\Local\\Programs\\Python\\Python312\\python.exe tests/http-contract.py",
+      "startedAt": "2026-09-20T10:02:43.937401+00:00",
+      "durationSeconds": 0.984,
+      "exitCode": 0,
+      "log": ".runtime/rfq-final/home-http.log",
+      "id": "home-http"
+    },
+    {
+      "command": "C:\\Users\\longe\\AppData\\Local\\Programs\\Python\\Python312\\python.exe tests/identity.py",
+      "startedAt": "2026-09-20T10:02:44.923819+00:00",
+      "durationSeconds": 3.516,
+      "exitCode": 0,
+      "log": ".runtime/rfq-final/identity.log",
+      "id": "identity"
+    },
+    {
+      "command": "C:\\Users\\longe\\AppData\\Local\\Programs\\Python\\Python312\\python.exe tests/negative-runtime.py",
+      "startedAt": "2026-09-20T10:02:48.449285+00:00",
+      "durationSeconds": 19.406,
+      "exitCode": 0,
+      "log": ".runtime/rfq-final/home-negative-runtime.log",
+      "id": "home-negative-runtime"
+    },
+    {
+      "command": "C:\\Users\\longe\\AppData\\Local\\Programs\\Python\\Python312\\python.exe tests/portability-test.py",
+      "startedAt": "2026-09-20T10:03:07.848816+00:00",
+      "durationSeconds": 0.109,
+      "exitCode": 0,
+      "log": ".runtime/rfq-final/portable.log",
+      "id": "portable"
+    },
+    {
+      "command": "C:\\Users\\longe\\AppData\\Local\\Programs\\Python\\Python312\\python.exe tests/runtime-settings-test.py",
+      "startedAt": "2026-09-20T10:03:07.951858+00:00",
+      "durationSeconds": 0.125,
+      "exitCode": 0,
+      "log": ".runtime/rfq-final/runtime-settings.log",
+      "id": "runtime-settings"
+    },
+    {
+      "command": "C:\\Users\\longe\\AppData\\Local\\Programs\\Python\\Python312\\python.exe tests/provision-contract.py",
+      "startedAt": "2026-09-20T10:03:08.081735+00:00",
+      "durationSeconds": 0.094,
+      "exitCode": 0,
+      "log": ".runtime/rfq-final/provision-contract.log",
+      "id": "provision-contract"
+    },
+    {
+      "command": "npx.cmd playwright test tests/rfq-browser.spec.mjs tests/browser.spec.mjs tests/rfq-editor.spec.mjs tests/editor.spec.mjs",
+      "startedAt": "2026-09-20T10:03:08.173068+00:00",
+      "durationSeconds": 86.469,
+      "exitCode": 0,
+      "log": ".runtime/rfq-final/browser-editor.log",
+      "id": "browser-editor"
+    },
+    {
+      "command": "C:\\Users\\longe\\AppData\\Local\\Programs\\Python\\Python312\\python.exe tests/rfq-evidence.py",
+      "startedAt": "2026-09-20T10:04:34.647278+00:00",
+      "durationSeconds": 1.156,
+      "exitCode": 0,
+      "log": ".runtime/rfq-final/evidence-contract.log",
+      "id": "evidence-contract"
+    }
+  ]
+}

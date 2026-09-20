@@ -1,10 +1,10 @@
 # 开发流程
 
-适用项目：`longestGj/wordpress_tio2_my`。本文件是本仓库后续开发的执行约定。GitHub 自动检查、`develop → main` 来源检查和 main 自动生产部署已经配置；每次变更仍以对应工作流的实际结果为准。
+适用项目：`longestGj/wordpress_tio2_my`。本文件是本仓库后续开发的执行约定。本地 `develop` 是集成分支；正常推送 `origin/main` 后，GitHub 自动执行完整质量检查和生产部署。每次发布仍以对应工作流的实际结果为准。
 
 ## 1. 一项需求怎样完成
 
-需求明确 → 接收设计与内容 → 拆分任务 → 从 develop 创建功能分支 → 本地开发与验证 → 分项提交 → PR 与代码审查 → 合入 develop → 集成测试 → develop 合入 main → 归档。
+需求明确 → 本地功能分支 → 本地验证与独立验收 → 合入本地 develop → 本地集成测试 → 本地 main 快进 → 推送 origin/main → 自动测试与发布 → 归档。
 
 页面任务同时完成适用的独立页面验收；页面验收与 develop 集成测试都满足后，才进入 main。
 
@@ -18,26 +18,27 @@
 | 开发 | 从最新 develop 创建功能分支，按任务实现 | 代码与内容分离，遵守本站数据边界；不夹带其他需求 |
 | 本地验证 | 运行与变更相关的检查，检查实际页面或后台行为 | 有真实结果；临时编辑已恢复；失败原因与未测项如实记录 |
 | 分项提交 | 检查差异，提交完成且已验证的工作项 | 一个独立完成项一个 commit，提交信息说明目的 |
-| PR 与审查 | 推送功能分支，创建目标为 develop 的 PR，执行已配置检查并审查代码 | 必修问题关闭；记录检查结果、影响、数据变化和剩余依赖 |
+| 本地审查 | 检查功能分支差异、测试证据、数据变化与恢复方式 | 必修问题关闭；记录检查结果、影响和剩余依赖；不要求把功能分支推到远端 |
 | 独立验收 | 对照批准输入检查固定候选的页面、内容与交互 | 结论绑定实现版本、内容与环境；自检不能替代独立验收 |
 | 集成测试 | 功能分支合入 develop 后，对合并结果测试 | 页面间、共享组件、内容与数据兼容性检查通过，结果绑定 develop 的具体提交 |
-| 合入 main 与归档 | 集成测试及适用验收通过后，创建 develop → main 的 PR 并合并 | main 接收已验证版本，保存验收结论和待办归属；部署单独记录 |
+| 发布与归档 | 集成测试及适用验收通过后，将本地 main 快进到已测试 develop 提交，再正常推送 origin/main | 远端在同一提交上自动测试、构建并部署；保存工作流、线上验证和待办记录 |
 
 没有新增风险、改动或失败，不反复重跑已经通过的相同检查。验收有明确 Finding 时，只针对该问题修复和回归。
 
 ## 2. 分支和提交
 
-- `develop`：开发与集成分支，是所有新工作分支的起点，也是其 PR 的合并目标。
-- `main`：接收 develop 集成测试通过的版本；不直接接收功能分支，不直接在其上开发。
+- `develop`：本地开发与集成分支，是所有新工作分支的起点，也是它们的本地合并目标。
+- `main`：本地发布指针，只快进到已经在 develop 上完成集成测试的精确提交；不直接接收功能分支，不直接在其上开发。
 - `codex/<任务>-<简述>`：从 develop 创建的功能分支，例如 `codex/home-001-wordpress`。
 - `codex/fix-<简述>`、`codex/docs-<简述>`：修复与文档分支，同样从 develop 创建并合回 develop。
-- 远端 `develop` 与 `main` 已建立。GitHub CI 检查目标为 develop/main 的 PR，并拒绝非 develop 来源的 main PR；main push 自动执行生产发布工作流。
+- `origin/main`：唯一常规推送目标。正常 push 会触发生产发布工作流；该工作流先调用可复用完整 CI，通过后才构建不可变镜像并部署。
+- `origin/develop` 和远端功能分支不是日常开发流程的输入或交付目标，不常规推送，也不以远端 PR 作为本地集成前提。
 
-新任务开始前获取远端最新状态，更新本地 develop，再从该提交创建工作分支。不要直接从 main 或其他未合并的功能分支开始新任务。
+新任务开始前检查工作区、本地 `develop`、本地 `main` 和 `origin/main` 的实际状态，再从最新本地 develop 创建工作分支。不要直接从 main、origin/develop 或其他未合并的功能分支开始新任务。
 
-集成失败时，从当前 develop 创建修复分支，经验证与审查合回 develop，再检查修复后的集成结果。失败未解决前不合入 main。develop 在测试通过后若又有新提交，原结果不自动覆盖新候选；应对新版本执行受影响的集成检查。
+集成失败时，从当前本地 develop 创建修复分支，经验证与审查合回本地 develop，再检查修复后的集成结果。失败未解决前不更新 main。develop 在测试通过后若又有新提交，原结果不自动覆盖新候选；应对新版本执行受影响的集成检查。
 
-从 develop 合入 main 的版本须与测试通过的候选一致；如合并产生冲突解决或新的代码组合，必须验证实际合并结果，不能直接套用旧结论。
+发布前先 fetch 并核对历史。如果 `origin/main` 或本地 main 不是候选 develop 的祖先，停止快进，先把分歧在 develop 上显式归并并重新执行集成测试。本地 main 只能 fast-forward 到测试通过的 develop 精确提交；快进后两者 SHA 必须相同。任何冲突解决或新代码组合都会产生新候选，不能套用旧结论。
 
 开始工作先检查 `git status`、当前分支和最近提交。已有未提交改动要辨明归属；不覆盖或顺手提交其他任务的文件。多个实现任务并行时使用独立 worktree，并使用独立运行环境和数据卷。
 
@@ -52,7 +53,7 @@ test: verify document request validation
 docs: define repository development workflow
 ```
 
-commit 是本地记录；push 是同步到 GitHub；merge 是合入目标分支；deploy 是更新运行站点。四个动作分别报告，不把“已提交”写成“已发布”。不随意 squash 已按完成项保存的提交；确需整理历史时在 PR 中说明。
+commit 是本地记录；push 是同步到 GitHub；merge 是合入目标分支；deploy 是更新运行站点。四个动作分别报告，不把“已提交”写成“已发布”。不随意 squash 已按完成项保存的提交；确需整理历史时在交付记录中说明。
 
 ## 3. WordPress 开发边界
 
@@ -94,18 +95,20 @@ python tests/negative-runtime.py
 
 PRODUCT-000 另有 `tests/products-http.py`、`tests/products-browser.spec.mjs`、`tests/products-editor.spec.mjs`、`tests/products-readiness.py` 与 `tests/products-migration.py`。会修改数据的 Products 测试只接受专用本地 `d32-product-000` 或 `scripts/ci-environment.sh` 创建的动态 `tio2-ci-*` 环境，并要求 loopback HTTP 地址；脚本会拒绝共享站和远程站。首页回归证据通过独立测试输出目录重定向，不能覆盖 `docs/verification/home/`。
 
-这些检查覆盖当前首页、Products Hub 和共用运行层；新增页面仍需增加对应契约和真实行为检查：
+CONV-RFQ 使用独立的 `d32-conv-rfq-gate8` Compose project、`8242` 端口和本地 fake receiver。配置这四个环境变量后，`python scripts/rfq-evidence.py --run-suite` 执行其完整 PHP、HTTP、迁移、隔离、浏览器、后台和首页回归检查；`--generate` 与 `--validate-dir docs/verification/request-a-quote` 生成并校验证据。不得把该套件指向共享验收站或生产环境，也不得为验证发送真实外部表单或邮件。
 
-- GitHub Browser integration 使用动态项目名、端口、数据卷和证据目录，在干净环境启动 WordPress 后运行首页与 Products 套件。
+这些检查覆盖当前首页、Products Hub、RFQ 和共用运行层；新增页面仍需增加对应契约和真实行为检查：
+
+- GitHub Browser integration 使用动态项目名、端口、数据卷、fake RFQ receiver 和证据目录，在干净环境启动 WordPress 后运行首页、Products 与 RFQ 套件。
 - 编辑测试和隔离异常测试会修改数据，只能在专用验证环境运行，不在共享验收站或线上直接执行。
 - 部分测试会重写 `docs/verification/home/`。已验收证据保留原记录，新任务使用自己的证据目录；不能直接覆盖旧证据后继续声称是原候选。
 - 新页面上线后，旧的“其他目标必须返回404”检查必须按新范围更新，不能为通过旧测试保留错误行为。
 - PRODUCT-000 的真实路由状态测试只创建带 `_tio2_test_fixture=products-readiness` 的临时页面，清理时不得操作其他页面。Products migration 的 rollback/resume 只管理 `_tio2_managed_page=1` 且 Page ID/scope 匹配的 Hub 页面。
 - 结果分别标记通过、失败、未测试和用户范围例外；豁免不等于实测通过，也不自动扩大到其他任务。
 
-## 5. PR、代码审查和页面验收
+## 5. 本地审查、证据和页面验收
 
-每个 PR 至少说明：
+每个独立工作项在合入 develop 前至少记录：
 
 1. 解决的问题、最终行为和改动范围。
 2. 已执行的检查及结果，必要的页面截图。
@@ -113,7 +116,7 @@ PRODUCT-000 另有 `tests/products-http.py`、`tests/products-browser.spec.mjs`�
 4. 未测项、外部依赖及其负责人。
 5. 对应需求、页面验收记录或待验收候选。
 
-代码审查检查实现质量；页面验收检查是否符合批准内容、设计和业务行为。两者不互相替代。已有首页采用 D23 Gate8 开发交付、Gate9 独立验收接口，后续适用页面继续沿用其既有格式，不在本仓库另设重复审批编号。
+代码审查检查实现质量；页面验收检查是否符合批准内容、设计和业务行为。两者不互相替代。审查可以在本地完成，不要求远端 PR。已有首页采用 D23 Gate8 开发交付、Gate9 独立验收接口，后续适用页面继续沿用其既有格式，不在本仓库另设重复审批编号。
 
 验收候选至少记录实现 commit、证据 commit、实际制品身份、内容快照身份和运行地址。纯文档后续提交不会自动产生新的页面候选，也不会把旧页面的验收结果转移给新代码。
 
@@ -125,7 +128,7 @@ PRODUCT-000 另有 `tests/products-http.py`、`tests/products-browser.spec.mjs`�
 
 页面需取得适用的独立验收结论，才标记“页面验收通过”。如果用户批准范围例外，记录适用候选与未测事实。外部目标未完成时，可以页面验收通过而集成尚未完成。
 
-发布由 `.github/workflows/deploy-production.yml` 执行：完整 CI 通过后构建不可变 ARM64 镜像，经固定主机密钥发布到生产服务器，运行数据库、容器、首页、Products、HTTPS 与版本标记健康检查；失败时由服务器脚本恢复前一版本。数据库/媒体与代码制品分开处理。当前按用户决定暂不开启站外备份，站点完整上线后再建立固定备份；当前也保持 `noindex, nofollow`，直到全部页面完成并明确授权索引。
+正常推送 `origin/main` 后，由 `.github/workflows/deploy-production.yml` 调用可复用 CI；完整 CI 通过后构建不可变 ARM64 镜像，经固定主机密钥发布到生产服务器，运行数据库、容器、首页、Products、HTTPS 与版本标记健康检查；失败时由服务器脚本恢复前一版本。数据库/媒体与代码制品分开处理。当前按用户决定暂不开启站外备份，站点完整上线后再建立固定备份；当前也保持 `noindex, nofollow`，直到全部页面完成并明确授权索引。
 
 ## 7. 当前基线
 
@@ -135,4 +138,6 @@ PRODUCT-000 另有 `tests/products-http.py`、`tests/products-browser.spec.mjs`�
 
 PRODUCT-000 实现候选 `95ed4c4`、证据提交 `8a4e3f5` 已完成独立页面验收，结论为 `PASS / CLOSED`。正式决定来源：`D:/23MySec/pages/products/05_review/PRODUCT-000_D32_GATE9_TARGETED_RECHECK_V0.1.md`；本机路径只用于追溯，不是 CI 或运行依赖。
 
-GitHub CI、生产镜像、服务器 Native Docker Compose/Caddy 发布和自动部署已经过首页发布验证。PRODUCT-000 的十四个 Grade 页面、两个 Process 页面、Applications、Documents、Markets 与 RFQ 接收端仍是外部依赖；Hub 对这些未就绪路由保持 fail-closed。仓库设置层的分支保护以 GitHub 当前设置为准，工作流中的 main 来源检查持续执行。
+CONV-RFQ 实现候选 `f407f0e`、证据提交 `6166626` 已完成独立页面验收，结论为 `READ_ONLY_QA_APPROVED / CLOSED`（用户范围例外）。正式决定来源：`D:/23MySec/pages/conversion/request-a-quote/07_qa/CONV-RFQ_D32_GATE9_USER_TOLERANCE_CLOSEOUT_V1.0.md`。F01/F02 已按用户容差关闭；物理触控、读屏和原生缩放保留 `NOT_TESTED`，不表述为实测通过。
+
+GitHub CI、生产镜像、服务器 Native Docker Compose/Caddy 发布和自动部署已经过首页发布验证。PRODUCT-000 的十四个 Grade 页面、两个 Process 页面、Applications、Documents、Markets 与真实 RFQ 接收端仍是外部依赖；Hub 对未就绪路由保持 fail-closed，生产 RFQ adapter 在缺少生产配置时保持禁用。仓库设置层的 main 规则以 GitHub 当前设置为准；可复用 CI 只由 main push 的发布工作流调用。

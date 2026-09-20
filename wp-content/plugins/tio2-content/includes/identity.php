@@ -41,4 +41,7 @@ add_action('wp_head',static function() {
     if (function_exists('tio2_current_page_id') && tio2_current_page_id() === 'PRODUCT-000') {
         echo '<meta name="tio2-products-content-sha256" content="'.hash('sha256',wp_json_encode(tio2_products_content(),JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES)).'">'.PHP_EOL;
     }
+    if (function_exists('tio2_is_rfq_page') && tio2_is_rfq_page()) {
+        echo '<meta name="tio2-rfq-content-sha256" content="'.hash('sha256',wp_json_encode(tio2_rfq_content(),JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES)).'">'.PHP_EOL;
+    }
 },2);

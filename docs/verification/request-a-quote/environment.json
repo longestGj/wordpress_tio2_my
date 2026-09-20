@@ -1,0 +1,11 @@
+{
+  "capturedAt": "2026-09-20T10:08:38.974898+00:00",
+  "composeProject": "d32-conv-rfq-gate8",
+  "baseUrl": "http://127.0.0.1:8242",
+  "environmentType": "local-preview",
+  "wordpress": "7.1",
+  "php": "8.3.33",
+  "receiverMode": "fake local deterministic fixture; no external submission or email",
+  "publicOrigin": "https://tio2products.com/",
+  "holdUntil": "GATE9_PASS_OR_RETURN_NOTICE"
+}

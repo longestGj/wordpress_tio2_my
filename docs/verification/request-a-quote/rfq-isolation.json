@@ -1,0 +1,32 @@
+{
+  "cases": [
+    {
+      "mode": "wrong-scope",
+      "statuses": [
+        503,
+        503
+      ],
+      "warmColdConsistent": true,
+      "homeUnchanged": true
+    },
+    {
+      "mode": "missing-content",
+      "statuses": [
+        503,
+        503
+      ],
+      "warmColdConsistent": true,
+      "homeUnchanged": true
+    },
+    {
+      "mode": "missing-page-scope",
+      "statuses": [
+        503,
+        503
+      ],
+      "warmColdConsistent": true,
+      "homeUnchanged": true
+    }
+  ],
+  "restoredExactly": true
+}

@@ -1,0 +1,13 @@
+{
+  "routes": {
+    "/privacy-policy/": 404,
+    "/request-sample/": 404,
+    "/request-documents/": 404,
+    "/products/": 404
+  },
+  "productsRegression": "NOT_TESTED / integration dependency because accepted Products feature is not present in this branch",
+  "productionReceiver": "NOT_TESTED / external root open",
+  "realSubmissionPerformed": false,
+  "analyticsEnabled": false,
+  "cmpIntegration": "NOT_TESTED / shared dependency open"
+}

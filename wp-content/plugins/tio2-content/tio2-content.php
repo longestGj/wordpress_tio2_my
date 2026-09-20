@@ -8,6 +8,8 @@
 defined('ABSPATH') || exit;
 require_once __DIR__ . '/includes/validation.php';
 require_once __DIR__ . '/includes/products.php';
+require_once __DIR__ . '/includes/rfq.php';
+require_once __DIR__ . '/includes/rfq-submission.php';
 require_once __DIR__ . '/includes/admin.php';
 require_once __DIR__ . '/includes/identity.php';
 
@@ -49,4 +51,13 @@ add_action('add_attachment', static function($id) {
 add_action('template_redirect', static function() {
     try { tio2_content(); }
     catch (Throwable $error) { wp_die('Site content is temporarily unavailable.', 'Content unavailable', ['response'=>503]); }
+    if (is_page('request-a-quote')) {
+        try {
+            $page=tio2_rfq_managed_page();
+            if (!$page || (int)$page->ID !== (int)get_queried_object_id()) throw new RuntimeException('RFQ page ownership mismatch.');
+            tio2_rfq_content();
+        } catch (Throwable $error) {
+            wp_die('Quotation request content is temporarily unavailable.', 'Content unavailable', ['response'=>503]);
+        }
+    }
 });

@@ -33,17 +33,20 @@ add_action('wp_head',static function() {
     $base = tio2_public_base_url();
     $home = is_front_page();
     $products = function_exists('tio2_current_page_id') && tio2_current_page_id() === 'PRODUCT-000';
-    $title = $home ? tio2_field('seo.title') : ($products ? tio2_products_field('seo.title') : 'Page not found | TiO₂ Malaysia');
-    $indexable = ($home || $products) && tio2_indexing_authorized();
+    $rfq = function_exists('tio2_is_rfq_page') && tio2_is_rfq_page();
+    $title = $home
+        ? tio2_field('seo.title')
+        : ($products ? tio2_products_field('seo.title') : ($rfq ? tio2_rfq_field('seo.title') : 'Page not found | TiO₂ Malaysia'));
+    $indexable = ($home || $products || $rfq) && tio2_indexing_authorized();
     echo '<title>'.esc_html($title)."</title>\n";
     echo '<meta name="robots" content="'.($indexable?'index, follow':'noindex, nofollow').'">'.PHP_EOL;
     echo '<link rel="icon" type="image/svg+xml" href="'.esc_url(get_template_directory_uri().'/assets/brand/favicon.svg').'">'.PHP_EOL;
-    if (!$home && !$products) return;
+    if (!$home && !$products && !$rfq) return;
 
-    $description = $home ? tio2_field('seo.description') : tio2_products_field('seo.description');
-    $share_title = $home ? tio2_field('seo.share-title') : tio2_products_field('seo.share-title');
+    $description = $home ? tio2_field('seo.description') : ($products ? tio2_products_field('seo.description') : tio2_rfq_field('seo.description'));
+    $share_title = $home ? tio2_field('seo.share-title') : ($products ? tio2_products_field('seo.share-title') : tio2_rfq_field('seo.title'));
     $share_description = $home ? tio2_field('seo.share-description') : $description;
-    $canonical = $home ? $base : $base . 'products/';
+    $canonical = $home ? $base : ($products ? $base . 'products/' : $base . 'request-a-quote/');
     echo '<meta name="description" content="'.esc_attr($description).'">'.PHP_EOL;
     echo '<link rel="canonical" href="'.esc_url($canonical).'">'.PHP_EOL;
     foreach(['og:type'=>'website','og:url'=>$canonical,'og:site_name'=>'TiO₂ Malaysia','og:title'=>$share_title,'og:description'=>$share_description] as $property=>$value) {
@@ -51,7 +54,16 @@ add_action('wp_head',static function() {
     }
 
     $ref = static fn($name) => ['@id' => $base . '#' . $name];
-    if ($home) {
+    if ($rfq) {
+        $breadcrumb_id = $canonical . '#breadcrumb';
+        $graph = [
+            ['@type'=>'WebPage','@id'=>$canonical.'#webpage','url'=>$canonical,'name'=>tio2_rfq_field('seo.title'),'description'=>$description,'isPartOf'=>$ref('website'),'breadcrumb'=>['@id'=>$breadcrumb_id],'inLanguage'=>'en'],
+            ['@type'=>'BreadcrumbList','@id'=>$breadcrumb_id,'itemListElement'=>[
+                ['@type'=>'ListItem','position'=>1,'name'=>tio2_rfq_field('breadcrumb.home-label'),'item'=>$base],
+                ['@type'=>'ListItem','position'=>2,'name'=>tio2_rfq_field('breadcrumb.current-label'),'item'=>$canonical],
+            ]],
+        ];
+    } elseif ($home) {
         $graph = [
             ['@type'=>'WebSite','@id'=>$base.'#website','url'=>$base,'name'=>'TiO₂ Malaysia','inLanguage'=>'en','publisher'=>$ref('organization')],
             ['@type'=>'WebPage','@id'=>$base.'#webpage','url'=>$base,'name'=>tio2_field('hero.heading.1'),'isPartOf'=>$ref('website'),'about'=>[$ref('brand'),$ref('organization'),$ref('titanium-dioxide')],'inLanguage'=>'en'],

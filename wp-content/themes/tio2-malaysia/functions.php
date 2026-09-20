@@ -32,7 +32,14 @@ function tio2_logo(string $placement): void {
 function tio2_current_page_id(): string {
     if (is_front_page()) return 'HOME-001';
     if (!is_page()) return '';
-    return (string) get_post_meta(get_queried_object_id(), '_tio2_page_id', true);
+    $post_id = get_queried_object_id();
+    $page_id = (string) get_post_meta($post_id, '_tio2_page_id', true);
+    if (get_post_meta($post_id, '_tio2_site_scope', true) !== 'tio2-my') return '';
+    if ($page_id === 'PRODUCT-000') {
+        $owned = get_post_meta($post_id, '_tio2_managed_page', true) === '1';
+        if (!$owned || get_page_uri($post_id) !== 'products') return '';
+    }
+    return $page_id;
 }
 function tio2_navigation(bool $mobile=false): void {
     $current = tio2_current_page_id();

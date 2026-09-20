@@ -4,6 +4,10 @@
  * Template Post Type: page
  */
 defined('ABSPATH') || exit;
+if (tio2_current_page_id() !== 'PRODUCT-000') {
+    require get_index_template();
+    return;
+}
 $content = tio2_products_content();
 $fields = $content['fields'];
 $model = tio2_products_model($content);

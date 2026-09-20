@@ -71,6 +71,21 @@ if ($action === 'managed-status') {
     update_post_meta($page_id, '_tio2_test_route_key', $route_key);
     flush_rewrite_rules(false);
     $result = ['page_id'=>(int) $page_id, 'route_key'=>$route_key, 'scope'=>$scope, 'path'=>$path];
+} elseif ($action === 'create-hub-clone') {
+    if (get_page_by_path('products-clone', OBJECT, 'page')) throw new RuntimeException('Clone path is already occupied.');
+    $page_id = wp_insert_post([
+        'post_type'=>'page', 'post_status'=>'publish', 'post_title'=>'Products clone fixture',
+        'post_name'=>'products-clone', 'post_content'=>'',
+    ], true);
+    if (is_wp_error($page_id)) throw new RuntimeException($page_id->get_error_message());
+    update_post_meta($page_id, '_tio2_page_id', 'PRODUCT-000');
+    update_post_meta($page_id, '_tio2_site_scope', 'tio2-my');
+    update_post_meta($page_id, '_tio2_managed_page', '1');
+    update_post_meta($page_id, '_wp_page_template', 'page-products.php');
+    update_post_meta($page_id, '_tio2_test_fixture', 'products-readiness');
+    update_post_meta($page_id, '_tio2_test_route_key', 'PRODUCT-000-CLONE');
+    flush_rewrite_rules(false);
+    $result = ['page_id'=>(int) $page_id, 'path'=>'/products-clone/'];
 } elseif ($action === 'delete') {
     $route_key = $args[1] ?? '';
     if (!isset($registry[$route_key])) throw new RuntimeException('Invalid fixture route.');

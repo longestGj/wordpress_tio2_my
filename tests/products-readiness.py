@@ -2,6 +2,7 @@ import hashlib
 import json
 import os
 import subprocess
+import urllib.error
 import urllib.request
 from pathlib import Path
 
@@ -61,12 +62,22 @@ def capture(label: str) -> dict:
     return state
 
 
+def status_code(path: str) -> int:
+    try:
+        return urllib.request.urlopen(BASE_URL + path).status
+    except urllib.error.HTTPError as error:
+        return error.code
+
+
 homepage_hash = digest(option("tio2_content"))
 products_hash = digest(option("tio2_products_content"))
 managed = fixture("managed-status")
 states = []
 fixture("purge-stale")
 try:
+    clone = fixture("create-hub-clone")
+    assert status_code(clone["path"]) == 404
+    fixture("cleanup")
     assert fixture("assert-clear")["occupied"] == []
     zero = capture("zero")
     states.append(zero)

@@ -34,7 +34,10 @@
 
 ## Git 与任务完成
 
-- 功能开发使用 `codex/<任务>-<简述>` 分支；主分支集成遵循开发流程。并行实现需要独立 worktree 和独立数据环境。
+- 所有新工作分支（功能、修复、文档）从最新 `develop` 创建，使用 `codex/<任务>-<简述>` 等约定名称；开发完成后通过 PR 合回 `develop`。
+- 在 `develop` 上对合并结果执行集成测试，测试及适用验收通过后，才通过 `develop → main` 的 PR 合入 `main`。不得从功能分支直接合入 main，也不直接在 develop/main 开发。
+- 测试结论绑定具体提交。develop 新增提交或合并冲突改变代码后，验证实际候选；集成失败先从 develop 切修复分支解决，不带失败进入 main。
+- 分支初始化和旧分支接入遵循 CONTRIBUTING 的过渡说明，不通过重写历史伪造分支起点。并行实现需要独立 worktree 和独立数据环境。
 - 用户约定：一个独立完成且验证过的工作项，提交一个 commit。
 - 暂存明确的本任务文件，提交前检查 `git diff`、`git diff --cached` 和 `git diff --cached --check`。
 - 不擅自强推、重写共享历史或清除他人改动。push、PR、merge、deploy 按当前任务已有授权执行；不要把本地commit描述成远端发布。

@@ -26,7 +26,13 @@ docker run --rm "$IMAGE" sh -ec '
   command -v wp >/dev/null
   test -x /usr/local/bin/wp
   test -f /usr/src/wordpress/wp-content/themes/tio2-malaysia/style.css
+  test -f /usr/src/wordpress/wp-content/themes/tio2-malaysia/page-products.php
+  test -f /usr/src/wordpress/wp-content/themes/tio2-malaysia/assets/products.css
+  test -f /usr/src/wordpress/wp-content/themes/tio2-malaysia/assets/products.js
   test -f /usr/src/wordpress/wp-content/plugins/tio2-content/tio2-content.php
+  test -f /usr/src/wordpress/wp-content/plugins/tio2-content/includes/products.php
+  test -f /usr/src/wordpress/wp-content/plugins/tio2-content/products-defaults.json
+  test -f /usr/src/wordpress/wp-content/plugins/tio2-content/products-schema.json
   test -f /opt/tio2/content/initial-home.json
   test -f /opt/tio2/content/media/hero.png
   test -f /opt/tio2/bin/bootstrap-production.php

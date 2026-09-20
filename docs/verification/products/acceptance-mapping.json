@@ -1,0 +1,215 @@
+{
+  "pageId": "PRODUCT-000",
+  "implementationCommit": "95ed4c4c47481ef78f64fa90b95a1096ea45bfae",
+  "conditions": [
+    {
+      "id": "PRODUCT-G6-B02",
+      "hubStatus": "PASS",
+      "externalStatus": "OPEN",
+      "evidence": [
+        "products-response.html",
+        "dependencies.json"
+      ],
+      "commands": [
+        "python tests/products-http.py"
+      ],
+      "result": "Seven clean RFQ links are present; receiver remains external.",
+      "boundary": "Fixed clean RFQ links are visible; receiver/form is external and not claimed."
+    },
+    {
+      "id": "PRODUCT-G6-B03",
+      "hubStatus": "PASS",
+      "externalStatus": "OPEN",
+      "evidence": [
+        "readiness-matrix.json",
+        "dependencies.json"
+      ],
+      "commands": [
+        "python tests/products-readiness.py"
+      ],
+      "result": "Zero, partial, full, wrong-scope, removal, and restoration states pass.",
+      "boundary": "All fail-closed route states pass; actual target pages remain external."
+    },
+    {
+      "id": "PRODUCT-G6-TDS-I02",
+      "hubStatus": "PASS",
+      "externalStatus": "NOT_APPLICABLE",
+      "evidence": [
+        "products-response.html",
+        "products-content.json",
+        "seo-schema.json"
+      ],
+      "commands": [
+        "python tests/products-http.py",
+        "npx playwright test tests/products-editor.spec.mjs"
+      ],
+      "result": "Fourteen visible summaries and Product descriptions are identical and editable from one source.",
+      "boundary": "Machine descriptions do not add claims beyond visible summaries."
+    },
+    {
+      "id": "PRODUCT-G7-B05",
+      "hubStatus": "PASS",
+      "externalStatus": "RELEASE_OPEN",
+      "evidence": [
+        "seo-schema.json",
+        "products-response.html"
+      ],
+      "commands": [
+        "python tests/products-http.py",
+        "docker compose exec -T wordpress php /workspace/tests/php/runtime-config-test.php"
+      ],
+      "result": "Local robots are noindex,nofollow and sitemap returns 404; indexing requires explicit authorization.",
+      "boundary": "Gate10 indexing is not authorized."
+    },
+    {
+      "id": "PRODUCT-G7-B06",
+      "hubStatus": "PASS",
+      "externalStatus": "OPEN",
+      "evidence": [
+        "readiness-matrix.json",
+        "identity.json",
+        "dependencies.json"
+      ],
+      "commands": [
+        "python tests/products-readiness.py",
+        "python tests/identity.py",
+        "python tests/negative-runtime.py"
+      ],
+      "result": "Malaysia scope and exact route identity fail closed and restore exactly.",
+      "boundary": "External target readiness remains open."
+    },
+    {
+      "id": "PRODUCT-G7-B07",
+      "hubStatus": "PASS",
+      "externalStatus": "GATE9_REVIEW",
+      "evidence": [
+        "layout-1440.json",
+        "layout-1024.json",
+        "layout-768.json",
+        "layout-390.json",
+        "faq-keyboard-768.png",
+        "menu-390.png",
+        "cookie-390.png"
+      ],
+      "commands": [
+        "npx playwright test tests/products-browser.spec.mjs"
+      ],
+      "result": "Four viewports, keyboard/focus, 44px targets, overflow, reduced motion, and axe pass.",
+      "boundary": "Independent Gate9 remains required."
+    },
+    {
+      "id": "PRODUCT-D32-AC-CONTENT",
+      "hubStatus": "PASS",
+      "externalStatus": "NOT_APPLICABLE",
+      "evidence": [
+        "products-response.html",
+        "products-content.json",
+        "readiness-matrix.json",
+        "selector-not-sure-1024.png",
+        "test-results.json"
+      ],
+      "commands": [
+        "python tests/products-http.py",
+        "npx playwright test tests/products-browser.spec.mjs",
+        "python tests/products-readiness.py"
+      ],
+      "result": "Approved modules, 14 rows, six selector sets, five steps, five FAQs, clean public payload, and conditional actions pass.",
+      "boundary": "No internal Page ID or route key appears in zero, partial, or full public payloads."
+    },
+    {
+      "id": "PRODUCT-D32-AC-SEO",
+      "hubStatus": "PASS",
+      "externalStatus": "NOT_APPLICABLE",
+      "evidence": [
+        "products-response.html",
+        "seo-schema.json",
+        "test-results.json"
+      ],
+      "commands": [
+        "python tests/products-http.py"
+      ],
+      "result": "Exact title, description, canonical, language, single H1, and approved JSON-LD graph pass.",
+      "boundary": "No Offer, price, inventory, comparison, or unapproved social image is emitted."
+    },
+    {
+      "id": "PRODUCT-D32-AC-SCHEMA-PREVIEW",
+      "hubStatus": "PASS",
+      "externalStatus": "RELEASE_OPEN",
+      "evidence": [
+        "seo-schema.json",
+        "readiness-matrix.json",
+        "products-response.html"
+      ],
+      "commands": [
+        "python tests/products-http.py",
+        "python tests/products-readiness.py"
+      ],
+      "result": "Fourteen ordered identities persist while URL and product @id appear only for ready routes.",
+      "boundary": "All target URLs require release-time revalidation."
+    },
+    {
+      "id": "PRODUCT-D32-AC-MIGRATION",
+      "hubStatus": "PASS",
+      "externalStatus": "NOT_APPLICABLE",
+      "evidence": [
+        "migration-results.json",
+        "editor-results.json",
+        "products-content-before.json",
+        "products-content-restored.json",
+        "home-content.json",
+        "test-results.json"
+      ],
+      "commands": [
+        "python tests/products-migration.py",
+        "npx playwright test tests/products-editor.spec.mjs"
+      ],
+      "result": "Migration is compatible, idempotent, edit-preserving, reversible, resumable, and isolated from Home.",
+      "boundary": "Tests run only in the dedicated local data environment and restore exactly."
+    },
+    {
+      "id": "PRODUCT-D32-AC-DOMAIN",
+      "hubStatus": "PASS",
+      "externalStatus": "RELEASE_OPEN",
+      "evidence": [
+        "identity.json",
+        "home-response.html",
+        "products-response.html",
+        "seo-schema.json",
+        "source-hashes.json"
+      ],
+      "commands": [
+        "docker compose exec -T wordpress php /workspace/tests/php/runtime-config-test.php",
+        "python tests/http-contract.py",
+        "python tests/products-http.py",
+        "python tests/identity.py"
+      ],
+      "result": "Home and Products canonical, OG, Schema, build, content, and scope identities use the approved formal origin.",
+      "boundary": "Local asset URLs remain preview-local; Gate10 is not authorized."
+    },
+    {
+      "id": "PRODUCT-D32-AC-CHROME-REGRESSION",
+      "hubStatus": "PASS",
+      "externalStatus": "GATE9_REVIEW",
+      "evidence": [
+        "products-1440.png",
+        "products-1024.png",
+        "products-768.png",
+        "products-390.png",
+        "menu-390.png",
+        "cookie-390.png",
+        "home-response.html",
+        "test-results.json"
+      ],
+      "commands": [
+        "npx playwright test tests/products-browser.spec.mjs",
+        "npx playwright test tests/browser.spec.mjs",
+        "npx playwright test tests/editor.spec.mjs"
+      ],
+      "result": "Shared Header, Footer, Menu, Cookie, RootPageHero, current navigation, and Home regressions pass.",
+      "boundary": "Independent Gate9 visual verdict remains separate."
+    }
+  ],
+  "qualityStatus": "GATE8_CANDIDATE_READY_FOR_GATE9",
+  "integrationStatus": "OPEN_EXTERNAL_DEPENDENCIES",
+  "releaseStatus": "NOT_AUTHORIZED"
+}

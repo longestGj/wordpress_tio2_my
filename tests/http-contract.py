@@ -17,6 +17,8 @@ assert soup.html['lang']=='en'
 assert [x.get_text() for x in soup.select('h1')]==['Malaysia Titanium Dioxide for Industrial Buyers']
 assert len(soup.select('link[rel="canonical"]'))==1
 assert soup.select_one('link[rel="canonical"]')['href']==runtime['public_url']
+assert soup.select_one('meta[property="og:url"]')['content']==runtime['public_url']
+assert 'tio2malaysia.com' not in html
 assert len(soup.select('title'))==1
 assert soup.title.string=='Malaysia Titanium Dioxide Supplier | TiO₂ Malaysia'
 assert 'noindex' in soup.select_one('meta[name="robots"]')['content']

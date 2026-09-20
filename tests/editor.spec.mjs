@@ -23,12 +23,13 @@ test('editor: persisted content, media, SEO, invalid input, stale edit and exact
   const before=snapshot();fs.writeFileSync(beforePath,JSON.stringify(before,null,2)+'\n');
   const codeHash=hash(fs.readFileSync('wp-content/themes/tio2-malaysia/front-page.php','utf8'));
   let changed;
+  let imageId;
   try {
     await login(page);
     await field(page,'hero.heading.1').fill('Editable homepage verification');
     await field(page,'hero.paragraph.1').fill('Temporary editor verification text.');
     await field(page,'hero.link.2').fill('/documents/');
-    const imageId=cli('media','import','/workspace/content/media/hero.png','--title=D32 editor test image','--porcelain').split(/\r?\n/).at(-1);
+    imageId=cli('media','import','/workspace/content/media/hero.png','--title=D32 editor test image','--porcelain').split(/\r?\n/).at(-1);
     await field(page,'hero.image').fill(imageId);
     await page.locator('details').filter({has:page.locator('summary',{hasText:/^Products$/})}).locator('summary').click();
     await field(page,'products.grade.1').fill('TEST-GRADE');
@@ -58,6 +59,7 @@ test('editor: persisted content, media, SEO, invalid input, stale edit and exact
     expect((await conflict).status()).toBe(409);expect(snapshot().content).toEqual(changed.content);
   } finally {
     cli('eval-file','/workspace/scripts/snapshot.php','restore',workspaceContainerPath(beforePath));
+    if(imageId) cli('post','delete',imageId,'--force');
   }
   const restored=snapshot();expect(restored.content).toEqual(before.content);
   expect(hash(fs.readFileSync('wp-content/themes/tio2-malaysia/front-page.php','utf8'))).toBe(codeHash);

@@ -1,0 +1,182 @@
+[
+  {
+    "routeKey": "CONV-RFQ",
+    "path": "/request-a-quote/",
+    "status": 404,
+    "siteScope": "tio2-my",
+    "ready": false,
+    "owner": "External target-page owner",
+    "interpretation": "Not implemented by PRODUCT-000; Hub fails closed except fixed RFQ visibility"
+  },
+  {
+    "routeKey": "PRODUCT-PROC-CL",
+    "path": "/products/chloride-process-titanium-dioxide/",
+    "status": 404,
+    "siteScope": "tio2-my",
+    "ready": false,
+    "owner": "External target-page owner",
+    "interpretation": "Not implemented by PRODUCT-000; Hub fails closed except fixed RFQ visibility"
+  },
+  {
+    "routeKey": "PRODUCT-PROC-SU",
+    "path": "/products/sulfate-process-titanium-dioxide/",
+    "status": 404,
+    "siteScope": "tio2-my",
+    "ready": false,
+    "owner": "External target-page owner",
+    "interpretation": "Not implemented by PRODUCT-000; Hub fails closed except fixed RFQ visibility"
+  },
+  {
+    "routeKey": "APP-000",
+    "path": "/applications/",
+    "status": 404,
+    "siteScope": "tio2-my",
+    "ready": false,
+    "owner": "External target-page owner",
+    "interpretation": "Not implemented by PRODUCT-000; Hub fails closed except fixed RFQ visibility"
+  },
+  {
+    "routeKey": "DOC-000",
+    "path": "/documents/",
+    "status": 404,
+    "siteScope": "tio2-my",
+    "ready": false,
+    "owner": "External target-page owner",
+    "interpretation": "Not implemented by PRODUCT-000; Hub fails closed except fixed RFQ visibility"
+  },
+  {
+    "routeKey": "MARKET-000",
+    "path": "/markets/",
+    "status": 404,
+    "siteScope": "tio2-my",
+    "ready": false,
+    "owner": "External target-page owner",
+    "interpretation": "Not implemented by PRODUCT-000; Hub fails closed except fixed RFQ visibility"
+  },
+  {
+    "routeKey": "GRADE-M350",
+    "path": "/products/m-350/",
+    "status": 404,
+    "siteScope": "tio2-my",
+    "ready": false,
+    "owner": "External target-page owner",
+    "interpretation": "Not implemented by PRODUCT-000; Hub fails closed except fixed RFQ visibility"
+  },
+  {
+    "routeKey": "GRADE-M510",
+    "path": "/products/m-510/",
+    "status": 404,
+    "siteScope": "tio2-my",
+    "ready": false,
+    "owner": "External target-page owner",
+    "interpretation": "Not implemented by PRODUCT-000; Hub fails closed except fixed RFQ visibility"
+  },
+  {
+    "routeKey": "GRADE-M896",
+    "path": "/products/m-896/",
+    "status": 404,
+    "siteScope": "tio2-my",
+    "ready": false,
+    "owner": "External target-page owner",
+    "interpretation": "Not implemented by PRODUCT-000; Hub fails closed except fixed RFQ visibility"
+  },
+  {
+    "routeKey": "GRADE-M996",
+    "path": "/products/m-996/",
+    "status": 404,
+    "siteScope": "tio2-my",
+    "ready": false,
+    "owner": "External target-page owner",
+    "interpretation": "Not implemented by PRODUCT-000; Hub fails closed except fixed RFQ visibility"
+  },
+  {
+    "routeKey": "GRADE-M2196",
+    "path": "/products/m-2196/",
+    "status": 404,
+    "siteScope": "tio2-my",
+    "ready": false,
+    "owner": "External target-page owner",
+    "interpretation": "Not implemented by PRODUCT-000; Hub fails closed except fixed RFQ visibility"
+  },
+  {
+    "routeKey": "GRADE-M895",
+    "path": "/products/m-895/",
+    "status": 404,
+    "siteScope": "tio2-my",
+    "ready": false,
+    "owner": "External target-page owner",
+    "interpretation": "Not implemented by PRODUCT-000; Hub fails closed except fixed RFQ visibility"
+  },
+  {
+    "routeKey": "GRADE-M200",
+    "path": "/products/m-200/",
+    "status": 404,
+    "siteScope": "tio2-my",
+    "ready": false,
+    "owner": "External target-page owner",
+    "interpretation": "Not implemented by PRODUCT-000; Hub fails closed except fixed RFQ visibility"
+  },
+  {
+    "routeKey": "GRADE-M108",
+    "path": "/products/m-108/",
+    "status": 404,
+    "siteScope": "tio2-my",
+    "ready": false,
+    "owner": "External target-page owner",
+    "interpretation": "Not implemented by PRODUCT-000; Hub fails closed except fixed RFQ visibility"
+  },
+  {
+    "routeKey": "GRADE-M210",
+    "path": "/products/m-210/",
+    "status": 404,
+    "siteScope": "tio2-my",
+    "ready": false,
+    "owner": "External target-page owner",
+    "interpretation": "Not implemented by PRODUCT-000; Hub fails closed except fixed RFQ visibility"
+  },
+  {
+    "routeKey": "GRADE-M340",
+    "path": "/products/m-340/",
+    "status": 404,
+    "siteScope": "tio2-my",
+    "ready": false,
+    "owner": "External target-page owner",
+    "interpretation": "Not implemented by PRODUCT-000; Hub fails closed except fixed RFQ visibility"
+  },
+  {
+    "routeKey": "GRADE-M886",
+    "path": "/products/m-886/",
+    "status": 404,
+    "siteScope": "tio2-my",
+    "ready": false,
+    "owner": "External target-page owner",
+    "interpretation": "Not implemented by PRODUCT-000; Hub fails closed except fixed RFQ visibility"
+  },
+  {
+    "routeKey": "GRADE-M52",
+    "path": "/products/m-52/",
+    "status": 404,
+    "siteScope": "tio2-my",
+    "ready": false,
+    "owner": "External target-page owner",
+    "interpretation": "Not implemented by PRODUCT-000; Hub fails closed except fixed RFQ visibility"
+  },
+  {
+    "routeKey": "GRADE-M2377",
+    "path": "/products/m-2377/",
+    "status": 404,
+    "siteScope": "tio2-my",
+    "ready": false,
+    "owner": "External target-page owner",
+    "interpretation": "Not implemented by PRODUCT-000; Hub fails closed except fixed RFQ visibility"
+  },
+  {
+    "routeKey": "GRADE-CR901",
+    "path": "/products/cr-901/",
+    "status": 404,
+    "siteScope": "tio2-my",
+    "ready": false,
+    "owner": "External target-page owner",
+    "interpretation": "Not implemented by PRODUCT-000; Hub fails closed except fixed RFQ visibility"
+  }
+]

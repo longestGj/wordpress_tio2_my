@@ -1,0 +1,18 @@
+{
+  "metrics": {
+    "scrollWidth": 1440,
+    "h1Size": "56px",
+    "h1Weight": "700",
+    "h1Spacing": "-2.52px",
+    "h1Lines": 3,
+    "headerHeight": 84,
+    "directoryColumns": 2,
+    "selectorColumns": 2,
+    "stepColumns": 5,
+    "longCopy": true,
+    "smallTargets": [],
+    "primaryColor": "rgb(255, 255, 255)",
+    "primaryBackground": "rgb(0, 128, 120)"
+  },
+  "violations": []
+}

@@ -5,12 +5,16 @@ add_action('after_setup_theme', static function() {
     add_theme_support('html5',['search-form','gallery','caption','style','script']);
 });
 add_filter('show_admin_bar','__return_false');
-add_filter('wp_sitemaps_enabled', static fn() => wp_get_environment_type()==='production' && (bool)get_option('blog_public'));
+add_filter('wp_sitemaps_enabled', 'tio2_indexing_authorized');
 add_action('wp_enqueue_scripts', static function() {
     $uri=get_template_directory_uri();
     wp_enqueue_style('tio2-design',$uri.'/assets/design.css',[],filemtime(__DIR__.'/assets/design.css'));
     wp_enqueue_style('tio2-site',$uri.'/assets/site.css',['tio2-design'],filemtime(__DIR__.'/assets/site.css'));
     wp_enqueue_script('tio2-site',$uri.'/assets/site.js',[],filemtime(__DIR__.'/assets/site.js'),['strategy'=>'defer','in_footer'=>true]);
+    if (tio2_current_page_id() === 'PRODUCT-000') {
+        wp_enqueue_style('tio2-products',$uri.'/assets/products.css',['tio2-site'],filemtime(__DIR__.'/assets/products.css'));
+        wp_enqueue_script('tio2-products',$uri.'/assets/products.js',['tio2-site'],filemtime(__DIR__.'/assets/products.js'),['strategy'=>'defer','in_footer'=>true]);
+    }
     wp_dequeue_style('wp-block-library');
     wp_dequeue_style('global-styles');
 });
@@ -25,9 +29,23 @@ function tio2_logo(string $placement): void {
     $asset=tio2_field($placement.'.logo');
     ?><img src="<?php echo esc_url(get_template_directory_uri().'/'.$asset); ?>" width="180" height="60" alt="TiO2 Malaysia"><?php
 }
+function tio2_current_page_id(): string {
+    if (is_front_page()) return 'HOME-001';
+    if (!is_page()) return '';
+    $post_id = get_queried_object_id();
+    $page_id = (string) get_post_meta($post_id, '_tio2_page_id', true);
+    if (get_post_meta($post_id, '_tio2_site_scope', true) !== 'tio2-my') return '';
+    if ($page_id === 'PRODUCT-000') {
+        $owned = get_post_meta($post_id, '_tio2_managed_page', true) === '1';
+        if (!$owned || get_page_uri($post_id) !== 'products') return '';
+    }
+    return $page_id;
+}
 function tio2_navigation(bool $mobile=false): void {
+    $current = tio2_current_page_id();
     for($i=0;$i<($mobile?8:7);$i++) {
         $href=tio2_field("header.nav.$i.href");
-        ?><a href="<?php echo esc_url($href); ?>"<?php echo is_front_page() && $i===0 ? ' aria-current="page"' : ''; ?><?php echo $i===7?' class="menu-rfq"':''; ?>><?php echo esc_html(tio2_field("header.nav.$i.label")); ?></a><?php
+        $is_current = ($current === 'HOME-001' && $i === 0) || ($current === 'PRODUCT-000' && $i === 2);
+        ?><a href="<?php echo esc_url($href); ?>"<?php echo $is_current ? ' aria-current="page"' : ''; ?><?php echo $i===7?' class="menu-rfq"':''; ?>><?php echo esc_html(tio2_field("header.nav.$i.label")); ?></a><?php
     }
 }

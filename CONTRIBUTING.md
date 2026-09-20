@@ -1,6 +1,6 @@
 # 开发流程
 
-适用项目：`longestGj/wordpress_tio2_my`。本文件是本仓库后续开发的执行约定；GitHub 自动检查、分支保护和部署机制尚待配置，不能把本文当作它们已经生效的证明。
+适用项目：`longestGj/wordpress_tio2_my`。本文件是本仓库后续开发的执行约定。GitHub 自动检查、`develop → main` 来源检查和 main 自动生产部署已经配置；每次变更仍以对应工作流的实际结果为准。
 
 ## 1. 一项需求怎样完成
 
@@ -8,7 +8,7 @@
 
 页面任务同时完成适用的独立页面验收；页面验收与 develop 集成测试都满足后，才进入 main。
 
-部署、线上验证与回滚是后续发布流程。页面开发完成、页面验收通过、全站集成完成和发布成功分别记录。
+部署、线上验证与回滚由 main 发布流程执行。页面开发完成、页面验收通过、全站集成完成和发布成功分别记录。
 
 | 阶段 | 要做的事 | 完成标准与记录 |
 |---|---|---|
@@ -31,7 +31,7 @@
 - `main`：接收 develop 集成测试通过的版本；不直接接收功能分支，不直接在其上开发。
 - `codex/<任务>-<简述>`：从 develop 创建的功能分支，例如 `codex/home-001-wordpress`。
 - `codex/fix-<简述>`、`codex/docs-<简述>`：修复与文档分支，同样从 develop 创建并合回 develop。
-- 当前远端已有首页功能分支及代码；develop 和远端 main 尚待初始化。首页分支早于本约定创建，保留其历史，初始化完成后按功能分支 → develop → main 顺序接入，不伪造其起点或跳过集成测试。
+- 远端 `develop` 与 `main` 已建立。GitHub CI 检查目标为 develop/main 的 PR，并拒绝非 develop 来源的 main PR；main push 自动执行生产发布工作流。
 
 新任务开始前获取远端最新状态，更新本地 develop，再从该提交创建工作分支。不要直接从 main 或其他未合并的功能分支开始新任务。
 
@@ -92,12 +92,15 @@ python tests/identity.py
 python tests/negative-runtime.py
 ```
 
-这些是当前首页本地检查，不是未来所有页面的通用验收套件：
+PRODUCT-000 另有 `tests/products-http.py`、`tests/products-browser.spec.mjs`、`tests/products-editor.spec.mjs`、`tests/products-readiness.py` 与 `tests/products-migration.py`。会修改数据的 Products 测试只接受专用本地 `d32-product-000` 或 `scripts/ci-environment.sh` 创建的动态 `tio2-ci-*` 环境，并要求 loopback HTTP 地址；脚本会拒绝共享站和远程站。首页回归证据通过独立测试输出目录重定向，不能覆盖 `docs/verification/home/`。
 
-- 当前脚本包含固定本地地址、恢复快照及本机来源路径。接入 GitHub Actions 前必须处理可移植性，并在干净环境实跑。
+这些检查覆盖当前首页、Products Hub 和共用运行层；新增页面仍需增加对应契约和真实行为检查：
+
+- GitHub Browser integration 使用动态项目名、端口、数据卷和证据目录，在干净环境启动 WordPress 后运行首页与 Products 套件。
 - 编辑测试和隔离异常测试会修改数据，只能在专用验证环境运行，不在共享验收站或线上直接执行。
 - 部分测试会重写 `docs/verification/home/`。已验收证据保留原记录，新任务使用自己的证据目录；不能直接覆盖旧证据后继续声称是原候选。
 - 新页面上线后，旧的“其他目标必须返回404”检查必须按新范围更新，不能为通过旧测试保留错误行为。
+- PRODUCT-000 的真实路由状态测试只创建带 `_tio2_test_fixture=products-readiness` 的临时页面，清理时不得操作其他页面。Products migration 的 rollback/resume 只管理 `_tio2_managed_page=1` 且 Page ID/scope 匹配的 Hub 页面。
 - 结果分别标记通过、失败、未测试和用户范围例外；豁免不等于实测通过，也不自动扩大到其他任务。
 
 ## 5. PR、代码审查和页面验收
@@ -122,19 +125,14 @@ python tests/negative-runtime.py
 
 页面需取得适用的独立验收结论，才标记“页面验收通过”。如果用户批准范围例外，记录适用候选与未测事实。外部目标未完成时，可以页面验收通过而集成尚未完成。
 
-发布还需执行独立发布流程：明确目标环境、发布版本、数据处理、备份/回滚、部署后检查及发布授权。本阶段仅整理开发流程，不配置或执行部署。
+发布由 `.github/workflows/deploy-production.yml` 执行：完整 CI 通过后构建不可变 ARM64 镜像，经固定主机密钥发布到生产服务器，运行数据库、容器、首页、Products、HTTPS 与版本标记健康检查；失败时由服务器脚本恢复前一版本。数据库/媒体与代码制品分开处理。当前按用户决定暂不开启站外备份，站点完整上线后再建立固定备份；当前也保持 `noindex, nofollow`，直到全部页面完成并明确授权索引。
 
-## 7. 当前基线与待建立能力
+## 7. 当前基线
 
 首页实现候选 `a75572a36cc50e820b640fca663a3a60594029cb`、证据提交 `9de5ef0e3409daf9c9cb675efb26f54d7c7ba6c6` 已完成独立页面验收，结论为 `READ_ONLY_QA_APPROVED / CLOSED`（用户范围例外）。物理触控、读屏和原生200%缩放保留 `NOT_TESTED`，本轮不再索取补证。
 
 正式决定来源：`D:/23MySec/pages/home/07_qa/HOME-001_D32_GATE9_USER_EXCEPTION_CLOSEOUT_V1.0.md`，决定ID `HOME-D32-G9-UD01`。该路径是本机追溯来源，不作为 GitHub CI 或站点运行依赖。旧 Gate8 回执是历史交付状态，不能据其旧文字重新打开已关闭问题。
 
-当前集成仍有24个目标页面依赖。开发流程文档完成后，仓库建设下一阶段分别落实：
+PRODUCT-000 实现候选 `95ed4c4`、证据提交 `8a4e3f5` 已完成独立页面验收，结论为 `PASS / CLOSED`。正式决定来源：`D:/23MySec/pages/products/05_review/PRODUCT-000_D32_GATE9_TARGETED_RECHECK_V0.1.md`；本机路径只用于追溯，不是 CI 或运行依赖。
 
-- 初始化 develop 和远端 main，落实功能分支 → develop → main 的 PR 流向及默认分支设置；首页代码已完成首次远端同步。
-- PR 模板、GitHub Actions 自动检查及实际运行验证。
-- 按实际仓库能力设置分支保护与必要检查。
-- 单独制定部署流程，再使用首页验证发布和回滚。
-
-以上是待办，不表示已实施。
+GitHub CI、生产镜像、服务器 Native Docker Compose/Caddy 发布和自动部署已经过首页发布验证。PRODUCT-000 的十四个 Grade 页面、两个 Process 页面、Applications、Documents、Markets 与 RFQ 接收端仍是外部依赖；Hub 对这些未就绪路由保持 fail-closed。仓库设置层的分支保护以 GitHub 当前设置为准，工作流中的 main 来源检查持续执行。

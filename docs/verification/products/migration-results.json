@@ -1,0 +1,9 @@
+{
+  "pageIdPreserved": true,
+  "homepageSha256": "2a1730e0a92c09c20e2c0305c5bd5eeef06729e1f22fb05c1d865e5a5876f92e",
+  "productsRestored": true,
+  "idempotent": true,
+  "cmsEditPreservedBeforeRollback": true,
+  "rollbackStatus": 404,
+  "resumeStatus": 200
+}

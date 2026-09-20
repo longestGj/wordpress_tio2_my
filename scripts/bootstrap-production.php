@@ -22,6 +22,11 @@ $theme = wp_get_theme('tio2-malaysia');
 if (!$theme->exists()) throw new RuntimeException('Production theme is missing');
 switch_theme('tio2-malaysia');
 
+// Run the managed Products migration in this bootstrap request. A newly
+// activated plugin has missed the current request's init hook, so relying on
+// the next request would allow a release to continue without its page.
+tio2_products_migrate();
+
 $existing_version = get_option('tio2_content_init_version', '');
 $existing_content = get_option('tio2_content', null);
 if ($existing_version !== '') {

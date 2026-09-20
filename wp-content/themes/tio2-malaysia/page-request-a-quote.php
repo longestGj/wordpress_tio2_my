@@ -85,6 +85,7 @@ get_header();
         <template id="rfq-failure"><h3><?php echo esc_html(tio2_rfq_field('failure.heading')); ?></h3><p><?php echo esc_html(tio2_rfq_field('failure.body')); ?></p><button type="button"><?php echo esc_html(tio2_rfq_field('failure.action')); ?></button></template>
         <template id="rfq-success"><h3><?php echo esc_html(tio2_rfq_field('success.heading')); ?></h3><p><?php echo esc_html(tio2_rfq_field('success.body')); ?></p></template>
         <template id="rfq-unavailable"><h3><?php echo esc_html(tio2_rfq_field('unavailable.heading')); ?></h3><p><?php echo esc_html(tio2_rfq_field('unavailable.body')); ?></p></template>
+        <script type="application/json" id="rfq-config"><?php echo wp_json_encode(['errors'=>$contract['errors'],'normal'=>tio2_rfq_field('submit.normal'),'pending'=>tio2_rfq_field('submit.pending')],JSON_HEX_TAG|JSON_HEX_AMP|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES); ?></script>
       </div>
     </div>
   </section>

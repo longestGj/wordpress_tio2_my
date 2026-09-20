@@ -15,11 +15,11 @@ old_dir=$(current_release_dir) || { echo 'No current release is installed' >&2; 
 old_release=$(cat "$old_dir/release-sha")
 
 if [[ "$old_release" == "$target_release" ]]; then
-  "$SCRIPT_DIR/healthcheck.sh" "$old_dir"
+  bash "$SCRIPT_DIR/healthcheck.sh" "$old_dir"
   exit 0
 fi
 
-TIO2_LOCK_HELD=1 "$SCRIPT_DIR/backup.sh" --release "$old_release" >/dev/null
+TIO2_LOCK_HELD=1 bash "$SCRIPT_DIR/backup.sh" --release "$old_release" >/dev/null
 mutated=0
 succeeded=0
 
@@ -29,7 +29,7 @@ finish_rollback() {
   set +e
   if (( mutated == 1 )); then
     compose "$old_dir" up -d --wait
-    "$old_dir/scripts/healthcheck.sh" "$old_dir" || true
+    bash "$old_dir/scripts/healthcheck.sh" "$old_dir" || true
   fi
   log_event error "manual_rollback_failed from=$old_release target=$target_release status=$status"
   exit "$status"
@@ -39,9 +39,9 @@ trap finish_rollback EXIT
 compose "$target_dir" pull
 mutated=1
 compose "$target_dir" up -d --wait db wordpress
-"$target_dir/scripts/bootstrap.sh" "$target_dir"
+bash "$target_dir/scripts/bootstrap.sh" "$target_dir"
 compose "$target_dir" up -d --wait caddy
-"$target_dir/scripts/healthcheck.sh" "$target_dir"
+bash "$target_dir/scripts/healthcheck.sh" "$target_dir"
 
 atomic_link "$old_dir" "$APP_ROOT/previous"
 atomic_link "$target_dir" "$APP_ROOT/current"

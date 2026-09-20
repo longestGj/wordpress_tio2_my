@@ -52,7 +52,7 @@ finish_deploy() {
   if (( mutated == 1 )); then
     if [[ -n "$old_dir" ]]; then
       compose "$old_dir" up -d --wait
-      if "$old_dir/scripts/healthcheck.sh" "$old_dir"; then
+      if bash "$old_dir/scripts/healthcheck.sh" "$old_dir"; then
         log_event warning "rollback_succeeded release=$release restored=$old_release"
       else
         log_event error "rollback_failed release=$release target=$old_release"
@@ -67,15 +67,15 @@ finish_deploy() {
 trap finish_deploy EXIT
 
 if [[ -n "$old_release" ]]; then
-  TIO2_LOCK_HELD=1 "$SCRIPT_DIR/backup.sh" --release "$old_release" >/dev/null
+  TIO2_LOCK_HELD=1 bash "$SCRIPT_DIR/backup.sh" --release "$old_release" >/dev/null
 fi
 
 compose "$dir" pull
 mutated=1
 compose "$dir" up -d --wait db wordpress
-"$SCRIPT_DIR/bootstrap.sh" "$dir"
+bash "$SCRIPT_DIR/bootstrap.sh" "$dir"
 compose "$dir" up -d --wait caddy
-"$SCRIPT_DIR/healthcheck.sh" "$dir"
+bash "$SCRIPT_DIR/healthcheck.sh" "$dir"
 
 [[ -n "$old_dir" ]] && atomic_link "$old_dir" "$APP_ROOT/previous"
 atomic_link "$dir" "$APP_ROOT/current"

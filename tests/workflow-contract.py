@@ -37,6 +37,22 @@ assert deploy['permissions'] == {'contents': 'read', 'packages': 'write'}
 assert deploy['jobs']['deploy']['needs'] == ['quality', 'image']
 assert 'environment' not in deploy['jobs']['deploy']
 
+image_steps = deploy['jobs']['image']['steps']
+qemu_index = next(
+    index for index, step in enumerate(image_steps)
+    if str(step.get('uses', '')).startswith('docker/setup-qemu-action@')
+)
+buildx_index = next(
+    index for index, step in enumerate(image_steps)
+    if str(step.get('uses', '')).startswith('docker/setup-buildx-action@')
+)
+image_build = next(
+    step for step in image_steps
+    if str(step.get('uses', '')).startswith('docker/build-push-action@')
+)
+assert qemu_index < buildx_index
+assert image_build['with']['platforms'] == 'linux/arm64'
+
 expected_names = {
     'Main source guard', 'PHP and content', 'Browser integration', 'Production deployment contract',
 }

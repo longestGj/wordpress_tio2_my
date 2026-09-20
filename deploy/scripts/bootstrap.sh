@@ -23,9 +23,9 @@ done
 (( ready == 1 )) || { echo 'WordPress filesystem did not become ready' >&2; exit 1; }
 
 if ! wp core is-installed >/dev/null 2>&1; then
-  printf '%s\n' "$WP_ADMIN_PASSWORD" | wp core install \
+  wp core install \
     --url="$PUBLIC_URL" --title='TiO2 Products' --admin_user="$WP_ADMIN_USER" \
-    --admin_email="$WP_ADMIN_EMAIL" --skip-email --prompt=admin_password
+    --admin_email="$WP_ADMIN_EMAIL" --skip-email --admin_password="$WP_ADMIN_PASSWORD"
 fi
 
 wp option update home "$PUBLIC_URL" --quiet

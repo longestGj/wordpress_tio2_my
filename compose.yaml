@@ -1,4 +1,4 @@
-name: d32-tio2-my
+name: ${COMPOSE_PROJECT_NAME:-d32-tio2-my}
 services:
   db:
     image: mariadb:11.4@sha256:4f1d8d202fcf7bcb3902f63af09f9c1a050c2922a89652f22abaec0d4f015e83
@@ -32,6 +32,7 @@ services:
       TIO2_PUBLIC_URL: ${TIO2_PUBLIC_URL:-https://tio2products.com}
       TIO2_SITE_SCOPE: ${TIO2_SITE_SCOPE:-tio2-my}
       TIO2_RELEASE: ${TIO2_RELEASE:-}
+      TIO2_BOOTSTRAP_MARKER: ${TIO2_BOOTSTRAP_MARKER:-.runtime/bootstrap-complete}
       WORDPRESS_CONFIG_EXTRA: |
         define('WP_ENVIRONMENT_TYPE', 'local');
         define('WP_HOME', getenv('TIO2_LOCAL_URL') ?: 'http://127.0.0.1:8232');

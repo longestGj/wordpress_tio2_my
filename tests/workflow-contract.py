@@ -42,6 +42,15 @@ expected_names = {
 }
 assert {job['name'] for job in ci['jobs'].values()} == expected_names
 
+python_setups = [
+    step for job in ci['jobs'].values() for step in job.get('steps', [])
+    if str(step.get('uses', '')).startswith('actions/setup-python@')
+]
+assert python_setups
+for step in python_setups:
+    assert step.get('with', {}).get('cache') == 'pip'
+    assert step.get('with', {}).get('cache-dependency-path') == 'requirements-dev.txt'
+
 for workflow in [ci, deploy]:
     for uses in uses_values(workflow):
         if uses == './.github/workflows/ci.yml':

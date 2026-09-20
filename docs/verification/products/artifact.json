@@ -1,7 +1,7 @@
 {
-  "build_id": "wp-227925effa731182ec8b288c7062d785980faab06a325a682bba8fabb8e8f1be",
-  "implementation_commit": "7eacb2ae1dd37ba445a4937e0a42e437768007de",
-  "directory": ".runtime/artifacts/wp-227925effa731182ec8b288c7062d785980faab06a325a682bba8fabb8e8f1be",
+  "build_id": "wp-cb6228f0471c41b6ac161f2c11a80f71462c10b73078af9a1d070e4620cd53e4",
+  "implementation_commit": "35605e34d08a582d70e1e43f388b4d1d3dcc0051",
+  "directory": ".runtime/artifacts/wp-cb6228f0471c41b6ac161f2c11a80f71462c10b73078af9a1d070e4620cd53e4",
   "files": {
     "wp-content/plugins/tio2-content/assets/admin.js": "453a1d8bf02078c735223d1f202c4d9ce140eda4c51c1416dd7a5aff69f0f879",
     "wp-content/plugins/tio2-content/includes/admin.php": "efa465bf66fc8208c82397753da5b1380bd3a674cd3af6d7a5f9e0c029a190e1",
@@ -25,9 +25,9 @@
     "wp-content/themes/tio2-malaysia/assets/site.js": "0b1c81499811efbbdaecd27d78ba42bdbcb479c5405dfbc5acddcffe4627356f",
     "wp-content/themes/tio2-malaysia/footer.php": "8cb83ad0d30fe3c4058b6da01592c90775b9df92e56393af5ac5a96aea0c577d",
     "wp-content/themes/tio2-malaysia/front-page.php": "fd2dc28f9cbc2d05af621d326f2cf17db21cb55d54eea952d0ac4ab7bd1062cb",
-    "wp-content/themes/tio2-malaysia/functions.php": "1214d18f26ab2e42486b4c925342d4ba2f295073ded4408738f0dde056ca8a29",
+    "wp-content/themes/tio2-malaysia/functions.php": "ded3fefafe7f219bbd1db0b47a979f9c98b7c732913b7abd3dd56cc062c250ca",
     "wp-content/themes/tio2-malaysia/header.php": "a44219feb8d1443ed2958873abc470ee37ce3d21b2aa7123a3287473c363345c",
-    "wp-content/themes/tio2-malaysia/inc/seo.php": "c7ecfbd31fc5450a665a34c260284e601f6b90bbd363c7a2908b8e8d0a1e7ec4",
+    "wp-content/themes/tio2-malaysia/inc/seo.php": "311fe894c47553e4ad5e758ebc5095044bcff45867aed5bacbcab41a9f402d2e",
     "wp-content/themes/tio2-malaysia/index.php": "f6b3be5bb3c9068db54b43e5d7115467aedc9059e1ac4efb4bd933c6052efa52",
     "wp-content/themes/tio2-malaysia/page-products.php": "d762d48a4e667c328a9a0e09fb996473c6399f630dbd4001324b7f7f4d2364f6",
     "wp-content/themes/tio2-malaysia/style.css": "4ebb69b87669e20c41d02d18913ba40ed3f29223fe13b18593cdd711ba68edfe",

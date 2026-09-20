@@ -1,6 +1,6 @@
 # PRODUCT-000 Gate 8 acceptance evidence
 
-- Candidate: `7eacb2ae1dd37ba445a4937e0a42e437768007de`
+- Candidate: `35605e34d08a582d70e1e43f388b4d1d3dcc0051`
 - Page quality: `GATE8_CANDIDATE_READY_FOR_GATE9`
 - Integration: `OPEN_EXTERNAL_DEPENDENCIES` (14 Grade, 2 Process, 3 Support, and RFQ receiver owners)
 - Release: `NOT_AUTHORIZED`; local runtime remains `noindex, nofollow`.

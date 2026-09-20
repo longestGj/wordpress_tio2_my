@@ -66,8 +66,9 @@ test('selector: all approved sets, focus, neutral default and Not Sure',async({p
 });
 
 test('FAQ: one open, four closed, server answers retained and keyboard toggles',async({page})=>{
-  let initialHtml='';page.on('response',async response=>{if(response.url().endsWith('/products/'))initialHtml=await response.text();});
-  await page.setViewportSize({width:768,height:1200});await page.goto('/products/');
+  await page.setViewportSize({width:768,height:1200});
+  const response=await page.goto('/products/');
+  const initialHtml=await response.text();
   expect((initialHtml.match(/class="product-faq-answer"/g)||[]).length).toBe(5);
   const items=page.locator('.product-faq-item');await expect(items).toHaveCount(5);
   await expect(items.nth(0).locator('button')).toHaveAttribute('aria-expanded','true');await expect(items.nth(0).locator('.product-faq-answer')).toBeVisible();

@@ -22,6 +22,7 @@ DEFAULT_EVIDENCE = ROOT / "docs/verification/products"
 DEFAULT_RECEIPT = ROOT / "docs/handoffs/PRODUCT-000-gate8.md"
 DEFAULT_MANIFEST = ROOT / ".runtime/handoff/products/gate8_evidence_manifest.json"
 BASELINE_COMMIT = "f520678e723fe040c2e3b2cb5f9bd219e33d8fb9"
+NPX = "npx.cmd" if os.name == "nt" else "npx"
 ACCEPTANCE_IDS = ["PRODUCT-G6-B02", "PRODUCT-G6-B03", "PRODUCT-G6-TDS-I02", "PRODUCT-G7-B05", "PRODUCT-G7-B06", "PRODUCT-G7-B07"]
 REQUIRED_EVIDENCE = {
     "acceptance.md", "acceptance-mapping.json", "artifact.json", "dependencies.json", "editor-changed.png",
@@ -123,12 +124,12 @@ def suite(evidence: Path) -> None:
         ("products-route-contract", ["docker","compose","exec","-T","wordpress","php","/workspace/tests/php/products-route-test.php"]),
         ("home-http", [sys.executable,"tests/http-contract.py"]),
         ("products-http", [sys.executable,"tests/products-http.py"]),
-        ("products-browser", ["npx","playwright","test","tests/products-browser.spec.mjs","--reporter=line"]),
-        ("products-editor", ["npx","playwright","test","tests/products-editor.spec.mjs","--reporter=line"]),
+        ("products-browser", [NPX,"playwright","test","tests/products-browser.spec.mjs","--reporter=line"]),
+        ("products-editor", [NPX,"playwright","test","tests/products-editor.spec.mjs","--reporter=line"]),
         ("products-readiness", [sys.executable,"tests/products-readiness.py"]),
         ("products-migration", [sys.executable,"tests/products-migration.py"]),
-        ("home-browser-regression", ["npx","playwright","test","tests/browser.spec.mjs","--reporter=line"]),
-        ("home-editor-regression", ["npx","playwright","test","tests/editor.spec.mjs","--reporter=line"]),
+        ("home-browser-regression", [NPX,"playwright","test","tests/browser.spec.mjs","--reporter=line"]),
+        ("home-editor-regression", [NPX,"playwright","test","tests/editor.spec.mjs","--reporter=line"]),
         ("runtime-identity", [sys.executable,"tests/identity.py"]),
         ("negative-runtime", [sys.executable,"tests/negative-runtime.py"]),
     ])

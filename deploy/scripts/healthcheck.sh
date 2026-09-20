@@ -24,7 +24,7 @@ for service in db wordpress caddy; do
 done
 
 compose "$dir" exec -T db healthcheck.sh --connect --innodb_initialized >/dev/null
-compose "$dir" exec -T wordpress wp --allow-root eval 'tio2_content();' >/dev/null
+compose "$dir" exec -T wordpress wp --allow-root eval 'tio2_content(); tio2_products_content();' >/dev/null
 compose "$dir" exec -T -e "TIO2_HEALTH_HOST=$public_host" wordpress php -r '
   $context=stream_context_create(["http"=>["header"=>"Host: ".getenv("TIO2_HEALTH_HOST")."\r\n","ignore_errors"=>true,"timeout"=>10]]);
   $body=file_get_contents("http://127.0.0.1/",false,$context);
@@ -37,13 +37,21 @@ base=${base%/}
 state_dir="$APP_ROOT/shared/state/health-${release}-$$"
 mkdir -p "$state_dir"
 trap 'rm -rf -- "$state_dir"' EXIT
-curl -fsS --max-time 30 -D "$state_dir/headers" -o "$state_dir/home.html" "$base/"
-tr -d '\r' <"$state_dir/headers" >"$state_dir/headers.clean"
-grep -q 'Malaysia Titanium Dioxide for Industrial Buyers' "$state_dir/home.html"
+curl -fsS --max-time 30 -D "$state_dir/home.headers" -o "$state_dir/home.html" "$base/"
+curl -fsS --max-time 30 -D "$state_dir/products.headers" -o "$state_dir/products.html" "$base/products/"
+tr -d '\r' <"$state_dir/home.headers" >"$state_dir/home.headers.clean"
+tr -d '\r' <"$state_dir/products.headers" >"$state_dir/products.headers.clean"
+grep -Fq '<main id="main" tabindex="-1">' "$state_dir/home.html"
 grep -Fq "<link rel=\"canonical\" href=\"$public/\">" "$state_dir/home.html"
 grep -Fq '<meta name="robots" content="noindex, nofollow">' "$state_dir/home.html"
-grep -qi '^X-Site-Scope: tio2-my$' "$state_dir/headers.clean"
-grep -qi "^X-Tio2-Release: $release$" "$state_dir/headers.clean"
+grep -Fq '<main id="main" class="products-page" tabindex="-1">' "$state_dir/products.html"
+grep -Fq 'id="all-grades" data-module="directory"' "$state_dir/products.html"
+grep -Fq "<link rel=\"canonical\" href=\"$public/products/\">" "$state_dir/products.html"
+grep -Fq '<meta name="robots" content="noindex, nofollow">' "$state_dir/products.html"
+for headers in "$state_dir/home.headers.clean" "$state_dir/products.headers.clean"; do
+  grep -qi '^X-Site-Scope: tio2-my$' "$headers"
+  grep -qi "^X-Tio2-Release: $release$" "$headers"
+done
 
 if [[ "${HEALTHCHECK_MODE:-production}" == production ]]; then
   curl -sS --max-time 20 -D "$state_dir/http-redirect" -o /dev/null --max-redirs 0 http://tio2products.com/

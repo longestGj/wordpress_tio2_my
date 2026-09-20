@@ -1,0 +1,11 @@
+{
+  "capturedAt": "2026-09-20T08:06:18.503404+00:00",
+  "composeProject": "d32-product-000",
+  "runtime": "http://127.0.0.1:8232",
+  "siteScope": "tio2-my",
+  "wordpress": "7.1",
+  "php": "8.3.33",
+  "dockerClient": "29.6.2",
+  "branch": "codex/product-000-products",
+  "implementationCommit": "95ed4c4c47481ef78f64fa90b95a1096ea45bfae"
+}

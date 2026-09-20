@@ -7,6 +7,7 @@
  */
 defined('ABSPATH') || exit;
 require_once __DIR__ . '/includes/validation.php';
+require_once __DIR__ . '/includes/products.php';
 require_once __DIR__ . '/includes/admin.php';
 require_once __DIR__ . '/includes/identity.php';
 

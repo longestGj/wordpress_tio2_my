@@ -3,6 +3,7 @@ import hashlib
 import json
 import shutil
 import subprocess
+import os
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -41,7 +42,7 @@ if __name__ == '__main__':
     record = dict(build_id=build_id, implementation_commit=commit,
                   directory=directory.relative_to(ROOT).as_posix(), files=dict(files))
     (directory / 'artifact.json').write_text(json.dumps(record, indent=2) + '\n', encoding='utf-8')
-    evidence = ROOT / 'docs/verification/home'
+    evidence = ROOT / os.environ.get('HOME_EVIDENCE_DIR', 'docs/verification/home')
     evidence.mkdir(parents=True, exist_ok=True)
     (evidence / 'artifact.json').write_text(json.dumps(record, indent=2) + '\n', encoding='utf-8')
     print(build_id)

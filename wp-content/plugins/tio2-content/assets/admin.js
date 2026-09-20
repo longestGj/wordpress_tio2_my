@@ -9,3 +9,9 @@ document.querySelectorAll('.tio2-media').forEach(button => {
     picker.open();
   });
 });
+
+// Keep long schema-driven editors easy to scan without changing submitted values.
+document.querySelectorAll('.tio2-editor-group').forEach(group => {
+  group.addEventListener('toggle', () => group.dataset.open = String(group.open));
+  group.dataset.open = String(group.open);
+});

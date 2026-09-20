@@ -74,6 +74,7 @@ run_tests() {
   export TEST_OUTPUT_DIR=.runtime/test-results/ci
   export TEST_ENV_FILE="$ENV_FILE"
   export TEST_COMPOSE_FILE=compose.yaml
+  export PRODUCT_EVIDENCE_DIR="$TEST_OUTPUT_DIR/products"
   export CI=true
   rm -rf "$TEST_OUTPUT_DIR"
   mkdir -p "$TEST_OUTPUT_DIR"
@@ -84,9 +85,17 @@ run_tests() {
     wordpress:php8.3-apache@sha256:65919a9ca10940feb10d9400fead0d639bf86241f47c91e2b9ea4703aa8452cf \
     php -d zend.assertions=1 -d assert.exception=1 tests/php/runtime-config-test.php
   compose exec -T wordpress php /workspace/tests/php/content-test.php
+  compose exec -T wordpress php /workspace/tests/php/products-model-test.php
+  compose exec -T wordpress php /workspace/tests/php/products-route-test.php
   python tests/http-contract.py
+  python tests/products-http.py
   python tests/identity.py
-  npx playwright test tests/browser.spec.mjs tests/editor.spec.mjs
+  npx playwright test tests/browser.spec.mjs tests/editor.spec.mjs tests/products-browser.spec.mjs tests/products-editor.spec.mjs
+  python tests/products-readiness.py
+  python tests/products-migration.py
+  python tests/products-evidence.py
+  python tests/http-contract.py
+  python tests/products-http.py
   python tests/negative-runtime.py
 }
 

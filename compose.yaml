@@ -22,15 +22,23 @@ services:
       db:
         condition: service_healthy
     ports:
-      - 127.0.0.1:8232:80
+      - 127.0.0.1:${TIO2_LOCAL_PORT:-8232}:80
     environment: &wp-environment
       WORDPRESS_DB_HOST: db:3306
       WORDPRESS_DB_NAME: wordpress
       WORDPRESS_DB_USER: wordpress
       WORDPRESS_DB_PASSWORD: ${DB_PASSWORD}
+      TIO2_LOCAL_URL: ${TIO2_LOCAL_URL:-http://127.0.0.1:8232}
+      TIO2_PUBLIC_URL: ${TIO2_PUBLIC_URL:-https://tio2products.com}
+      TIO2_SITE_SCOPE: ${TIO2_SITE_SCOPE:-tio2-my}
+      TIO2_RELEASE: ${TIO2_RELEASE:-}
       WORDPRESS_CONFIG_EXTRA: |
         define('WP_ENVIRONMENT_TYPE', 'local');
-        define('TIO2_SITE_SCOPE', 'tio2-my');
+        define('WP_HOME', getenv('TIO2_LOCAL_URL') ?: 'http://127.0.0.1:8232');
+        define('WP_SITEURL', getenv('TIO2_LOCAL_URL') ?: 'http://127.0.0.1:8232');
+        define('TIO2_PUBLIC_URL', getenv('TIO2_PUBLIC_URL') ?: 'https://tio2products.com');
+        define('TIO2_SITE_SCOPE', getenv('TIO2_SITE_SCOPE') ?: 'tio2-my');
+        define('TIO2_RELEASE', getenv('TIO2_RELEASE') ?: '');
         define('DISALLOW_FILE_EDIT', true);
         define('WP_AUTO_UPDATE_CORE', false);
     volumes: &wp-volumes

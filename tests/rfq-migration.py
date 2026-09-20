@@ -91,6 +91,11 @@ assert final["page_id"] == original_page_id and final["page_status"] == "publish
 assert option("tio2_rfq_content") == original_rfq
 assert sha(option("tio2_content")) == home_hash
 EVIDENCE.mkdir(parents=True, exist_ok=True)
+legacy_snapshot = EVIDENCE / "legacy-home-only-restore.json"
+legacy_snapshot.write_text(json.dumps({"content": option("tio2_content")}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+legacy_container_path = "/workspace/" + legacy_snapshot.resolve().relative_to(ROOT.resolve()).as_posix()
+cli("eval-file", "/workspace/scripts/snapshot.php", "restore", legacy_container_path)
+assert option("tio2_rfq_content") == original_rfq
 (EVIDENCE / "migration-results.json").write_text(json.dumps({
     "pageIdPreserved": final["page_id"] == original_page_id,
     "homepageSha256": home_hash,
@@ -99,5 +104,6 @@ EVIDENCE.mkdir(parents=True, exist_ok=True)
     "cmsEditPreservedBeforeRollback": True,
     "rollbackPageStatus": None,
     "resumePageStatus": "publish",
+    "legacyHomeOnlySnapshotPreservesRfq": True,
 }, indent=2) + "\n", encoding="utf-8")
 print("RFQ migration is idempotent, edit-preserving, reversible, resumable, and isolated")

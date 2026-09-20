@@ -11,10 +11,13 @@ if($action==='export') {
     $data=json_decode(file_get_contents($resolved),true,512,JSON_THROW_ON_ERROR);
     $valid=tio2_validate_content($data['content']??null,tio2_schema(),'tio2_owned_image');
     if(is_wp_error($valid)) throw new RuntimeException($valid->get_error_message());
-    $valid_rfq=tio2_validate_content($data['rfq_content']??null,tio2_rfq_schema(),static fn()=>false);
-    if(is_wp_error($valid_rfq)) throw new RuntimeException($valid_rfq->get_error_message());
+    $valid_rfq=null;
+    if(array_key_exists('rfq_content',$data)) {
+        $valid_rfq=tio2_validate_content($data['rfq_content'],tio2_rfq_schema(),static fn()=>false);
+        if(is_wp_error($valid_rfq)) throw new RuntimeException($valid_rfq->get_error_message());
+    }
     update_option('tio2_content',$valid,false);
-    update_option(TIO2_RFQ_OPTION,$valid_rfq,false);
+    if($valid_rfq!==null) update_option(TIO2_RFQ_OPTION,$valid_rfq,false);
     echo 'Restored content SHA256: '.hash('sha256',wp_json_encode(tio2_content()))."\n";
-    echo 'Restored RFQ content SHA256: '.hash('sha256',wp_json_encode(tio2_rfq_content()))."\n";
+    echo 'RFQ content SHA256: '.hash('sha256',wp_json_encode(tio2_rfq_content())).($valid_rfq!==null?' (restored)':' (preserved)')."\n";
 } else throw new RuntimeException('Unknown snapshot action');

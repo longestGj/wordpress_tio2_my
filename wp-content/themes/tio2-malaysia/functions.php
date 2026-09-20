@@ -65,13 +65,13 @@ function tio2_rfq_prefill(array $query): array {
     $country=$query['destination_country'] ?? null;
     if (is_string($country)) {
         $country=tio2_rfq_text(wp_unslash($country));
-        $broad=['eu','european union','asean','europe','asia','southeast asia','middle east','africa','global','worldwide'];
+        $broad=['eu','european union','asean','europe','asia','southeast asia','asia pacific','apac','emea','mena','middle east','africa','african union','north america','south america','central america','latin america','caribbean','gcc','gulf cooperation council','mercosur','global','world','worldwide','international'];
         if ($country!==null && $country!=='' && tio2_rfq_length($country)<=100 && !in_array(strtolower($country),$broad,true)) {
             $prefill['destination_country']=$country;
         }
     }
     $process=$query['process_context'] ?? null;
-    if (is_string($process) && strtolower(trim(wp_unslash($process)))==='sulfate') {
+    if (($prefill['grade_id'] ?? null)==='m-2377' && is_string($process) && strtolower(trim(wp_unslash($process)))==='sulfate') {
         $prefill['additional_requirements']='Sulfate';
     }
     return $prefill;

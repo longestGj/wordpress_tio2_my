@@ -37,5 +37,6 @@ $invalid = tio2_rfq_prefill([
     'company_name'=>'Must not prefill',
 ]);
 $check($invalid === [], 'arrays, stale values, broad regions, internal IDs, and buyer data fail closed');
+$check(tio2_rfq_prefill(['grade_id'=>'m-350','process_context'=>'sulfate']) === ['grade_id'=>'m-350'], 'Sulfate context requires explicit M-2377 grade context');
 
 echo "$count RFQ route ownership and prefill assertions passed\n";

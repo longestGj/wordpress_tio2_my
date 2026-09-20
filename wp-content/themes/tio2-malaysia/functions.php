@@ -11,6 +11,10 @@ add_action('wp_enqueue_scripts', static function() {
     wp_enqueue_style('tio2-design',$uri.'/assets/design.css',[],filemtime(__DIR__.'/assets/design.css'));
     wp_enqueue_style('tio2-site',$uri.'/assets/site.css',['tio2-design'],filemtime(__DIR__.'/assets/site.css'));
     wp_enqueue_script('tio2-site',$uri.'/assets/site.js',[],filemtime(__DIR__.'/assets/site.js'),['strategy'=>'defer','in_footer'=>true]);
+    if (tio2_current_page_id() === 'PRODUCT-000') {
+        wp_enqueue_style('tio2-products',$uri.'/assets/products.css',['tio2-site'],filemtime(__DIR__.'/assets/products.css'));
+        wp_enqueue_script('tio2-products',$uri.'/assets/products.js',['tio2-site'],filemtime(__DIR__.'/assets/products.js'),['strategy'=>'defer','in_footer'=>true]);
+    }
     wp_dequeue_style('wp-block-library');
     wp_dequeue_style('global-styles');
 });

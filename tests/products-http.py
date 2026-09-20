@@ -22,6 +22,7 @@ assert home_response.status == products_response.status == 200
 assert home.select_one('link[rel="canonical"]')["href"] == "https://tio2products.com/"
 assert home.select_one('meta[property="og:url"]')["content"] == "https://tio2products.com/"
 assert "tio2malaysia.com" not in home_html
+assert "assets/products.css" not in home_html and "assets/products.js" not in home_html
 assert [link.get_text(strip=True) for link in home.select('.desktop-nav a[aria-current="page"]')] == ["Home"]
 assert [link.get_text(strip=True) for link in home.select('.mobile-menu nav a[aria-current="page"]')] == ["Home"]
 
@@ -33,6 +34,7 @@ assert products.select_one('meta[name="description"]')["content"] == (
 )
 assert products.select_one('link[rel="canonical"]')["href"] == "https://tio2products.com/products/"
 assert products.select_one('meta[property="og:url"]')["content"] == "https://tio2products.com/products/"
+assert "assets/products.css" in products_html and "assets/products.js" in products_html
 assert not products.select('meta[property="og:image"]')
 assert "noindex" in products.select_one('meta[name="robots"]')["content"]
 assert [link.get_text(strip=True) for link in products.select('.desktop-nav a[aria-current="page"]')] == ["Products"]

@@ -21,6 +21,25 @@ $support_cards = [
     'MARKET-000' => ['title' => $fields['support.card.3.title'], 'body' => $fields['support.card.3.body'], 'cta' => $fields['support.card.3.cta']],
 ];
 $ready_support = array_filter($support_cards, static fn($_card, $key) => $resolved[$key] !== null, ARRAY_FILTER_USE_BOTH);
+$selector_applications = [];
+foreach ($model['applications'] as $application => $route_keys) {
+    $selector_applications[$application] = array_map(static function($route_key) use ($grade_by_route, $resolved) {
+        return [
+            'routeKey' => $route_key,
+            'name' => $grade_by_route[$route_key]['name'],
+            'url' => $resolved[$route_key]['path'] ?? null,
+        ];
+    }, $route_keys);
+}
+$selector_data = [
+    'applications' => $selector_applications,
+    'headingTemplate' => $fields['selector.result-heading-template'],
+    'ctaLabel' => $fields['selector.result-cta-label'],
+    'noResult' => $fields['selector.no-result'],
+    'browseLabel' => $fields['directory.heading'],
+    'failure' => $fields['selector.failure'],
+    'explicitSelection' => false,
+];
 get_header();
 ?>
 <main id="main" class="products-page" tabindex="-1" data-page-id="PRODUCT-000">
@@ -69,6 +88,7 @@ get_header();
         </div>
       </div>
       <noscript><p><?php echo esc_html($fields['selector.failure']); ?></p></noscript>
+      <script id="products-selector-data" type="application/json"><?php echo wp_json_encode($selector_data, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES); ?></script>
     </div>
   </section>
   <section class="shell product-section" id="process" data-module="process" aria-labelledby="process-heading">

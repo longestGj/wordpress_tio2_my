@@ -1,6 +1,6 @@
 # TiO₂ Malaysia — WordPress site
 
-HOME-001 and the PRODUCT-000 `/products/` Hub use one custom PHP theme and a first-party typed-content plugin. The approved designs are fixed; page copy, registered local paths and SEO are editable in WordPress **Site content**. Homepage and Products content use separate typed options and revision tokens.
+HOME-001, the PRODUCT-000 `/products/` Hub and CONV-RFQ use one custom PHP theme and a first-party typed-content plugin. The approved designs are fixed; page copy, registered local paths, form options, hero media, grades and SEO are editable in WordPress **Site content**. Home, Products and RFQ use independent typed content records and revision tokens, with no approval-state runtime dependency.
 
 开发、分支、提交、验证与验收约定见 [开发流程](CONTRIBUTING.md)。GitHub CI、`develop → main` 发布流和 main 自动生产部署已经建立。
 开发代理执行本仓库任务时，先阅读 [AGENTS.md](AGENTS.md)。
@@ -48,8 +48,23 @@ docker compose run --rm wpcli eval-file /workspace/scripts/products-migration.ph
 docker compose run --rm wpcli eval-file /workspace/scripts/products-migration.php resume
 ```
 
+The CONV-RFQ final suite must run only in its isolated Compose project with the deterministic fake receiver; it deliberately exercises data-changing migration, editor and scope-failure paths and restores the original records:
+
+```powershell
+$env:COMPOSE_PROJECT_NAME='d32-conv-rfq-gate8'
+$env:TEST_BASE_URL='http://127.0.0.1:8242'
+$env:TIO2_LOCAL_URL='http://127.0.0.1:8242'
+$env:TIO2_RFQ_RECEIVER_MODE='fake'
+python scripts/rfq-evidence.py --run-suite
+python scripts/artifact.py --evidence-dir docs/verification/request-a-quote
+python scripts/rfq-evidence.py --generate
+python scripts/rfq-evidence.py --validate-dir docs/verification/request-a-quote
+```
+
+Editor tests temporarily change content and restore it in `finally`. Negative runtime tests deliberately produce local 503 responses and restore the same snapshot; run only on this isolated preview. The snapshot restores editable content, not the entire database. It references the existing site-owned hero attachment; keep the `wp_data` and `db_data` volumes. For a fresh installation use the seed/bootstrap, which imports `content/media/hero.png`; do not copy old attachment IDs blindly.
+
 To recover code, use the implementation commit recorded in `docs/verification/home/artifact.json` or its ignored `.runtime/artifacts/<build_id>` copy. Restart only this project's WordPress container to clear PHP opcode cache, then rerun identity and HTTP checks. `scripts/artifact.py` packages committed theme/plugin bytes and verifies their hashes; it does not deploy anything.
 
-The local environment binds only loopback. HOME-001, PRODUCT-000 and shared navigation/footer/menu/cookie UI are implemented. PRODUCT-000 intentionally does not create its fourteen Grade pages, two Process pages, Applications, Documents, Markets or the RFQ receiver; those routes remain genuine external 404 dependencies and Hub actions fail closed except for always-visible clean RFQ links. No analytics or optional-consent storage is active. A merge to `main` runs the complete CI suite, builds an immutable ARM64 image, deploys it to production and runs Home plus Products health checks. Production remains `noindex, nofollow` until the complete site is ready and indexing is explicitly authorized.
+The local environment is noindex and binds only loopback. HOME-001, PRODUCT-000, CONV-RFQ and the shared navigation/footer/menu/cookie UI are implemented. PRODUCT-000 intentionally does not create its fourteen Grade pages, two Process pages, Applications, Documents or Markets; those routes remain genuine external 404 dependencies and Hub actions fail closed except for always-visible clean RFQ links. No analytics or optional-consent storage is active. The production RFQ adapter stays disabled and fail-closed unless production-only configuration is supplied. A merge to `main` runs the complete CI suite, builds an immutable ARM64 image and deploys it to production. Production remains `noindex, nofollow` until the complete site is ready and indexing is explicitly authorized.
 
-See `docs/handoffs/HOME-001-gate8.md` and `docs/handoffs/PRODUCT-000-gate8.md` for the historical candidate handoffs. Later independent acceptance and release records supplement those fixed historical receipts.
+See `docs/handoffs/HOME-001-gate8.md`, `docs/handoffs/PRODUCT-000-gate8.md` and `docs/handoffs/CONV-RFQ-gate8.md` for the historical candidate handoffs. Later independent acceptance and release records supplement those fixed historical receipts.

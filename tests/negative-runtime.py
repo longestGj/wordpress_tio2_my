@@ -30,6 +30,8 @@ for mode in ['wrong-scope','missing-content','foreign-media']:
         if mode=='foreign-media':cli('eval-file','/workspace/scripts/negative-runtime.php','restore-media')
         cli('eval-file','/workspace/scripts/snapshot.php','restore',workspace_container_path(restore_file))
     assert http()[0]==200
-assert json.loads(cli('eval-file','/workspace/scripts/snapshot.php','export'))['content']==original['content']
+restored=json.loads(cli('eval-file','/workspace/scripts/snapshot.php','export'))
+assert restored['content']==original['content']
+assert restored['rfq_content']==original['rfq_content']
 (out/'negative-runtime.json').write_text(json.dumps(dict(cases=results,restoredExactly=True),indent=2)+'\n',encoding='utf-8')
 print('Three actual runtime isolation failure/restore scenarios passed')

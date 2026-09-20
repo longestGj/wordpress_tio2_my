@@ -1,0 +1,273 @@
+{
+  "acceptance": [
+    {
+      "id": "RFQ-D32-AC-01-IDENTITY-CONTENT",
+      "status": "PASS",
+      "evidence": [
+        "docs/verification/request-a-quote/test-results.json",
+        "docs/verification/request-a-quote/runtime-contract.json"
+      ],
+      "commands": [
+        "python scripts/rfq-evidence.py --run-suite"
+      ],
+      "result": "200 route, one H1, exact module order and approved editable copy verified.",
+      "ownerBoundary": "D32 Gate 8; independent Gate 9 must recheck the exact candidate"
+    },
+    {
+      "id": "RFQ-D32-AC-02-FIELDS-OPTIONS",
+      "status": "PASS",
+      "evidence": [
+        "docs/verification/request-a-quote/test-results.json",
+        "docs/verification/request-a-quote/runtime-contract.json"
+      ],
+      "commands": [
+        "python scripts/rfq-evidence.py --run-suite"
+      ],
+      "result": "Eleven editable controls plus fixed MT, exact option order, requiredness, limits and helpers verified.",
+      "ownerBoundary": "D32 Gate 8; independent Gate 9 must recheck the exact candidate"
+    },
+    {
+      "id": "RFQ-D32-AC-03-VALIDATION-A11Y",
+      "status": "PASS",
+      "evidence": [
+        "docs/verification/request-a-quote/test-results.json",
+        "docs/verification/request-a-quote/runtime-contract.json"
+      ],
+      "commands": [
+        "python scripts/rfq-evidence.py --run-suite"
+      ],
+      "result": "Initial, 15 validation branches, focused linked summary, ARIA and keyboard/axe checks passed.",
+      "ownerBoundary": "D32 Gate 8; independent Gate 9 must recheck the exact candidate"
+    },
+    {
+      "id": "RFQ-D32-AC-04-STATE-ACK",
+      "status": "PASS",
+      "evidence": [
+        "docs/verification/request-a-quote/test-results.json",
+        "docs/verification/request-a-quote/runtime-contract.json"
+      ],
+      "commands": [
+        "python scripts/rfq-evidence.py --run-suite"
+      ],
+      "result": "Fake receiver matrix, explicit receipt, duplicate prevention, value retention and fail-closed states passed.",
+      "ownerBoundary": "D32 Gate 8; independent Gate 9 must recheck the exact candidate"
+    },
+    {
+      "id": "RFQ-D32-AC-05-PREFILL",
+      "status": "PASS",
+      "evidence": [
+        "docs/verification/request-a-quote/test-results.json",
+        "docs/verification/request-a-quote/runtime-contract.json"
+      ],
+      "commands": [
+        "python scripts/rfq-evidence.py --run-suite"
+      ],
+      "result": "Positive/negative prefill matrix and invariant clean canonical passed.",
+      "ownerBoundary": "D32 Gate 8; independent Gate 9 must recheck the exact candidate"
+    },
+    {
+      "id": "RFQ-D32-AC-06-SERVER-SECURITY",
+      "status": "PASS",
+      "evidence": [
+        "docs/verification/request-a-quote/test-results.json",
+        "docs/verification/request-a-quote/runtime-contract.json"
+      ],
+      "commands": [
+        "python scripts/rfq-evidence.py --run-suite"
+      ],
+      "result": "Method/origin/nonce/size/honeypot/allowlist/rate/privacy negatives passed with zero receiver calls.",
+      "ownerBoundary": "D32 Gate 8; independent Gate 9 must recheck the exact candidate"
+    },
+    {
+      "id": "RFQ-D32-AC-07-CMS-MIGRATION",
+      "status": "PASS",
+      "evidence": [
+        "docs/verification/request-a-quote/test-results.json",
+        "docs/verification/request-a-quote/runtime-contract.json"
+      ],
+      "commands": [
+        "python scripts/rfq-evidence.py --run-suite"
+      ],
+      "result": "Independent RFQ CMS record, revision guard, migration idempotence/rollback/resume and exact restore passed.",
+      "ownerBoundary": "D32 Gate 8; independent Gate 9 must recheck the exact candidate"
+    },
+    {
+      "id": "RFQ-D32-AC-08-SCOPE-ISOLATION",
+      "status": "PASS",
+      "evidence": [
+        "docs/verification/request-a-quote/test-results.json",
+        "docs/verification/request-a-quote/runtime-contract.json"
+      ],
+      "commands": [
+        "python scripts/rfq-evidence.py --run-suite"
+      ],
+      "result": "Wrong/missing content scope and missing page scope returned controlled 503 twice and restored exactly.",
+      "ownerBoundary": "D32 Gate 8; independent Gate 9 must recheck the exact candidate"
+    },
+    {
+      "id": "RFQ-D32-AC-09-SHARED-CHROME",
+      "status": "NOT_TESTED",
+      "evidence": [
+        "docs/verification/request-a-quote/test-results.json",
+        "docs/verification/request-a-quote/runtime-contract.json"
+      ],
+      "commands": [
+        "python scripts/rfq-evidence.py --run-suite"
+      ],
+      "result": "Shared Header/Footer/Menu/Cookie and Home regression passed; Products is absent from this branch and remains an integration dependency.",
+      "ownerBoundary": "D32 Gate 8; independent Gate 9 must recheck the exact candidate"
+    },
+    {
+      "id": "RFQ-D32-AC-10-SEO-SCHEMA",
+      "status": "PASS",
+      "evidence": [
+        "docs/verification/request-a-quote/test-results.json",
+        "docs/verification/request-a-quote/runtime-contract.json"
+      ],
+      "commands": [
+        "python scripts/rfq-evidence.py --run-suite"
+      ],
+      "result": "Exact head and WebPage/BreadcrumbList graph passed; query values and local identity do not alter metadata.",
+      "ownerBoundary": "D32 Gate 8; independent Gate 9 must recheck the exact candidate"
+    },
+    {
+      "id": "RFQ-D32-AC-11-RESPONSIVE-VISUAL",
+      "status": "NOT_TESTED",
+      "evidence": [
+        "docs/verification/request-a-quote/test-results.json",
+        "docs/verification/request-a-quote/runtime-contract.json"
+      ],
+      "commands": [
+        "python scripts/rfq-evidence.py --run-suite"
+      ],
+      "result": "Eight widths, target geometry, axe, reduced motion and 200% reflow proxy passed; native browser zoom and physical touch remain for independent review.",
+      "ownerBoundary": "D32 Gate 8; independent Gate 9 must recheck the exact candidate"
+    },
+    {
+      "id": "RFQ-D32-AC-12-EXTERNAL-ROUTES",
+      "status": "PASS",
+      "evidence": [
+        "docs/verification/request-a-quote/test-results.json",
+        "docs/verification/request-a-quote/runtime-contract.json"
+      ],
+      "commands": [
+        "python scripts/rfq-evidence.py --run-suite"
+      ],
+      "result": "Exact Privacy/Sample/Documents links stay visible; all three destinations truthfully remain 404 dependencies.",
+      "ownerBoundary": "D32 Gate 8; independent Gate 9 must recheck the exact candidate"
+    },
+    {
+      "id": "RFQ-D32-AC-13-ANALYTICS",
+      "status": "PASS",
+      "evidence": [
+        "docs/verification/request-a-quote/test-results.json",
+        "docs/verification/request-a-quote/runtime-contract.json"
+      ],
+      "commands": [
+        "python scripts/rfq-evidence.py --run-suite"
+      ],
+      "result": "No analytics/tag manager/remarketing was added; no conversion event exists.",
+      "ownerBoundary": "D32 Gate 8; independent Gate 9 must recheck the exact candidate"
+    },
+    {
+      "id": "RFQ-D32-AC-14-RECEIVER-CONFIG",
+      "status": "PASS",
+      "evidence": [
+        "docs/verification/request-a-quote/test-results.json",
+        "docs/verification/request-a-quote/runtime-contract.json"
+      ],
+      "commands": [
+        "python scripts/rfq-evidence.py --run-suite"
+      ],
+      "result": "Production adapter remains disabled/fail-closed without production-only mode, enable flag and runtime key; no recipient/secret is public.",
+      "ownerBoundary": "D32 Gate 8; independent Gate 9 must recheck the exact candidate"
+    },
+    {
+      "id": "RFQ-D32-AC-15-EVIDENCE-HANDOFF",
+      "status": "PASS",
+      "evidence": [
+        "docs/verification/request-a-quote/test-results.json",
+        "docs/verification/request-a-quote/runtime-contract.json"
+      ],
+      "commands": [
+        "python scripts/rfq-evidence.py --run-suite"
+      ],
+      "result": "Implementation/build/runtime/content identities, committed evidence, hashes and machine handoff are recorded.",
+      "ownerBoundary": "D32 Gate 8; independent Gate 9 must recheck the exact candidate"
+    }
+  ],
+  "dependencies": [
+    {
+      "id": "RFQ-D32-DEP-01-PROVIDER",
+      "status": "NOT_TESTED",
+      "evidence": [
+        "docs/verification/request-a-quote/dependencies.json"
+      ],
+      "commands": [
+        "python scripts/rfq-evidence.py --generate"
+      ],
+      "result": "Production provider/account/key/recipient binding and mailbox receipt remain outside Gate 8.",
+      "ownerBoundary": "RFQ operational owner"
+    },
+    {
+      "id": "RFQ-D32-DEP-02-PRIVACY-OPS",
+      "status": "NOT_TESTED",
+      "evidence": [
+        "docs/verification/request-a-quote/dependencies.json"
+      ],
+      "commands": [
+        "python scripts/rfq-evidence.py --generate"
+      ],
+      "result": "Operational privacy controller/contact/retention/processors/transfers/rights/DPA parity remains open.",
+      "ownerBoundary": "Legal/Privacy + RFQ operational owner"
+    },
+    {
+      "id": "RFQ-D32-DEP-03-PRIVACY-ROUTE",
+      "status": "NOT_TESTED",
+      "evidence": [
+        "docs/verification/request-a-quote/dependencies.json"
+      ],
+      "commands": [
+        "python scripts/rfq-evidence.py --generate"
+      ],
+      "result": "Privacy and shared legal routes remain 404 in this isolated branch.",
+      "ownerBoundary": "Legal/Privacy page owner"
+    },
+    {
+      "id": "RFQ-D32-DEP-04-SIBLING-ROUTES",
+      "status": "NOT_TESTED",
+      "evidence": [
+        "docs/verification/request-a-quote/dependencies.json"
+      ],
+      "commands": [
+        "python scripts/rfq-evidence.py --generate"
+      ],
+      "result": "Sample and Documents request routes remain 404 in this isolated branch.",
+      "ownerBoundary": "CONV-SAMPLE / CONV-DOC owners"
+    },
+    {
+      "id": "RFQ-D32-DEP-05-COOKIE-CMP",
+      "status": "NOT_TESTED",
+      "evidence": [
+        "docs/verification/request-a-quote/dependencies.json"
+      ],
+      "commands": [
+        "python scripts/rfq-evidence.py --generate"
+      ],
+      "result": "CMP/banner/settings and storage inventory integration remains open.",
+      "ownerBoundary": "Shared consent owner"
+    },
+    {
+      "id": "RFQ-D32-DEP-06-ANALYTICS-CONSENT",
+      "status": "NOT_TESTED",
+      "evidence": [
+        "docs/verification/request-a-quote/dependencies.json"
+      ],
+      "commands": [
+        "python scripts/rfq-evidence.py --generate"
+      ],
+      "result": "GA4/GTM are absent, so consent firing is currently not applicable and not tested; DEP-05 remains open.",
+      "ownerBoundary": "Shared consent + analytics owner"
+    }
+  ]
+}

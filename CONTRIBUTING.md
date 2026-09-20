@@ -94,7 +94,9 @@ python tests/negative-runtime.py
 
 PRODUCT-000 另有 `tests/products-http.py`、`tests/products-browser.spec.mjs`、`tests/products-editor.spec.mjs`、`tests/products-readiness.py` 与 `tests/products-migration.py`。会修改数据的 Products 测试只接受专用本地 `d32-product-000` 或 `scripts/ci-environment.sh` 创建的动态 `tio2-ci-*` 环境，并要求 loopback HTTP 地址；脚本会拒绝共享站和远程站。首页回归证据通过独立测试输出目录重定向，不能覆盖 `docs/verification/home/`。
 
-这些检查覆盖当前首页、Products Hub 和共用运行层；新增页面仍需增加对应契约和真实行为检查：
+CONV-RFQ 使用独立的 `d32-conv-rfq-gate8` Compose project、`8242` 端口和本地 fake receiver。配置这四个环境变量后，`python scripts/rfq-evidence.py --run-suite` 执行其完整 PHP、HTTP、迁移、隔离、浏览器、后台和首页回归检查；`--generate` 与 `--validate-dir docs/verification/request-a-quote` 生成并校验证据。不得把该套件指向共享验收站或生产环境，也不得为验证发送真实外部表单或邮件。
+
+这些检查覆盖当前首页、Products Hub、RFQ 和共用运行层；新增页面仍需增加对应契约和真实行为检查：
 
 - GitHub Browser integration 使用动态项目名、端口、数据卷和证据目录，在干净环境启动 WordPress 后运行首页与 Products 套件。
 - 编辑测试和隔离异常测试会修改数据，只能在专用验证环境运行，不在共享验收站或线上直接执行。

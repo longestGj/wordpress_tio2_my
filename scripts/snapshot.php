@@ -2,7 +2,7 @@
 if (!defined('WP_CLI') || !WP_CLI || wp_get_environment_type()!=='local') throw new RuntimeException('Local CLI only');
 $action=$args[0] ?? 'export';
 if($action==='export') {
-    echo wp_json_encode(['content'=>tio2_content(),'wordpress_version'=>get_bloginfo('version'),'theme'=>wp_get_theme()->get('Version'),'site_scope'=>TIO2_SITE_SCOPE],JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES)."\n";
+    echo wp_json_encode(['content'=>tio2_content(),'rfq_content'=>tio2_rfq_content(),'wordpress_version'=>get_bloginfo('version'),'theme'=>wp_get_theme()->get('Version'),'site_scope'=>TIO2_SITE_SCOPE],JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES)."\n";
 } elseif($action==='restore') {
     $path=$args[1] ?? '';
     $resolved=realpath($path);
@@ -11,6 +11,13 @@ if($action==='export') {
     $data=json_decode(file_get_contents($resolved),true,512,JSON_THROW_ON_ERROR);
     $valid=tio2_validate_content($data['content']??null,tio2_schema(),'tio2_owned_image');
     if(is_wp_error($valid)) throw new RuntimeException($valid->get_error_message());
+    $valid_rfq=null;
+    if(array_key_exists('rfq_content',$data)) {
+        $valid_rfq=tio2_validate_content($data['rfq_content'],tio2_rfq_schema(),static fn()=>false);
+        if(is_wp_error($valid_rfq)) throw new RuntimeException($valid_rfq->get_error_message());
+    }
     update_option('tio2_content',$valid,false);
+    if($valid_rfq!==null) update_option(TIO2_RFQ_OPTION,$valid_rfq,false);
     echo 'Restored content SHA256: '.hash('sha256',wp_json_encode(tio2_content()))."\n";
+    echo 'RFQ content SHA256: '.hash('sha256',wp_json_encode(tio2_rfq_content())).($valid_rfq!==null?' (restored)':' (preserved)')."\n";
 } else throw new RuntimeException('Unknown snapshot action');

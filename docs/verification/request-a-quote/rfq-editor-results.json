@@ -1,0 +1,10 @@
+{
+  "beforeSha256": "02f88b1ca3d539e406d2f020a550e2b327229e90b57d234787400742d7aff398",
+  "changedSha256": "b73eb234a5bf5b11b31131984cd9729c004374320c81e5a756fe1438f76147d0",
+  "restoredSha256": "02f88b1ca3d539e406d2f020a550e2b327229e90b57d234787400742d7aff398",
+  "homeUnchanged": true,
+  "invalidSaveStatus": 422,
+  "incompleteSaveStatus": 422,
+  "staleSaveStatus": 409,
+  "restored": true
+}

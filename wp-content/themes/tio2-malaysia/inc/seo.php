@@ -1,5 +1,28 @@
 <?php
 defined('ABSPATH') || exit;
+
+function tio2_validate_public_base_url(string $candidate): string {
+    $parts = parse_url(trim($candidate));
+    $valid = is_array($parts)
+        && ($parts['scheme'] ?? '') === 'https'
+        && ($parts['host'] ?? '') === 'tio2products.com'
+        && !isset($parts['port'])
+        && !isset($parts['user'])
+        && !isset($parts['pass'])
+        && !isset($parts['query'])
+        && !isset($parts['fragment'])
+        && in_array($parts['path'] ?? '', ['', '/'], true);
+    if (!$valid) throw new InvalidArgumentException('TIO2_PUBLIC_URL must be the approved HTTPS origin.');
+    return 'https://tio2products.com/';
+}
+
+function tio2_public_base_url(): string {
+    static $url;
+    if ($url !== null) return $url;
+    $candidate = defined('TIO2_PUBLIC_URL') ? TIO2_PUBLIC_URL : (getenv('TIO2_PUBLIC_URL') ?: 'https://tio2products.com');
+    return $url = tio2_validate_public_base_url((string) $candidate);
+}
+
 add_action('wp_head',static function() {
     $home=is_front_page();
     $title=$home?tio2_field('seo.title'):'Page not found | TiO₂ Malaysia';

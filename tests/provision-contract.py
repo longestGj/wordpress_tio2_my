@@ -34,6 +34,9 @@ for directory in ('releases', 'incoming', 'shared/state', 'backups', 'logs', 'bi
     assert f'/opt/tio2products/{directory}' in provision
 assert provision.index('ufw allow OpenSSH') < provision.index('ufw --force enable')
 assert 'ufw allow 80/tcp' in provision and 'ufw allow 443/tcp' in provision
+assert 'clear_legacy_oci_rejects' in provision
+assert 'icmp-host-prohibited' in provision and 'icmp6-adm-prohibited' in provision
+assert re.search(r'clear_legacy_oci_rejects\s*\nufw --force enable', provision)
 assert 'PermitRootLogin' not in provision
 assert 'receive-release.sh' in provision
 assert 'tio2products-backup.service' in provision and 'tio2products-backup.timer' in provision

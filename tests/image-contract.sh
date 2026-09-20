@@ -7,7 +7,9 @@ cd "$ROOT"
 VALID_SHA=0123456789abcdef0123456789abcdef01234567
 INVALID_SHA='../release;touch /tmp/tio2-invalid'
 BUILD_DATE=2026-09-20T00:00:00Z
-IMAGE="tio2-production-test:${VALID_SHA}"
+TIO2_IMAGE_TEST_TAG="${TIO2_IMAGE_TEST_TAG:-tio2-production-test:${VALID_SHA}-image-$$}"
+export TIO2_IMAGE_TEST_TAG
+IMAGE="$TIO2_IMAGE_TEST_TAG"
 
 mkdir -p .runtime
 if docker build --build-arg "VCS_REF=$INVALID_SHA" --build-arg "BUILD_DATE=$BUILD_DATE" -t tio2-production-test:invalid . >.runtime/image-invalid.log 2>&1; then
@@ -21,6 +23,7 @@ test "$(docker image inspect "$IMAGE" --format '{{index .Config.Labels "org.open
 test "$(docker image inspect "$IMAGE" --format '{{index .Config.Labels "org.opencontainers.image.revision"}}')" = "$VALID_SHA"
 test "$(docker image inspect "$IMAGE" --format '{{index .Config.Labels "org.opencontainers.image.created"}}')" = "$BUILD_DATE"
 test "$(docker image inspect "$IMAGE" --format '{{range .Config.Env}}{{println .}}{{end}}' | sed -n 's/^TIO2_RELEASE=//p')" = "$VALID_SHA"
+test "$(docker image inspect "$IMAGE" --format '{{json .Config.Entrypoint}}')" = '["/usr/local/bin/tio2-entrypoint.sh"]'
 
 docker run --rm "$IMAGE" sh -ec '
   command -v wp >/dev/null
@@ -36,6 +39,7 @@ docker run --rm "$IMAGE" sh -ec '
   test -f /opt/tio2/content/initial-home.json
   test -f /opt/tio2/content/media/hero.png
   test -f /opt/tio2/bin/bootstrap-production.php
+  test -x /usr/local/bin/tio2-entrypoint.sh
   test ! -e /opt/tio2/.git
   test ! -e /opt/tio2/.env
   test ! -e /opt/tio2/.runtime

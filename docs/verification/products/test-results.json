@@ -1,6 +1,6 @@
 {
-  "implementationCommit": "35605e34d08a582d70e1e43f388b4d1d3dcc0051",
-  "capturedAt": "2026-09-20T07:28:43.280085+00:00",
+  "implementationCommit": "7d4875a778401d0ecd118f5935c6392571a6d13c",
+  "capturedAt": "2026-09-20T07:44:29.555282+00:00",
   "passed": true,
   "commands": [
     {
@@ -16,7 +16,7 @@
         "/workspace/wp-content/plugins/tio2-content/includes/admin.php"
       ],
       "returncode": 0,
-      "durationSeconds": 0.437,
+      "durationSeconds": 0.453,
       "output": "No syntax errors detected in /workspace/wp-content/plugins/tio2-content/includes/admin.php"
     },
     {
@@ -32,7 +32,7 @@
         "/workspace/wp-content/plugins/tio2-content/includes/identity.php"
       ],
       "returncode": 0,
-      "durationSeconds": 0.453,
+      "durationSeconds": 0.469,
       "output": "No syntax errors detected in /workspace/wp-content/plugins/tio2-content/includes/identity.php"
     },
     {
@@ -48,7 +48,7 @@
         "/workspace/wp-content/plugins/tio2-content/includes/products.php"
       ],
       "returncode": 0,
-      "durationSeconds": 0.485,
+      "durationSeconds": 0.468,
       "output": "No syntax errors detected in /workspace/wp-content/plugins/tio2-content/includes/products.php"
     },
     {
@@ -64,7 +64,7 @@
         "/workspace/wp-content/plugins/tio2-content/includes/validation.php"
       ],
       "returncode": 0,
-      "durationSeconds": 0.437,
+      "durationSeconds": 0.469,
       "output": "No syntax errors detected in /workspace/wp-content/plugins/tio2-content/includes/validation.php"
     },
     {
@@ -80,7 +80,7 @@
         "/workspace/wp-content/plugins/tio2-content/tio2-content.php"
       ],
       "returncode": 0,
-      "durationSeconds": 0.453,
+      "durationSeconds": 0.469,
       "output": "No syntax errors detected in /workspace/wp-content/plugins/tio2-content/tio2-content.php"
     },
     {
@@ -96,7 +96,7 @@
         "/workspace/wp-content/themes/tio2-malaysia/footer.php"
       ],
       "returncode": 0,
-      "durationSeconds": 0.532,
+      "durationSeconds": 0.437,
       "output": "No syntax errors detected in /workspace/wp-content/themes/tio2-malaysia/footer.php"
     },
     {
@@ -112,7 +112,7 @@
         "/workspace/wp-content/themes/tio2-malaysia/front-page.php"
       ],
       "returncode": 0,
-      "durationSeconds": 0.5,
+      "durationSeconds": 0.438,
       "output": "No syntax errors detected in /workspace/wp-content/themes/tio2-malaysia/front-page.php"
     },
     {
@@ -144,7 +144,7 @@
         "/workspace/wp-content/themes/tio2-malaysia/header.php"
       ],
       "returncode": 0,
-      "durationSeconds": 0.437,
+      "durationSeconds": 0.594,
       "output": "No syntax errors detected in /workspace/wp-content/themes/tio2-malaysia/header.php"
     },
     {
@@ -160,7 +160,7 @@
         "/workspace/wp-content/themes/tio2-malaysia/inc/seo.php"
       ],
       "returncode": 0,
-      "durationSeconds": 0.453,
+      "durationSeconds": 0.468,
       "output": "No syntax errors detected in /workspace/wp-content/themes/tio2-malaysia/inc/seo.php"
     },
     {
@@ -192,7 +192,7 @@
         "/workspace/wp-content/themes/tio2-malaysia/page-products.php"
       ],
       "returncode": 0,
-      "durationSeconds": 0.453,
+      "durationSeconds": 0.438,
       "output": "No syntax errors detected in /workspace/wp-content/themes/tio2-malaysia/page-products.php"
     },
     {
@@ -208,7 +208,7 @@
         "/workspace/wp-content/themes/tio2-malaysia/template-parts/applications.php"
       ],
       "returncode": 0,
-      "durationSeconds": 0.422,
+      "durationSeconds": 0.484,
       "output": "No syntax errors detected in /workspace/wp-content/themes/tio2-malaysia/template-parts/applications.php"
     },
     {
@@ -224,7 +224,7 @@
         "/workspace/wp-content/themes/tio2-malaysia/template-parts/company.php"
       ],
       "returncode": 0,
-      "durationSeconds": 0.422,
+      "durationSeconds": 0.469,
       "output": "No syntax errors detected in /workspace/wp-content/themes/tio2-malaysia/template-parts/company.php"
     },
     {
@@ -240,7 +240,7 @@
         "/workspace/wp-content/themes/tio2-malaysia/template-parts/documents.php"
       ],
       "returncode": 0,
-      "durationSeconds": 0.438,
+      "durationSeconds": 0.437,
       "output": "No syntax errors detected in /workspace/wp-content/themes/tio2-malaysia/template-parts/documents.php"
     },
     {
@@ -256,7 +256,7 @@
         "/workspace/wp-content/themes/tio2-malaysia/template-parts/hero.php"
       ],
       "returncode": 0,
-      "durationSeconds": 0.437,
+      "durationSeconds": 0.438,
       "output": "No syntax errors detected in /workspace/wp-content/themes/tio2-malaysia/template-parts/hero.php"
     },
     {
@@ -272,7 +272,7 @@
         "/workspace/wp-content/themes/tio2-malaysia/template-parts/markets.php"
       ],
       "returncode": 0,
-      "durationSeconds": 0.5,
+      "durationSeconds": 0.453,
       "output": "No syntax errors detected in /workspace/wp-content/themes/tio2-malaysia/template-parts/markets.php"
     },
     {
@@ -288,7 +288,7 @@
         "/workspace/wp-content/themes/tio2-malaysia/template-parts/page-rfq.php"
       ],
       "returncode": 0,
-      "durationSeconds": 0.438,
+      "durationSeconds": 0.453,
       "output": "No syntax errors detected in /workspace/wp-content/themes/tio2-malaysia/template-parts/page-rfq.php"
     },
     {
@@ -304,7 +304,7 @@
         "/workspace/wp-content/themes/tio2-malaysia/template-parts/products.php"
       ],
       "returncode": 0,
-      "durationSeconds": 0.422,
+      "durationSeconds": 0.453,
       "output": "No syntax errors detected in /workspace/wp-content/themes/tio2-malaysia/template-parts/products.php"
     },
     {
@@ -320,7 +320,7 @@
         "/workspace/wp-content/themes/tio2-malaysia/template-parts/resources.php"
       ],
       "returncode": 0,
-      "durationSeconds": 0.437,
+      "durationSeconds": 0.438,
       "output": "No syntax errors detected in /workspace/wp-content/themes/tio2-malaysia/template-parts/resources.php"
     },
     {
@@ -336,7 +336,7 @@
         "/workspace/wp-content/themes/tio2-malaysia/template-parts/root-page-hero.php"
       ],
       "returncode": 0,
-      "durationSeconds": 0.422,
+      "durationSeconds": 0.437,
       "output": "No syntax errors detected in /workspace/wp-content/themes/tio2-malaysia/template-parts/root-page-hero.php"
     },
     {
@@ -352,7 +352,7 @@
         "/workspace/wp-content/themes/tio2-malaysia/template-parts/start-here.php"
       ],
       "returncode": 0,
-      "durationSeconds": 0.437,
+      "durationSeconds": 0.453,
       "output": "No syntax errors detected in /workspace/wp-content/themes/tio2-malaysia/template-parts/start-here.php"
     },
     {
@@ -367,7 +367,7 @@
         "/workspace/tests/php/content-test.php"
       ],
       "returncode": 0,
-      "durationSeconds": 0.454,
+      "durationSeconds": 0.438,
       "output": "21 content contract assertions passed"
     },
     {
@@ -382,7 +382,7 @@
         "/workspace/tests/php/runtime-config-test.php"
       ],
       "returncode": 0,
-      "durationSeconds": 0.453,
+      "durationSeconds": 0.5,
       "output": "11 runtime identity assertions passed"
     },
     {
@@ -397,7 +397,7 @@
         "/workspace/tests/php/products-model-test.php"
       ],
       "returncode": 0,
-      "durationSeconds": 0.515,
+      "durationSeconds": 0.469,
       "output": "13 products model assertions passed"
     },
     {
@@ -412,7 +412,7 @@
         "/workspace/tests/php/products-route-test.php"
       ],
       "returncode": 0,
-      "durationSeconds": 0.891,
+      "durationSeconds": 0.953,
       "output": "8 route readiness assertions passed"
     },
     {
@@ -422,7 +422,7 @@
         "tests/http-contract.py"
       ],
       "returncode": 0,
-      "durationSeconds": 0.703,
+      "durationSeconds": 0.75,
       "output": "HTTP content, editable seed, links, identity and SEO assertions passed"
     },
     {
@@ -432,7 +432,7 @@
         "tests/products-http.py"
       ],
       "returncode": 0,
-      "durationSeconds": 1.047,
+      "durationSeconds": 1.094,
       "output": "Products HTTP, content, route-state, identity, and Schema assertions passed"
     },
     {
@@ -445,8 +445,8 @@
         "--reporter=line"
       ],
       "returncode": 0,
-      "durationSeconds": 10.75,
-      "output": "Running 8 tests using 1 worker\n\n(node:27072) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n(Use `node --trace-warnings ...` to show where the warning was created)\n\n\n[1/8] tests\\products-browser.spec.mjs:10:3 › products layout 1440: responsive, complete and accessible\n[2/8] tests\\products-browser.spec.mjs:10:3 › products layout 1024: responsive, complete and accessible\n[3/8] tests\\products-browser.spec.mjs:10:3 › products layout 768: responsive, complete and accessible\n[4/8] tests\\products-browser.spec.mjs:10:3 › products layout 390: responsive, complete and accessible\n[5/8] tests\\products-browser.spec.mjs:42:1 › selector: all approved sets, focus, neutral default and Not Sure\n[6/8] tests\\products-browser.spec.mjs:64:1 › FAQ: one open, four closed, server answers retained and keyboard toggles\n[7/8] tests\\products-browser.spec.mjs:76:1 › mobile menu and cookie dialog preserve modal isolation and focus\n[8/8] tests\\products-browser.spec.mjs:93:1 › reduced motion disables product transitions and animations\n  8 passed (9.3s)"
+      "durationSeconds": 10.093,
+      "output": "Running 8 tests using 1 worker\n\n(node:37924) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n(Use `node --trace-warnings ...` to show where the warning was created)\n\n\n[1/8] tests\\products-browser.spec.mjs:10:3 › products layout 1440: responsive, complete and accessible\n[2/8] tests\\products-browser.spec.mjs:10:3 › products layout 1024: responsive, complete and accessible\n[3/8] tests\\products-browser.spec.mjs:10:3 › products layout 768: responsive, complete and accessible\n[4/8] tests\\products-browser.spec.mjs:10:3 › products layout 390: responsive, complete and accessible\n[5/8] tests\\products-browser.spec.mjs:42:1 › selector: all approved sets, focus, neutral default and Not Sure\n[6/8] tests\\products-browser.spec.mjs:64:1 › FAQ: one open, four closed, server answers retained and keyboard toggles\n[7/8] tests\\products-browser.spec.mjs:76:1 › mobile menu and cookie dialog preserve modal isolation and focus\n[8/8] tests\\products-browser.spec.mjs:93:1 › reduced motion disables product transitions and animations\n  8 passed (8.6s)"
     },
     {
       "name": "products-editor",
@@ -458,8 +458,8 @@
         "--reporter=line"
       ],
       "returncode": 0,
-      "durationSeconds": 31.562,
-      "output": "Running 1 test using 1 worker\n\n(node:25828) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n(Use `node --trace-warnings ...` to show where the warning was created)\n\n\n[1/1] tests\\products-editor.spec.mjs:21:1 › Products editor persists visible and Schema copy, rejects unsafe writes, and restores exactly\n  1 passed (30.1s)"
+      "durationSeconds": 31.203,
+      "output": "Running 1 test using 1 worker\n\n(node:34336) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n(Use `node --trace-warnings ...` to show where the warning was created)\n\n\n[1/1] tests\\products-editor.spec.mjs:21:1 › Products editor persists visible and Schema copy, rejects unsafe writes, and restores exactly\n  1 passed (29.9s)"
     },
     {
       "name": "products-readiness",
@@ -468,7 +468,7 @@
         "tests/products-readiness.py"
       ],
       "returncode": 0,
-      "durationSeconds": 88.547,
+      "durationSeconds": 92.438,
       "output": "Products zero/partial/full readiness, scope isolation, Schema gating, and exact restoration passed"
     },
     {
@@ -478,7 +478,7 @@
         "tests/products-migration.py"
       ],
       "returncode": 0,
-      "durationSeconds": 40.188,
+      "durationSeconds": 38.547,
       "output": "Products migration is idempotent, edit-preserving, reversible, resumable, and isolated"
     },
     {
@@ -491,8 +491,8 @@
         "--reporter=line"
       ],
       "returncode": 0,
-      "durationSeconds": 13.047,
-      "output": "Running 8 tests using 1 worker\n\n(node:6172) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n(Use `node --trace-warnings ...` to show where the warning was created)\n\n\n[1/8] tests\\browser.spec.mjs:7:3 › layout 1440: approved geometry, content and accessibility\n[2/8] tests\\browser.spec.mjs:7:3 › layout 1024: approved geometry, content and accessibility\n[3/8] tests\\browser.spec.mjs:7:3 › layout 768: approved geometry, content and accessibility\n[4/8] tests\\browser.spec.mjs:7:3 › layout 390: approved geometry, content and accessibility\n[5/8] tests\\browser.spec.mjs:7:3 › layout 320: approved geometry, content and accessibility\n[6/8] tests\\browser.spec.mjs:32:1 › menu: keyboard focus, transparent backdrop, modal isolation and return\n[7/8] tests\\browser.spec.mjs:47:1 › cookie settings: no analytics state, focus return and no storage\n[8/8] tests\\browser.spec.mjs:63:1 › mobile grades: default collapsed, keyboard expansion and all 14 labels reachable\n  8 passed (11.6s)"
+      "durationSeconds": 11.75,
+      "output": "Running 8 tests using 1 worker\n\n(node:44500) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n(Use `node --trace-warnings ...` to show where the warning was created)\n\n\n[1/8] tests\\browser.spec.mjs:7:3 › layout 1440: approved geometry, content and accessibility\n[2/8] tests\\browser.spec.mjs:7:3 › layout 1024: approved geometry, content and accessibility\n[3/8] tests\\browser.spec.mjs:7:3 › layout 768: approved geometry, content and accessibility\n[4/8] tests\\browser.spec.mjs:7:3 › layout 390: approved geometry, content and accessibility\n[5/8] tests\\browser.spec.mjs:7:3 › layout 320: approved geometry, content and accessibility\n[6/8] tests\\browser.spec.mjs:32:1 › menu: keyboard focus, transparent backdrop, modal isolation and return\n[7/8] tests\\browser.spec.mjs:47:1 › cookie settings: no analytics state, focus return and no storage\n[8/8] tests\\browser.spec.mjs:63:1 › mobile grades: default collapsed, keyboard expansion and all 14 labels reachable\n  8 passed (10.3s)"
     },
     {
       "name": "home-editor-regression",
@@ -504,8 +504,8 @@
         "--reporter=line"
       ],
       "returncode": 0,
-      "durationSeconds": 29.968,
-      "output": "Running 3 tests using 1 worker\n\n(node:29132) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n(Use `node --trace-warnings ...` to show where the warning was created)\n\n\n[1/3] tests\\editor.spec.mjs:17:1 › editor: persisted content, media, SEO, invalid input, stale edit and exact restore\n[2/3] tests\\editor.spec.mjs:67:1 › editor: media picker works and missing nonce cannot write content\n[3/3] tests\\editor.spec.mjs:81:1 › editor: unauthenticated visitor cannot save content\n  3 passed (28.6s)"
+      "durationSeconds": 29.515,
+      "output": "Running 3 tests using 1 worker\n\n(node:19852) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n(Use `node --trace-warnings ...` to show where the warning was created)\n\n\n[1/3] tests\\editor.spec.mjs:17:1 › editor: persisted content, media, SEO, invalid input, stale edit and exact restore\n[2/3] tests\\editor.spec.mjs:67:1 › editor: media picker works and missing nonce cannot write content\n[3/3] tests\\editor.spec.mjs:81:1 › editor: unauthenticated visitor cannot save content\n  3 passed (28.1s)"
     },
     {
       "name": "runtime-identity",
@@ -514,8 +514,8 @@
         "tests/identity.py"
       ],
       "returncode": 0,
-      "durationSeconds": 2.563,
-      "output": "Container d32-product-000-db-1 Running \n Container d32-product-000-db-1 Waiting \n Container d32-product-000-db-1 Healthy \n Container d32-product-000-wpcli-run-405538313b9a Creating \n Container d32-product-000-wpcli-run-405538313b9a Created \nActual live theme/plugin fingerprint matches source: wp-cb6228f0471c41b6ac161f2c11a80f71462c10b73078af9a1d070e4620cd53e4\nLive content fingerprint matches database and restored snapshot: ee6a324ea68ada21e9424f930ed52f87800cea9e982c0feb4fd9ef456b71a992"
+      "durationSeconds": 2.485,
+      "output": "Container d32-product-000-db-1 Running \n Container d32-product-000-db-1 Waiting \n Container d32-product-000-db-1 Healthy \n Container d32-product-000-wpcli-run-2bfcb4f84b8f Creating \n Container d32-product-000-wpcli-run-2bfcb4f84b8f Created \nActual live theme/plugin fingerprint matches source: wp-fb45d8677fec877ae499976fdfa96491c03bf9c9c062d35c98f70b10eb7cea9b\nLive content fingerprint matches database and restored snapshot: ee6a324ea68ada21e9424f930ed52f87800cea9e982c0feb4fd9ef456b71a992"
     },
     {
       "name": "negative-runtime",
@@ -524,7 +524,7 @@
         "tests/negative-runtime.py"
       ],
       "returncode": 0,
-      "durationSeconds": 18.734,
+      "durationSeconds": 17.75,
       "output": "Three actual runtime isolation failure/restore scenarios passed"
     }
   ]

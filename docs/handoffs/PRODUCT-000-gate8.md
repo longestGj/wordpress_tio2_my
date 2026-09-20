@@ -2,8 +2,8 @@
 
 - Handoff: `PRODUCT-D32-G8-01`
 - Gate 8 task: `01a0bd3a-a7ba-7632-bda0-fad444f654db`
-- Implementation commit: `35605e34d08a582d70e1e43f388b4d1d3dcc0051`
-- Build ID: `wp-cb6228f0471c41b6ac161f2c11a80f71462c10b73078af9a1d070e4620cd53e4`
+- Implementation commit: `7d4875a778401d0ecd118f5935c6392571a6d13c`
+- Build ID: `wp-fb45d8677fec877ae499976fdfa96491c03bf9c9c062d35c98f70b10eb7cea9b`
 - Runtime: `http://127.0.0.1:8232/products/` (`site_scope=tio2-my`, local preview)
 - Hold: `GATE9_PASS_OR_RETURN_NOTICE`
 - Page quality: `GATE8_CANDIDATE_READY_FOR_GATE9`

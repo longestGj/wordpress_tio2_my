@@ -8,6 +8,7 @@
 defined('ABSPATH') || exit;
 require_once __DIR__ . '/includes/validation.php';
 require_once __DIR__ . '/includes/admin.php';
+require_once __DIR__ . '/includes/identity.php';
 
 function tio2_schema(): array {
     static $schema;

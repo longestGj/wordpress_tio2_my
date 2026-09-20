@@ -40,6 +40,7 @@ TIO2_LOCAL_URL=http://127.0.0.1:$port
 TIO2_PUBLIC_URL=https://tio2products.com
 TIO2_SITE_SCOPE=tio2-my
 TIO2_RELEASE=
+TIO2_RFQ_RECEIVER_MODE=fake
 TIO2_BOOTSTRAP_MARKER=.runtime/bootstrap-$project
 DB_PASSWORD=$(openssl rand -hex 24)
 DB_ROOT_PASSWORD=$(openssl rand -hex 24)
@@ -75,6 +76,7 @@ run_tests() {
   export TEST_ENV_FILE="$ENV_FILE"
   export TEST_COMPOSE_FILE=compose.yaml
   export PRODUCT_EVIDENCE_DIR="$TEST_OUTPUT_DIR/products"
+  export RFQ_EVIDENCE_DIR="$TEST_OUTPUT_DIR/rfq"
   export CI=true
   rm -rf "$TEST_OUTPUT_DIR"
   mkdir -p "$TEST_OUTPUT_DIR"
@@ -87,16 +89,25 @@ run_tests() {
   compose exec -T wordpress php /workspace/tests/php/content-test.php
   compose exec -T wordpress php /workspace/tests/php/products-model-test.php
   compose exec -T wordpress php /workspace/tests/php/products-route-test.php
+  compose exec -T wordpress php /workspace/tests/php/rfq-model-test.php
+  compose run --rm --no-deps --entrypoint php wpcli /workspace/tests/php/rfq-submission-test.php
+  compose run --rm wpcli eval-file /workspace/tests/php/rfq-route-test.php
   python tests/http-contract.py
   python tests/products-http.py
+  python tests/rfq-http.py
+  python tests/rfq-endpoint.py
   python tests/identity.py
-  npx playwright test tests/browser.spec.mjs tests/editor.spec.mjs tests/products-browser.spec.mjs tests/products-editor.spec.mjs
+  npx playwright test tests/browser.spec.mjs tests/editor.spec.mjs tests/products-browser.spec.mjs tests/products-editor.spec.mjs tests/rfq-browser.spec.mjs tests/rfq-editor.spec.mjs
   python tests/products-readiness.py
   python tests/products-migration.py
   python tests/products-evidence.py
+  python tests/rfq-migration.py
+  python tests/rfq-isolation.py
+  python tests/negative-runtime.py
   python tests/http-contract.py
   python tests/products-http.py
-  python tests/negative-runtime.py
+  python tests/rfq-http.py
+  python tests/identity.py
 }
 
 down() {

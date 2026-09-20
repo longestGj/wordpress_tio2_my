@@ -84,4 +84,19 @@ assert 'DB_PASSWORD' not in deploy_text
 assert 'WP_ADMIN_PASSWORD' not in deploy_text
 assert 'cancel-in-progress: false' in deploy_text
 
+ci_script = (ROOT / 'scripts/ci-environment.sh').read_text(encoding='utf-8')
+for required in [
+    'TIO2_RFQ_RECEIVER_MODE=fake',
+    'tests/php/rfq-model-test.php',
+    'tests/php/rfq-submission-test.php',
+    'tests/php/rfq-route-test.php',
+    'python tests/rfq-http.py',
+    'python tests/rfq-endpoint.py',
+    'python tests/rfq-isolation.py',
+    'python tests/rfq-migration.py',
+    'tests/rfq-browser.spec.mjs',
+    'tests/rfq-editor.spec.mjs',
+]:
+    assert required in ci_script, required
+
 print('GitHub workflow trigger, permission, pinning and deployment policy contract passed')

@@ -4,15 +4,21 @@ HOME-001 uses one custom PHP theme and a first-party typed-content plugin. The a
 
 ## Local preview
 
-Requires Docker Desktop, PowerShell, Python with BeautifulSoup, Node and Chrome for browser tests.
+Requires Docker Desktop, PowerShell, Python with BeautifulSoup, Node and Chrome for browser tests. For the already-installed candidate, run `./scripts/local.ps1 -Action Start` and `npm ci`; do not bootstrap it again.
+
+For a **fresh installation with new empty volumes only**, start the containers and wait for WordPress files to initialize. The install command prompts for the local `.env` file's `D32_ADMIN_PASSWORD` value; it is not printed by these commands.
 
 ```powershell
 ./scripts/local.ps1 -Action Start
+docker compose run --rm wpcli core install --url=http://127.0.0.1:8232 --title="TiO2 Malaysia" --admin_user=d32editor --admin_email=editor@example.test --skip-email --prompt=admin_password
+docker compose run --rm wpcli theme activate tio2-malaysia
 docker compose run --rm wpcli eval-file /workspace/scripts/bootstrap.php
+New-Item -ItemType Directory -Force .runtime | Out-Null
+New-Item -ItemType File .runtime/bootstrap-complete | Out-Null
 npm ci
 ```
 
-Open http://127.0.0.1:8232/ and `/wp-admin/`. Local administrator: `d32editor`; its generated password is the `D32_ADMIN_PASSWORD` value in the ignored local `.env` file. Do not share or commit that file. Bootstrap refuses to rerun once `.runtime/bootstrap-complete` exists. Docker volumes preserve content and uploaded media.
+Check each command succeeds before continuing. Open http://127.0.0.1:8232/ and `/wp-admin/`. Local administrator: `d32editor`; its generated password is the `D32_ADMIN_PASSWORD` value in the ignored local `.env` file. Do not share or commit that file. Bootstrap refuses to rerun once `.runtime/bootstrap-complete` exists. Docker volumes preserve content and uploaded media. A fresh-volume reinstall was not part of final candidate testing; this sequence documents the original installation prerequisites.
 
 ## Verification and recovery
 

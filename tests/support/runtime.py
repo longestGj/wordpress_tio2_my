@@ -4,6 +4,11 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 
 
+def workspace_container_path(path: str | Path) -> str:
+    relative = Path(path).resolve().relative_to(ROOT)
+    return '/workspace/' + relative.as_posix()
+
+
 def runtime_settings() -> dict[str, str]:
     output = Path(os.getenv('TEST_OUTPUT_DIR', ROOT / '.runtime/test-results')).resolve()
     output.mkdir(parents=True, exist_ok=True)

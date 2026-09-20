@@ -1,8 +1,10 @@
 import {test, expect} from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import fs from 'node:fs';
-const evidence='docs/verification/home';
-fs.mkdirSync(evidence,{recursive:true});
+import path from 'node:path';
+import {runtime} from './support/runtime.mjs';
+const evidence=runtime.outputDir;
+const output=name=>path.join(evidence,name);
 for (const width of [1440,1024,768,390,320]) {
   test(`layout ${width}: approved geometry, content and accessibility`,async({page})=>{
     await page.setViewportSize({width,height:width===768?1400:width<768?1500:900});
@@ -23,10 +25,10 @@ for (const width of [1440,1024,768,390,320]) {
     if(width<768) await expect(page.locator('.page-rfq')).toBeHidden(); else await expect(page.locator('.page-rfq')).toBeVisible();
     expect(errors).toEqual([]);
     const axe=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa']).analyze();
-    fs.writeFileSync(`${evidence}/layout-${width}.json`,JSON.stringify({metrics,violations:axe.violations},null,2));
+    fs.writeFileSync(output(`layout-${width}.json`),JSON.stringify({metrics,violations:axe.violations},null,2));
     expect(axe.violations).toEqual([]);
-    await page.screenshot({path:`${evidence}/home-${width}.png`,fullPage:true,animations:'disabled'});
-    if([1440,768,390].includes(width)) await page.screenshot({path:`${evidence}/hero-${width}.png`,animations:'disabled'});
+    await page.screenshot({path:output(`home-${width}.png`),fullPage:true,animations:'disabled'});
+    if([1440,768,390].includes(width)) await page.screenshot({path:output(`hero-${width}.png`),animations:'disabled'});
   });
 }
 test('menu: keyboard focus, transparent backdrop, modal isolation and return',async({page})=>{
@@ -39,26 +41,27 @@ test('menu: keyboard focus, transparent backdrop, modal isolation and return',as
   expect(await page.locator('#mobile-menu').evaluate(el=>getComputedStyle(el,'::backdrop').backgroundColor)).toBe('rgba(0, 0, 0, 0)');
   for(let i=0;i<16;i++){await page.keyboard.press('Tab');expect(await dialog.evaluate(el=>el.contains(document.activeElement))).toBe(true);}
   const ax=await page.locator('body').ariaSnapshot();expect(ax).not.toContain('heading "Malaysia Titanium');
-  await page.screenshot({path:`${evidence}/menu-390.png`});
+  await page.screenshot({path:output('menu-390.png')});
   expect((await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa']).analyze()).violations).toEqual([]);
   await page.keyboard.press('Escape');await expect(dialog).toBeHidden();await expect(trigger).toBeFocused();
   await trigger.click();await page.setViewportSize({width:1440,height:900});await expect(dialog).toBeHidden();
 });
 test('cookie settings: no analytics state, focus return and no storage',async({page,context})=>{
   await page.setViewportSize({width:390,height:900});const external=[];
-  page.on('request',r=>{if(!r.url().startsWith('http://127.0.0.1:8232/'))external.push(r.url())});
+  const expectedOrigin=new URL(runtime.baseURL).origin;
+  page.on('request',r=>{if(new URL(r.url()).origin!==expectedOrigin)external.push(r.url())});
   await page.goto('/');await page.getByRole('button',{name:'Cookie Settings',exact:true}).click();
   const dialog=page.getByRole('dialog',{name:'Cookie settings',exact:true});await expect(dialog).toBeVisible();
   await expect(dialog.getByRole('button',{name:'Close',exact:true})).toBeFocused();
   expect(await dialog.getByRole('button',{name:'Close',exact:true}).evaluate(el=>getComputedStyle(el).backgroundColor)).toBe('rgb(255, 255, 255)');
   await expect(dialog).toContainText('No optional Analytics or advertising technology is currently active on this site.');
   expect(await dialog.getByRole('checkbox').count()).toBe(0);
-  await page.screenshot({path:`${evidence}/cookie-390.png`});
+  await page.screenshot({path:output('cookie-390.png')});
   expect((await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa']).analyze()).violations).toEqual([]);
   await page.keyboard.press('Escape');await expect(dialog).toBeHidden();await expect(page.getByRole('button',{name:'Cookie Settings',exact:true})).toBeFocused();
   expect(await page.evaluate(()=>({local:localStorage.length,session:sessionStorage.length}))).toEqual({local:0,session:0});
   expect(await context.cookies()).toEqual([]);expect(external).toEqual([]);
-  fs.writeFileSync(`${evidence}/privacy.json`,JSON.stringify({externalRequests:external,cookies:[],localStorageKeys:0,sessionStorageKeys:0,state:'no_optional_analytics'},null,2));
+  fs.writeFileSync(output('privacy.json'),JSON.stringify({externalRequests:external,cookies:[],localStorageKeys:0,sessionStorageKeys:0,state:'no_optional_analytics'},null,2));
 });
 test('mobile grades: default collapsed, keyboard expansion and all 14 labels reachable',async({page})=>{
   await page.setViewportSize({width:390,height:900});await page.goto('/');
@@ -69,5 +72,5 @@ test('mobile grades: default collapsed, keyboard expansion and all 14 labels rea
     await summary.focus();await page.keyboard.press('Enter');await expect(summary).toHaveAttribute('aria-expanded','true');await expect(group.locator('.grades')).toBeVisible();
   }
   await expect(page.locator('.grades span:visible')).toHaveCount(14);
-  await page.locator('[data-module=products]').screenshot({path:`${evidence}/products-expanded-390.png`});
+  await page.locator('[data-module=products]').screenshot({path:output('products-expanded-390.png')});
 });

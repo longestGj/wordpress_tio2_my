@@ -4,7 +4,9 @@
   "type": "module",
   "scripts": {
     "test:browser": "playwright test",
-    "test:http": "python tests/http-contract.py"
+    "test:http": "python tests/http-contract.py",
+    "test:php": "docker compose exec -T wordpress php /workspace/tests/php/content-test.php",
+    "test:portable": "python tests/portability-test.py && python tests/runtime-settings-test.py && node tests/runtime-settings-test.mjs"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",

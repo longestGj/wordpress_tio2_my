@@ -25,9 +25,16 @@ function tio2_logo(string $placement): void {
     $asset=tio2_field($placement.'.logo');
     ?><img src="<?php echo esc_url(get_template_directory_uri().'/'.$asset); ?>" width="180" height="60" alt="TiO2 Malaysia"><?php
 }
+function tio2_current_page_id(): string {
+    if (is_front_page()) return 'HOME-001';
+    if (!is_page()) return '';
+    return (string) get_post_meta(get_queried_object_id(), '_tio2_page_id', true);
+}
 function tio2_navigation(bool $mobile=false): void {
+    $current = tio2_current_page_id();
     for($i=0;$i<($mobile?8:7);$i++) {
         $href=tio2_field("header.nav.$i.href");
-        ?><a href="<?php echo esc_url($href); ?>"<?php echo is_front_page() && $i===0 ? ' aria-current="page"' : ''; ?><?php echo $i===7?' class="menu-rfq"':''; ?>><?php echo esc_html(tio2_field("header.nav.$i.label")); ?></a><?php
+        $is_current = ($current === 'HOME-001' && $i === 0) || ($current === 'PRODUCT-000' && $i === 2);
+        ?><a href="<?php echo esc_url($href); ?>"<?php echo $is_current ? ' aria-current="page"' : ''; ?><?php echo $i===7?' class="menu-rfq"':''; ?>><?php echo esc_html(tio2_field("header.nav.$i.label")); ?></a><?php
     }
 }

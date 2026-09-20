@@ -55,7 +55,7 @@ original_page_id = initial["page_id"]
 
 try:
     assert initial == {
-        "version": 1,
+        "version": 2,
         "suspended": False,
         "content_present": True,
         "page_id": original_page_id,

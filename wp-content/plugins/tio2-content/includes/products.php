@@ -2,7 +2,7 @@
 /** PRODUCT-000 content, relationships, route readiness, and managed-page migration. */
 defined('ABSPATH') || (defined('WP_CLI') && WP_CLI) || exit;
 
-const TIO2_PRODUCTS_MIGRATION_VERSION = 1;
+const TIO2_PRODUCTS_MIGRATION_VERSION = 2;
 const TIO2_PRODUCTS_OPTION = 'tio2_products_content';
 const TIO2_PRODUCTS_BACKUP_OPTION = 'tio2_products_migration_backup';
 const TIO2_PRODUCTS_VERSION_OPTION = 'tio2_products_migration_version';
@@ -146,7 +146,12 @@ function tio2_products_migrate(): array {
     }
     $page = tio2_products_managed_page();
     $existing_content = get_option(TIO2_PRODUCTS_OPTION, null);
-    if ((int) get_option(TIO2_PRODUCTS_VERSION_OPTION, 0) === TIO2_PRODUCTS_MIGRATION_VERSION && $page && is_array($existing_content)) {
+    $installed_version = (int) get_option(TIO2_PRODUCTS_VERSION_OPTION, 0);
+    if ($installed_version < 2 && is_array($existing_content) && ($existing_content['fields']['hero.primary-path'] ?? null) === '/#grade-selector') {
+        $existing_content['fields']['hero.primary-path'] = '#grade-selector';
+        update_option(TIO2_PRODUCTS_OPTION, $existing_content, false);
+    }
+    if ($installed_version === TIO2_PRODUCTS_MIGRATION_VERSION && $page && is_array($existing_content)) {
         tio2_products_assign_template((int) $page->ID);
         return tio2_products_migration_status();
     }

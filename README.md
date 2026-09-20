@@ -2,6 +2,8 @@
 
 HOME-001 uses one custom PHP theme and a first-party typed-content plugin. The approved design is fixed; text, local links, hero media, grades and SEO are editable in WordPress **Site content**. The content model has no approval-state dependency.
 
+开发、分支、提交、验证与验收约定见 [开发流程](CONTRIBUTING.md)。该文档同时记录首页最新验收状态和待建立的 GitHub 仓库能力。
+
 ## Local preview
 
 Requires Docker Desktop, PowerShell, Python with BeautifulSoup, Node and Chrome for browser tests. For the already-installed candidate, run `./scripts/local.ps1 -Action Start` and `npm ci`; do not bootstrap it again.

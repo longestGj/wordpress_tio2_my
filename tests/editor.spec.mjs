@@ -59,3 +59,24 @@ test('editor: persisted content, media, SEO, invalid input, stale edit and exact
   fs.writeFileSync(`${evidence}/content-restored.json`,JSON.stringify(restored,null,2)+'\n');
   fs.writeFileSync(`${evidence}/editor-results.json`,JSON.stringify({beforeSha256:hash(before.content),changedSha256:hash(changed.content),restoredSha256:hash(restored.content),themeEntryUnchanged:true,invalidSaveStatus:422,staleSaveStatus:409,restored:true},null,2)+'\n');
 });
+
+test('editor: media picker works and missing nonce cannot write content',async({page})=>{
+  const before=snapshot();
+  await login(page);
+  await page.getByRole('button',{name:'Choose image',exact:true}).click();
+  const media=page.getByRole('dialog');await expect(media).toBeVisible();
+  await expect(media.getByRole('heading',{name:'Choose hero image',exact:true})).toBeVisible();
+  await media.getByRole('button',{name:'Close dialog',exact:true}).click();
+  await page.locator('[name=_wpnonce]').evaluate(el=>el.value='invalid');
+  const rejection=page.waitForResponse(r=>r.url().endsWith('/admin-post.php')&&r.request().method()==='POST');
+  await page.getByRole('button',{name:'Save site content',exact:true}).click();
+  expect((await rejection).status()).toBe(403);
+  expect(snapshot().content).toEqual(before.content);
+});
+
+test('editor: unauthenticated visitor cannot save content',async({request})=>{
+  const before=snapshot();
+  const result=await request.post('/wp-admin/admin-post.php',{form:{action:'tio2_save'},maxRedirects:0});
+  expect(result.status()).toBeGreaterThanOrEqual(400);
+  expect(snapshot().content).toEqual(before.content);
+});

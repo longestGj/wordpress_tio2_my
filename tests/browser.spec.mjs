@@ -50,6 +50,7 @@ test('cookie settings: no analytics state, focus return and no storage',async({p
   await page.goto('/');await page.getByRole('button',{name:'Cookie Settings',exact:true}).click();
   const dialog=page.getByRole('dialog',{name:'Cookie settings',exact:true});await expect(dialog).toBeVisible();
   await expect(dialog.getByRole('button',{name:'Close',exact:true})).toBeFocused();
+  expect(await dialog.getByRole('button',{name:'Close',exact:true}).evaluate(el=>getComputedStyle(el).backgroundColor)).toBe('rgb(255, 255, 255)');
   await expect(dialog).toContainText('No optional Analytics or advertising technology is currently active on this site.');
   expect(await dialog.getByRole('checkbox').count()).toBe(0);
   await page.screenshot({path:`${evidence}/cookie-390.png`});

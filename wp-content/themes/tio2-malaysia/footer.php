@@ -16,6 +16,6 @@
 <dialog id="cookie-dialog" class="cookie-dialog" aria-labelledby="cookie-title" aria-describedby="cookie-description">
   <h2 id="cookie-title">Cookie settings</h2>
   <p id="cookie-description">No optional Analytics or advertising technology is currently active on this site. Necessary functions may use browser storage to operate the site and remember an available privacy setting.</p>
-  <div class="cookie-actions"><button type="button" class="primary cookie-close">Close</button><a class="secondary" href="/cookie-policy/">Read Cookie Policy</a></div>
+  <div class="cookie-actions"><button type="button" class="secondary cookie-close">Close</button><a class="secondary" href="/cookie-policy/">Read Cookie Policy</a></div>
 </dialog>
 <?php wp_footer(); ?></body></html>

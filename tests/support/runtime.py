@@ -1,7 +1,17 @@
 import os
 from pathlib import Path
+from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parents[2]
+
+
+def is_isolated_runtime(base_url: str, project: str, dedicated_project: str) -> bool:
+    parsed = urlsplit(base_url)
+    return (
+        parsed.scheme == 'http'
+        and parsed.hostname in {'127.0.0.1', 'localhost', '::1'}
+        and (project == dedicated_project or project.startswith('tio2-ci-'))
+    )
 
 
 def workspace_container_path(path: str | Path) -> str:

@@ -10,6 +10,8 @@
 
 生产服务器：`129.146.32.192`，Ubuntu 24.04
 
+> 历史说明：本文关于远端功能分支、PR、`develop → main` PR 和 PR/develop 工作流触发的描述，已由 [`2026-09-20-local-first-release-flow-design.md`](2026-09-20-local-first-release-flow-design.md) 取代，不再是现行分支规范。本文的不可变镜像、服务器、健康检查、备份边界和回滚架构仍然有效。
+
 ## 1. 目标与边界
 
 本设计建立从 GitHub `main` 到生产服务器的全自动发布流程，并用已经合入 `main` 的首页验证构建、发布、健康检查和回滚链路。

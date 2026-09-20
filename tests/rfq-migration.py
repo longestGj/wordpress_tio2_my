@@ -5,12 +5,14 @@ import os
 import subprocess
 from pathlib import Path
 
+from support.runtime import is_isolated_runtime
+
 ROOT = Path(__file__).resolve().parents[1]
 BASE_URL = os.environ.get("TEST_BASE_URL", "").rstrip("/")
 PROJECT = os.environ.get("COMPOSE_PROJECT_NAME", "")
 EVIDENCE = Path(os.environ.get("RFQ_EVIDENCE_DIR", ".runtime/request-a-quote-migration"))
 
-if BASE_URL != "http://127.0.0.1:8242" or PROJECT != "d32-conv-rfq-gate8":
+if not is_isolated_runtime(BASE_URL, PROJECT, "d32-conv-rfq-gate8"):
     raise RuntimeError("RFQ migration test refuses a non-isolated runtime")
 
 

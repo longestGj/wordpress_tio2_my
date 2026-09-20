@@ -4,10 +4,11 @@ import urllib.parse
 import urllib.request
 
 from bs4 import BeautifulSoup
+from support.runtime import is_isolated_runtime
 
 BASE_URL = os.environ.get("TEST_BASE_URL", "").rstrip("/")
 PROJECT = os.environ.get("COMPOSE_PROJECT_NAME", "")
-if BASE_URL != "http://127.0.0.1:8242" or PROJECT != "d32-conv-rfq-gate8":
+if not is_isolated_runtime(BASE_URL, PROJECT, "d32-conv-rfq-gate8"):
     raise RuntimeError("RFQ HTTP test refuses a non-isolated runtime")
 
 FORMAL_URL = "https://tio2products.com/request-a-quote/"

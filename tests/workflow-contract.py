@@ -28,13 +28,13 @@ def uses_values(value):
 
 ci = load(CI_PATH)
 deploy = load(DEPLOY_PATH)
-assert ci['on']['pull_request']['branches'] == ['develop', 'main']
-assert ci['on']['push']['branches'] == ['develop']
-assert 'workflow_call' in ci['on']
+assert set(ci['on']) == {'workflow_call'}
 assert deploy['on']['push']['branches'] == ['main']
+assert deploy['jobs']['quality']['uses'] == './.github/workflows/ci.yml'
+assert deploy['jobs']['image']['needs'] == 'quality'
+assert deploy['jobs']['deploy']['needs'] == ['quality', 'image']
 assert deploy['concurrency'] == {'group': 'production', 'cancel-in-progress': False}
 assert deploy['permissions'] == {'contents': 'read', 'packages': 'write'}
-assert deploy['jobs']['deploy']['needs'] == ['quality', 'image']
 assert 'environment' not in deploy['jobs']['deploy']
 
 image_steps = deploy['jobs']['image']['steps']
@@ -54,7 +54,7 @@ assert qemu_index < buildx_index
 assert image_build['with']['platforms'] == 'linux/arm64'
 
 expected_names = {
-    'Main source guard', 'PHP and content', 'Browser integration', 'Production deployment contract',
+    'PHP and content', 'Browser integration', 'Production deployment contract',
 }
 assert {job['name'] for job in ci['jobs'].values()} == expected_names
 
@@ -83,5 +83,20 @@ assert ':latest' not in deploy_text
 assert 'DB_PASSWORD' not in deploy_text
 assert 'WP_ADMIN_PASSWORD' not in deploy_text
 assert 'cancel-in-progress: false' in deploy_text
+
+ci_script = (ROOT / 'scripts/ci-environment.sh').read_text(encoding='utf-8')
+for required in [
+    'TIO2_RFQ_RECEIVER_MODE=fake',
+    'tests/php/rfq-model-test.php',
+    'tests/php/rfq-submission-test.php',
+    'tests/php/rfq-route-test.php',
+    'python tests/rfq-http.py',
+    'python tests/rfq-endpoint.py',
+    'python tests/rfq-isolation.py',
+    'python tests/rfq-migration.py',
+    'tests/rfq-browser.spec.mjs',
+    'tests/rfq-editor.spec.mjs',
+]:
+    assert required in ci_script, required
 
 print('GitHub workflow trigger, permission, pinning and deployment policy contract passed')

@@ -2,9 +2,12 @@ import json
 import subprocess
 import urllib.request
 import urllib.error
+import os
 from pathlib import Path
 root=Path(__file__).resolve().parents[1]
-out=root/'docs/verification/home'
+out=root/os.environ.get('HOME_EVIDENCE_DIR','docs/verification/home')
+container_out='/workspace/'+out.relative_to(root).as_posix()
+out.mkdir(parents=True,exist_ok=True)
 def cli(*args):
     return subprocess.run(['docker','compose','run','--rm','wpcli',*args],cwd=root,capture_output=True,text=True,encoding='utf-8',check=True).stdout
 def http():
@@ -24,7 +27,7 @@ for mode in ['wrong-scope','missing-content','foreign-media']:
         results.append(dict(mode=mode,status=status,noCrossSiteFallback=True))
     finally:
         if mode=='foreign-media':cli('eval-file','/workspace/scripts/negative-runtime.php','restore-media')
-        cli('eval-file','/workspace/scripts/snapshot.php','restore','/workspace/docs/verification/home/negative-restore.json')
+        cli('eval-file','/workspace/scripts/snapshot.php','restore',container_out+'/negative-restore.json')
     assert http()[0]==200
 assert json.loads(cli('eval-file','/workspace/scripts/snapshot.php','export'))['content']==original['content']
 (out/'negative-runtime.json').write_text(json.dumps(dict(cases=results,restoredExactly=True),indent=2)+'\n',encoding='utf-8')

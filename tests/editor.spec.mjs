@@ -2,7 +2,9 @@ import {test,expect} from '@playwright/test';
 import fs from 'node:fs';
 import crypto from 'node:crypto';
 import {execFileSync} from 'node:child_process';
-const evidence='docs/verification/home';
+const evidence=process.env.HOME_EVIDENCE_DIR || 'docs/verification/home';
+fs.mkdirSync(evidence,{recursive:true});
+const containerEvidence='/workspace/'+evidence.replaceAll('\\','/').replace(/^\.\//,'');
 const cli=(...args)=>execFileSync('docker',['compose','run','--rm','wpcli',...args],{encoding:'utf8',stdio:['ignore','pipe','pipe']}).trim();
 const snapshot=()=>JSON.parse(cli('eval-file','/workspace/scripts/snapshot.php','export'));
 const hash=x=>crypto.createHash('sha256').update(JSON.stringify(x)).digest('hex');
@@ -17,12 +19,13 @@ test('editor: persisted content, media, SEO, invalid input, stale edit and exact
   const before=snapshot();fs.writeFileSync(`${evidence}/content-before.json`,JSON.stringify(before,null,2)+'\n');
   const codeHash=hash(fs.readFileSync('wp-content/themes/tio2-malaysia/front-page.php','utf8'));
   let changed;
+  let imageId;
   try {
     await login(page);
     await field(page,'hero.heading.1').fill('Editable homepage verification');
     await field(page,'hero.paragraph.1').fill('Temporary editor verification text.');
     await field(page,'hero.link.2').fill('/documents/');
-    const imageId=cli('media','import','/workspace/content/media/hero.png','--title=D32 editor test image','--porcelain').split(/\r?\n/).at(-1);
+    imageId=cli('media','import','/workspace/content/media/hero.png','--title=D32 editor test image','--porcelain').split(/\r?\n/).at(-1);
     await field(page,'hero.image').fill(imageId);
     await page.locator('details').filter({has:page.locator('summary',{hasText:/^Products$/})}).locator('summary').click();
     await field(page,'products.grade.1').fill('TEST-GRADE');
@@ -51,7 +54,8 @@ test('editor: persisted content, media, SEO, invalid input, stale edit and exact
     await page.getByRole('button',{name:'Save site content',exact:true}).click();
     expect((await conflict).status()).toBe(409);expect(snapshot().content).toEqual(changed.content);
   } finally {
-    cli('eval-file','/workspace/scripts/snapshot.php','restore','/workspace/docs/verification/home/content-before.json');
+    cli('eval-file','/workspace/scripts/snapshot.php','restore',`${containerEvidence}/content-before.json`);
+    if(imageId) cli('post','delete',imageId,'--force');
   }
   const restored=snapshot();expect(restored.content).toEqual(before.content);
   expect(hash(fs.readFileSync('wp-content/themes/tio2-malaysia/front-page.php','utf8'))).toBe(codeHash);

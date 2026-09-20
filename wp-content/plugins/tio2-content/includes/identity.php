@@ -27,4 +27,7 @@ add_action('wp_head',static function() {
     if(wp_get_environment_type()!=='local') return;
     echo '<meta name="tio2-artifact" content="'.esc_attr(tio2_runtime_artifact()).'">'.PHP_EOL;
     echo '<meta name="tio2-content-sha256" content="'.hash('sha256',wp_json_encode(tio2_content(),JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES)).'">'.PHP_EOL;
+    if (function_exists('tio2_current_page_id') && tio2_current_page_id() === 'PRODUCT-000') {
+        echo '<meta name="tio2-products-content-sha256" content="'.hash('sha256',wp_json_encode(tio2_products_content(),JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES)).'">'.PHP_EOL;
+    }
 },2);

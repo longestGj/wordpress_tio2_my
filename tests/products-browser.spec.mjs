@@ -70,6 +70,7 @@ test('FAQ: one open, four closed, server answers retained and keyboard toggles',
   for(let i=1;i<5;i++){await expect(items.nth(i).locator('button')).toHaveAttribute('aria-expanded','false');await expect(items.nth(i).locator('.product-faq-answer')).toBeHidden();expect((await items.nth(i).locator('.product-faq-answer').textContent()).trim().length).toBeGreaterThan(20);}
   await items.nth(0).locator('button').focus();await page.keyboard.press('Enter');await expect(items.nth(0).locator('.product-faq-answer')).toBeHidden();await expect(items.nth(0).locator('button span')).toHaveText('+');
   await items.nth(1).locator('button').focus();await page.keyboard.press('Space');await expect(items.nth(1).locator('.product-faq-answer')).toBeVisible();await expect(items.nth(1).locator('button span')).toHaveText('−');
+  await page.locator('[data-module="faq"]').screenshot({path:`${evidence}/faq-keyboard-768.png`});
 });
 
 test('mobile menu and cookie dialog preserve modal isolation and focus',async({page,context})=>{
@@ -79,10 +80,12 @@ test('mobile menu and cookie dialog preserve modal isolation and focus',async({p
   await expect(menu.locator('a[aria-current="page"]')).toHaveText('Products');
   for(let i=0;i<16;i++){await page.keyboard.press('Tab');expect(await menu.evaluate(el=>el.contains(document.activeElement))).toBe(true);}
   expect(await page.locator('body').ariaSnapshot()).not.toContain('Titanium Dioxide Pigment Grades for Industrial Applications');
+  await page.screenshot({path:`${evidence}/menu-390.png`});
   await page.keyboard.press('Escape');await expect(menu).toBeHidden();await expect(trigger).toBeFocused();
   const cookieTrigger=page.getByRole('button',{name:'Cookie Settings',exact:true});await cookieTrigger.click();
   const cookie=page.getByRole('dialog',{name:'Cookie settings',exact:true});await expect(cookie).toBeVisible();await expect(cookie.getByRole('button',{name:'Close',exact:true})).toBeFocused();
   expect(await page.locator('body').ariaSnapshot()).not.toContain('Titanium Dioxide Pigment Grades for Industrial Applications');
+  await page.screenshot({path:`${evidence}/cookie-390.png`});
   await page.keyboard.press('Escape');await expect(cookie).toBeHidden();await expect(cookieTrigger).toBeFocused();
   expect(await page.evaluate(()=>({local:localStorage.length,session:sessionStorage.length}))).toEqual({local:0,session:0});expect(await context.cookies()).toEqual([]);
 });

@@ -1,6 +1,7 @@
 import json
 import os
 import urllib.request
+from pathlib import Path
 
 from bs4 import BeautifulSoup
 
@@ -95,5 +96,19 @@ assert all("url" not in item["item"] and "@id" not in item["item"] for item in i
 assert all(item["item"]["description"] == rows[index].select_one("p").get_text(strip=True) for index, item in enumerate(item_list["itemListElement"]))
 assert "http://127.0.0.1:8232" not in scripts[0].string
 assert "tio2malaysia.com" not in scripts[0].string
+
+if os.environ.get("PRODUCT_EVIDENCE_DIR"):
+    evidence = Path(os.environ["PRODUCT_EVIDENCE_DIR"])
+    evidence.mkdir(parents=True, exist_ok=True)
+    (evidence / "products-response.html").write_text(products_html, encoding="utf-8")
+    (evidence / "seo-schema.json").write_text(json.dumps({
+        "title": products.title.string,
+        "description": products.select_one('meta[name="description"]')["content"],
+        "canonical": products.select_one('link[rel="canonical"]')["href"],
+        "robots": products.select_one('meta[name="robots"]')["content"],
+        "graphTypes": types,
+        "itemNames": names,
+        "schemaUrlCount": sum(1 for item in item_list["itemListElement"] if item["item"].get("url")),
+    }, indent=2) + "\n", encoding="utf-8")
 
 print("Products HTTP, content, route-state, identity, and Schema assertions passed")

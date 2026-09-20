@@ -10,6 +10,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 BASE_URL = os.environ.get("TEST_BASE_URL", "http://127.0.0.1:8232").rstrip("/")
 PROJECT = os.environ.get("COMPOSE_PROJECT_NAME", "")
+EVIDENCE = Path(os.environ.get("PRODUCT_EVIDENCE_DIR", ".runtime/products-migration"))
 
 if BASE_URL != "http://127.0.0.1:8232" or PROJECT != "d32-product-000":
     raise RuntimeError("Products migration test refuses a non-isolated runtime")
@@ -99,4 +100,14 @@ final = migration("status")
 assert final["page_id"] == original_page_id and final["page_status"] == "publish"
 assert option("tio2_products_content") == original_products
 assert sha(option("tio2_content")) == home_hash
+EVIDENCE.mkdir(parents=True, exist_ok=True)
+(EVIDENCE / "migration-results.json").write_text(json.dumps({
+    "pageIdPreserved": final["page_id"] == original_page_id,
+    "homepageSha256": home_hash,
+    "productsRestored": option("tio2_products_content") == original_products,
+    "idempotent": True,
+    "cmsEditPreservedBeforeRollback": True,
+    "rollbackStatus": 404,
+    "resumeStatus": 200,
+}, indent=2) + "\n", encoding="utf-8")
 print("Products migration is idempotent, edit-preserving, reversible, resumable, and isolated")

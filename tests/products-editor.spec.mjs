@@ -10,6 +10,8 @@ const hash=value=>crypto.createHash('sha256').update(JSON.stringify(value)).dige
 const password=fs.readFileSync('.env','utf8').split(/\r?\n/).find(line=>line.startsWith('D32_ADMIN_PASSWORD=')).split('=').slice(1).join('=');
 const field=(page,key)=>page.locator(`[name="products_fields[${key}]"]`);
 const openGroup=async(page,name)=>{const details=page.locator('details').filter({has:page.locator('summary',{hasText:new RegExp(`^${name}$`,'i')})});if(!(await details.getAttribute('open')))await details.locator('summary').click();};
+const evidence=process.env.PRODUCT_EVIDENCE_DIR || '.runtime/products-editor';
+fs.mkdirSync(evidence,{recursive:true});
 
 async function login(page){
   await page.goto('/wp-login.php');await page.locator('#user_login').fill('d32editor');await page.locator('#user_pass').fill(password);await page.locator('#wp-submit').click();
@@ -19,6 +21,7 @@ async function login(page){
 test('Products editor persists visible and Schema copy, rejects unsafe writes, and restores exactly',async({page,request})=>{
   test.setTimeout(120000);
   const original=option('tio2_products_content');
+  fs.writeFileSync(`${evidence}/products-content-before.json`,JSON.stringify(original,null,2)+'\n');
   const homepageHash=hash(option('tio2_content'));
   let saved;
   try{
@@ -37,6 +40,7 @@ test('Products editor persists visible and Schema copy, rejects unsafe writes, a
     await expect(page.locator('meta[name="description"]')).toHaveAttribute('content','Temporary Products editor metadata description.');
     const graph=JSON.parse(await page.locator('script[type="application/ld+json"]').textContent())['@graph'];
     expect(graph.find(node=>node['@type']==='ItemList').itemListElement[0].item.description).toBe('Temporary Products editor summary for exact parity.');
+    await page.screenshot({path:`${evidence}/editor-changed.png`,fullPage:false});
 
     await page.goto('/wp-admin/admin.php?page=tio2-products');
     await openGroup(page,'Directory');
@@ -71,5 +75,7 @@ test('Products editor persists visible and Schema copy, rejects unsafe writes, a
     cli('eval',`update_option('tio2_products_content',json_decode(base64_decode('${encoded}'),true),false);`);
   }
   expect(option('tio2_products_content')).toEqual(original);expect(hash(option('tio2_content'))).toBe(homepageHash);
+  fs.writeFileSync(`${evidence}/products-content-restored.json`,JSON.stringify(option('tio2_products_content'),null,2)+'\n');
+  fs.writeFileSync(`${evidence}/editor-results.json`,JSON.stringify({beforeSha256:hash(original),changedSha256:hash(saved),restoredSha256:hash(option('tio2_products_content')),homepageUnchanged:true,invalidPathStatus:422,incompleteFieldsStatus:422,staleRevisionStatus:409,missingNonceStatus:403,unauthenticatedRejected:true,restored:true},null,2)+'\n');
   await page.goto('/products/');await expect(page.locator('.product-grade-row').first().locator('p')).toHaveText(original.fields['directory.grade.1.summary']);
 });

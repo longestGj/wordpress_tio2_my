@@ -1,7 +1,7 @@
 import {test, expect} from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import fs from 'node:fs';
-const evidence='docs/verification/home';
+const evidence=process.env.HOME_EVIDENCE_DIR || 'docs/verification/home';
 fs.mkdirSync(evidence,{recursive:true});
 for (const width of [1440,1024,768,390,320]) {
   test(`layout ${width}: approved geometry, content and accessibility`,async({page})=>{

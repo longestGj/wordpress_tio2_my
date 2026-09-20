@@ -92,12 +92,15 @@ python tests/identity.py
 python tests/negative-runtime.py
 ```
 
+PRODUCT-000 另有 `tests/products-http.py`、`tests/products-browser.spec.mjs`、`tests/products-editor.spec.mjs`、`tests/products-readiness.py` 与 `tests/products-migration.py`。会修改数据的 Products 测试必须使用 `COMPOSE_PROJECT_NAME=d32-product-000` 的独立卷，并固定 `TEST_BASE_URL=http://127.0.0.1:8232`；脚本会拒绝其他运行态。首页回归证据通过 `HOME_EVIDENCE_DIR=.runtime/home-regression` 重定向，不能覆盖 `docs/verification/home/`。
+
 这些是当前首页本地检查，不是未来所有页面的通用验收套件：
 
 - 当前脚本包含固定本地地址、恢复快照及本机来源路径。接入 GitHub Actions 前必须处理可移植性，并在干净环境实跑。
 - 编辑测试和隔离异常测试会修改数据，只能在专用验证环境运行，不在共享验收站或线上直接执行。
 - 部分测试会重写 `docs/verification/home/`。已验收证据保留原记录，新任务使用自己的证据目录；不能直接覆盖旧证据后继续声称是原候选。
 - 新页面上线后，旧的“其他目标必须返回404”检查必须按新范围更新，不能为通过旧测试保留错误行为。
+- PRODUCT-000 的真实路由状态测试只创建带 `_tio2_test_fixture=products-readiness` 的临时页面，清理时不得操作其他页面。Products migration 的 rollback/resume 只管理 `_tio2_managed_page=1` 且 Page ID/scope 匹配的 Hub 页面。
 - 结果分别标记通过、失败、未测试和用户范围例外；豁免不等于实测通过，也不自动扩大到其他任务。
 
 ## 5. PR、代码审查和页面验收

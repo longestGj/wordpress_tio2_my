@@ -26,8 +26,11 @@ if __name__ == '__main__':
     commit = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
     # Packaging requires the custom code to be committed. Evidence can be untracked.
     for path, digest in files:
-        blob = subprocess.check_output(['git', 'show', f'{commit}:{path}'], cwd=ROOT)
-        assert hashlib.sha256(blob).hexdigest() == digest, f'Uncommitted code: {path}'
+        # Git's declared text filters may normalize Windows CRLF to LF. Check
+        # the filtered Git blob, while the artifact binds actual runtime bytes.
+        committed = subprocess.check_output(['git', 'rev-parse', f'{commit}:{path}'], cwd=ROOT).strip()
+        current = subprocess.check_output(['git', 'hash-object', path], cwd=ROOT).strip()
+        assert current == committed, f'Uncommitted code: {path}'
     directory = ROOT / '.runtime/artifacts' / build_id
     for path, digest in files:
         destination = directory / path

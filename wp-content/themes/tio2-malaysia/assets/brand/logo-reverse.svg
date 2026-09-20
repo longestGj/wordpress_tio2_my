@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 300" role="img" aria-labelledby="title desc">
+  <title id="title">TiO2 Malaysia reverse monochrome logo candidate</title>
+  <desc id="desc">Single-color white vector logo for Deep Navy and other approved dark backgrounds.</desc>
+  <g fill="#FFFFFF" stroke="#FFFFFF">
+    <circle cx="72" cy="88" r="16" fill="none" stroke-width="4"/>
+    <circle cx="98" cy="52" r="22" fill="none" stroke-width="4"/>
+    <circle cx="134" cy="33" r="12" fill="none" stroke-width="4"/>
+    <circle cx="160" cy="55" r="18" fill="none" stroke-width="4"/>
+    <circle cx="57" cy="125" r="11" fill="none" stroke-width="4"/>
+    <circle cx="119" cy="88" r="10" fill="none" stroke-width="4"/>
+    <circle cx="145" cy="155" r="72" fill="none" stroke-width="5"/>
+    <path d="M104 127l10-9 13 7 7 12-5 10 7 9-5 15 7 12-8 8-11-9-2-13-9-9 2-12-7-10zM158 151l16-14 18-2 12-10 18 5-4 11 9 7-12 6-14 1-12 10-15-5-11 8-11-6 9-9z" stroke="none"/>
+    <path d="M42 186C76 224 145 237 211 207C250 189 273 157 266 122" fill="none" stroke-width="27" stroke-linecap="round"/>
+    <path d="M70 91C122 42 214 46 252 86C278 113 280 146 260 176" fill="none" stroke-width="12" stroke-linecap="round"/>
+    <path d="M84 230C146 249 222 218 268 169" fill="none" stroke-width="8" stroke-linecap="round"/>
+    <path d="M300 65H435V92H382V205H353V92H300ZM454 105H482V205H454ZM454 66H482V94H454Z" stroke="none"/>
+    <path d="M610 60C562 60 525 92 525 135S562 210 610 210 695 178 695 135 658 60 610 60ZM610 91C640 91 664 109 664 135S640 179 610 179 556 161 556 135 580 91 610 91Z" fill-rule="evenodd" stroke="none"/>
+    <path d="M710 112C710 78 733 58 767 58 806 58 830 78 830 108 830 131 814 147 792 161L754 182H833V210H706V184L774 143C792 132 800 122 800 111 800 96 787 87 768 87 747 87 736 97 736 114Z" stroke="none"/>
+    <path d="M330 270V232H341L353 249 365 232H376V270H365V248L353 264 341 248V270ZM395 270L411 232H424L440 270H428L425 262H410L407 270ZM414 253H422L418 242ZM455 232H466V260H490V270H455ZM505 270L521 232H534L550 270H538L535 262H520L517 270ZM524 253H532L528 242ZM565 232H578L587 246 596 232H609L593 257V270H581V257ZM620 263C629 267 638 269 647 269 656 269 661 266 661 262 661 258 655 257 644 255 629 252 622 247 622 238 622 228 632 223 648 223 657 223 666 225 674 229L669 238C661 234 654 232 647 232 638 232 634 234 634 238 634 242 640 243 650 245 665 248 673 253 673 262 673 272 663 278 647 278 635 278 625 275 616 271ZM687 232H699V270H687ZM714 270L730 232H743L759 270H747L744 262H729L726 270ZM733 253H741L737 242Z" fill-rule="evenodd" stroke="none"/>
+    <path d="M292 252H320M778 252H838" fill="none" stroke-width="4" stroke-linecap="round"/>
+  </g>
+</svg>

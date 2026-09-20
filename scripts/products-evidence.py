@@ -101,11 +101,14 @@ def check_directory(evidence: Path) -> None:
 
 def suite(evidence: Path) -> None:
     assert_runtime()
-    check_clean()
     target = evidence.resolve()
     allowed = DEFAULT_EVIDENCE.resolve()
     if target != allowed:
         raise RuntimeError(f"Final suite evidence directory must be {allowed}")
+    # A failed evidence run may leave only generated evidence behind. Permit
+    # that exact directory so the next run can replace it atomically while
+    # still refusing every implementation-tree change.
+    check_clean(allow_evidence=True, evidence=evidence)
     if target.exists():
         shutil.rmtree(target)
     target.mkdir(parents=True)
@@ -329,6 +332,13 @@ def manifest(evidence: Path, receipt: Path, output: Path) -> None:
 
 
 def main() -> int:
+    # Windows commonly inherits a legacy console codec (for example GBK),
+    # while Playwright's line reporter emits Unicode status characters.
+    # Keep captured logs and the orchestrator output deterministically UTF-8.
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    if hasattr(sys.stderr, "reconfigure"):
+        sys.stderr.reconfigure(encoding="utf-8", errors="replace")
     parser = argparse.ArgumentParser()
     parser.add_argument("action", choices=["check-directory","run-suite","capture","write-receipt","manifest"])
     parser.add_argument("--evidence-dir", type=Path, default=DEFAULT_EVIDENCE)

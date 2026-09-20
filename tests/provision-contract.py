@@ -6,15 +6,19 @@ ROOT = Path(__file__).resolve().parents[1]
 PROVISION = ROOT / 'deploy/scripts/provision-ubuntu.sh'
 CONFIGURE = ROOT / 'deploy/scripts/configure-env.sh'
 RECEIVER = ROOT / 'deploy/scripts/receive-release.sh'
+DEPLOY = ROOT / 'deploy/scripts/deploy.sh'
+ROLLBACK = ROOT / 'deploy/scripts/rollback.sh'
 SERVICE = ROOT / 'deploy/systemd/tio2products-backup.service'
 TIMER = ROOT / 'deploy/systemd/tio2products-backup.timer'
 
-for path in (PROVISION, CONFIGURE, RECEIVER, SERVICE, TIMER):
+for path in (PROVISION, CONFIGURE, RECEIVER, DEPLOY, ROLLBACK, SERVICE, TIMER):
     assert path.is_file(), f'missing provisioning artifact: {path.relative_to(ROOT)}'
 
 provision = PROVISION.read_text(encoding='utf-8')
 configure = CONFIGURE.read_text(encoding='utf-8')
 receiver = RECEIVER.read_text(encoding='utf-8')
+deploy = DEPLOY.read_text(encoding='utf-8')
+rollback = ROLLBACK.read_text(encoding='utf-8')
 service = SERVICE.read_text(encoding='utf-8')
 timer = TIMER.read_text(encoding='utf-8')
 
@@ -66,6 +70,14 @@ assert '--no-same-owner' in receiver and '--no-same-permissions' in receiver
 assert re.search(r'\(\^\|/\).*\\\.\\\.', receiver)
 assert 'scripts/deploy.sh' in receiver
 assert receiver.index('scripts/deploy.sh') < receiver.rindex('rm -f')
+assert 'bash "$SCRIPT_DIR/bootstrap.sh" "$dir"' in deploy
+assert 'bash "$SCRIPT_DIR/healthcheck.sh" "$dir"' in deploy
+assert 'bash "$old_dir/scripts/healthcheck.sh" "$old_dir"' in deploy
+assert 'TIO2_LOCK_HELD=1 bash "$SCRIPT_DIR/backup.sh" --release "$old_release"' in deploy
+assert 'bash "$target_dir/scripts/bootstrap.sh" "$target_dir"' in rollback
+assert 'bash "$target_dir/scripts/healthcheck.sh" "$target_dir"' in rollback
+assert 'bash "$old_dir/scripts/healthcheck.sh" "$old_dir"' in rollback
+assert 'TIO2_LOCK_HELD=1 bash "$SCRIPT_DIR/backup.sh" --release "$old_release"' in rollback
 
 assert 'Requires=docker.service' in service
 assert 'After=docker.service' in service

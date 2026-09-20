@@ -14,8 +14,11 @@ body:has(dialog[open]){overflow:hidden}
 .cookie-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
 button{font-family:inherit;cursor:pointer}
 .product-group summary .disclosure-sign{display:none}
-@media(min-width:1101px){.mobile-menu[open]{display:none}}
+@media(min-width:1025px){
+ .mobile-menu[open]{display:none}.global-header{height:84px}.header-inner{height:83px;width:min(1200px,calc(100% - 64px));gap:24px}
+ .desktop-bar{display:flex}.mobile-bar{display:none}
+}
 @media(max-width:1100px){.mobile-menu{background:transparent}.mobile-menu nav>a[aria-current=page]::before{background:var(--functional)}}
-@media(max-width:767px){.page-rfq{display:none!important}.start-grid{grid-template-columns:1fr}}
+@media(max-width:767px){.page-rfq{display:none!important}.start-grid{grid-template-columns:1fr}.product-group summary .disclosure-sign{display:inline}}
 @media(max-width:560px){.cookie-dialog{padding:24px}.cookie-actions{display:grid}.cookie-actions>*{width:100%}.product-group summary .disclosure-sign{display:inline}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}

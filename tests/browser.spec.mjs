@@ -31,7 +31,7 @@ for (const width of [1440,1024,768,390,320]) {
 }
 test('menu: keyboard focus, transparent backdrop, modal isolation and return',async({page})=>{
   await page.setViewportSize({width:390,height:900});await page.goto('/');
-  const trigger=page.getByRole('button',{name:'Open primary navigation',exact:true});
+  const trigger=page.locator('.menu-button');
   await trigger.focus();await page.keyboard.press('Enter');
   const dialog=page.getByRole('dialog',{name:'Primary navigation menu'});
   await expect(dialog).toBeVisible();await expect(trigger).toHaveAttribute('aria-expanded','true');

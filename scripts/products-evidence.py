@@ -84,7 +84,9 @@ def assert_runtime() -> None:
 
 
 def check_clean(*, allow_evidence: bool = False, evidence: Path = DEFAULT_EVIDENCE) -> None:
-    lines = [line for line in git("status", "--porcelain").splitlines() if line]
+    # Porcelain's two-character status column can begin with a significant
+    # space (for example `` D``). Do not use the stripped git() helper here.
+    lines = [line for line in run(["git", "status", "--porcelain"]).stdout.splitlines() if line]
     if allow_evidence:
         prefix = relative(evidence).rstrip("/") + "/"
         lines = [line for line in lines if not line[3:].replace("\\", "/").startswith(prefix)]

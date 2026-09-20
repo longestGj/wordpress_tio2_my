@@ -1,0 +1,13 @@
+**
+!Dockerfile
+!wp-content/
+!wp-content/themes/
+!wp-content/themes/tio2-malaysia/
+!wp-content/themes/tio2-malaysia/**
+!wp-content/plugins/
+!wp-content/plugins/tio2-content/
+!wp-content/plugins/tio2-content/**
+!content/
+!content/**
+!scripts/
+!scripts/bootstrap-production.php

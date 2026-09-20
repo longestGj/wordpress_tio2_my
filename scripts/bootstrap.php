@@ -1,7 +1,9 @@
 <?php
 // Runs only through WP-CLI in the local project-owned environment.
 if (!defined('WP_CLI') || !WP_CLI || wp_get_environment_type() !== 'local') throw new RuntimeException('Local CLI only');
-if (is_file('/workspace/.runtime/bootstrap-complete')) throw new RuntimeException('Bootstrap already completed');
+$marker=getenv('TIO2_BOOTSTRAP_MARKER') ?: '.runtime/bootstrap-complete';
+if (str_starts_with($marker,'.runtime/')) $marker='/workspace/'.$marker;
+if (!str_starts_with($marker,'/workspace/.runtime/') || is_file($marker)) throw new RuntimeException('Bootstrap already completed or marker is invalid');
 update_option('blog_public',0);
 update_option('permalink_structure','/%postname%/');
 update_option('timezone_string','Asia/Shanghai');

@@ -1,5 +1,27 @@
 <?php
 defined('ABSPATH') || exit;
+
+function tio2_normalize_public_url(string $candidate): string {
+    $fallback='https://tio2products.com/';
+    $parts=wp_parse_url(trim($candidate));
+    if (!is_array($parts)
+        || strtolower((string)($parts['scheme'] ?? ''))!=='https'
+        || empty($parts['host'])
+        || isset($parts['user'])
+        || isset($parts['pass'])
+        || isset($parts['port'])
+        || isset($parts['query'])
+        || isset($parts['fragment'])
+        || !in_array($parts['path'] ?? '', ['', '/'], true)
+    ) return $fallback;
+    return 'https://'.strtolower($parts['host']).'/';
+}
+
+function tio2_public_base_url(): string {
+    $configured=defined('TIO2_PUBLIC_URL') ? (string)TIO2_PUBLIC_URL : (string)getenv('TIO2_PUBLIC_URL');
+    return tio2_normalize_public_url($configured);
+}
+
 add_action('wp_head',static function() {
     $home=is_front_page();
     $title=$home?tio2_field('seo.title'):'Page not found | TiO₂ Malaysia';
@@ -8,10 +30,10 @@ add_action('wp_head',static function() {
     echo '<meta name="robots" content="'.($indexable?'index, follow':'noindex, nofollow').'">'.PHP_EOL;
     echo '<link rel="icon" type="image/svg+xml" href="'.esc_url(get_template_directory_uri().'/assets/brand/favicon.svg').'">'.PHP_EOL;
     if (!$home) return;
+    $base=tio2_public_base_url();
     echo '<meta name="description" content="'.esc_attr(tio2_field('seo.description')).'">'.PHP_EOL;
-    echo "<link rel=\"canonical\" href=\"https://tio2malaysia.com/\">\n";
-    foreach(['og:type'=>'website','og:url'=>'https://tio2malaysia.com/','og:site_name'=>'TiO₂ Malaysia','og:title'=>tio2_field('seo.share-title'),'og:description'=>tio2_field('seo.share-description')] as $property=>$value) echo '<meta property="'.esc_attr($property).'" content="'.esc_attr($value).'">'.PHP_EOL;
-    $base='https://tio2malaysia.com/';
+    echo '<link rel="canonical" href="'.esc_url($base).'">'.PHP_EOL;
+    foreach(['og:type'=>'website','og:url'=>$base,'og:site_name'=>'TiO₂ Malaysia','og:title'=>tio2_field('seo.share-title'),'og:description'=>tio2_field('seo.share-description')] as $property=>$value) echo '<meta property="'.esc_attr($property).'" content="'.esc_attr($value).'">'.PHP_EOL;
     $ref=static fn($name)=>['@id'=>$base.'#'.$name];
     $graph=[
         ['@type'=>'WebSite','@id'=>$base.'#website','url'=>$base,'name'=>'TiO₂ Malaysia','inLanguage'=>'en','publisher'=>$ref('organization')],

@@ -2,16 +2,21 @@ import json
 import urllib.request
 from pathlib import Path
 from bs4 import BeautifulSoup
+from support.runtime import runtime_settings
 
 root=Path(__file__).resolve().parents[1]
-response=urllib.request.urlopen('http://127.0.0.1:8232/')
+runtime=runtime_settings()
+response=urllib.request.urlopen(runtime['base_url']+'/')
 html=response.read().decode()
 soup=BeautifulSoup(html,'html.parser')
 assert response.status==200
+assert response.headers['X-Site-Scope']=='tio2-my'
+if runtime['release']:
+    assert response.headers['X-Tio2-Release']==runtime['release']
 assert soup.html['lang']=='en'
 assert [x.get_text() for x in soup.select('h1')]==['Malaysia Titanium Dioxide for Industrial Buyers']
 assert len(soup.select('link[rel="canonical"]'))==1
-assert soup.select_one('link[rel="canonical"]')['href']=='https://tio2malaysia.com/'
+assert soup.select_one('link[rel="canonical"]')['href']==runtime['public_url']
 assert len(soup.select('title'))==1
 assert soup.title.string=='Malaysia Titanium Dioxide Supplier | TiO₂ Malaysia'
 assert 'noindex' in soup.select_one('meta[name="robots"]')['content']
@@ -32,7 +37,7 @@ assert len(soup.select('.legal-utilities a'))==3
 assert soup.select_one('.legal-utilities button').get_text()=='Cookie Settings'
 assert 'googletagmanager' not in html and 'google-analytics' not in html
 assert soup.select_one('.hero-media img')['alt']==''
-assert soup.select_one('.hero-media img')['src'].startswith('http://127.0.0.1:8232/wp-content/uploads/')
+assert soup.select_one('.hero-media img')['src'].startswith(runtime['base_url']+'/wp-content/uploads/')
 seed=json.loads((root/'content/initial-home.json').read_text(encoding='utf-8'))['fields']
 text=soup.get_text(' ',strip=True)
 for key,value in seed.items():

@@ -4,6 +4,10 @@ define('ABSPATH', __DIR__ . '/');
 define('TIO2_PUBLIC_URL', 'https://tio2products.com');
 function add_action($hook, $callback, $priority = 10) {}
 function home_url($path = '/') { return 'http://127.0.0.1:8232' . $path; }
+$environment_type = 'local';
+$blog_public = true;
+function wp_get_environment_type() { global $environment_type; return $environment_type; }
+function get_option($name) { global $blog_public; return $name === 'blog_public' ? $blog_public : null; }
 
 require __DIR__ . '/../../wp-content/themes/tio2-malaysia/inc/seo.php';
 
@@ -16,6 +20,11 @@ function check($condition, $message) {
 
 check(tio2_public_base_url() === 'https://tio2products.com/', 'formal public URL is stable');
 check(home_url('/') === 'http://127.0.0.1:8232/', 'test proves the request origin is different');
+check(tio2_indexing_authorized() === false, 'local preview cannot be indexed');
+$environment_type = 'production';
+check(tio2_indexing_authorized() === false, 'production remains excluded without explicit Gate 10 authorization');
+define('TIO2_INDEXING_AUTHORIZED', true);
+check(tio2_indexing_authorized() === true, 'production indexing requires the explicit authorization constant');
 
 foreach ([
     'http://tio2products.com',

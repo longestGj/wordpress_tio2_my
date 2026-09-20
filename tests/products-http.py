@@ -1,5 +1,6 @@
 import json
 import os
+import urllib.error
 import urllib.request
 from pathlib import Path
 
@@ -18,8 +19,13 @@ def page(path: str):
 
 home_response, home_html, home = page("/")
 products_response, products_html, products = page("/products/")
+try:
+    sitemap_response = urllib.request.urlopen(BASE_URL + "/wp-sitemap.xml")
+except urllib.error.HTTPError as error:
+    sitemap_response = error
 
 assert home_response.status == products_response.status == 200
+assert sitemap_response.status == 404
 assert home.select_one('link[rel="canonical"]')["href"] == "https://tio2products.com/"
 assert home.select_one('meta[property="og:url"]')["content"] == "https://tio2products.com/"
 assert "tio2malaysia.com" not in home_html
@@ -106,6 +112,7 @@ if os.environ.get("PRODUCT_EVIDENCE_DIR"):
         "description": products.select_one('meta[name="description"]')["content"],
         "canonical": products.select_one('link[rel="canonical"]')["href"],
         "robots": products.select_one('meta[name="robots"]')["content"],
+        "sitemapStatus": sitemap_response.status,
         "graphTypes": types,
         "itemNames": names,
         "schemaUrlCount": sum(1 for item in item_list["itemListElement"] if item["item"].get("url")),

@@ -5,7 +5,7 @@ add_action('after_setup_theme', static function() {
     add_theme_support('html5',['search-form','gallery','caption','style','script']);
 });
 add_filter('show_admin_bar','__return_false');
-add_filter('wp_sitemaps_enabled', static fn() => wp_get_environment_type()==='production' && (bool)get_option('blog_public'));
+add_filter('wp_sitemaps_enabled', 'tio2_indexing_authorized');
 add_action('wp_enqueue_scripts', static function() {
     $uri=get_template_directory_uri();
     wp_enqueue_style('tio2-design',$uri.'/assets/design.css',[],filemtime(__DIR__.'/assets/design.css'));

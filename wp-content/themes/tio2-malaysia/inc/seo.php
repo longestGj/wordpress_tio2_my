@@ -23,16 +23,19 @@ function tio2_public_base_url(): string {
     return $url = tio2_validate_public_base_url((string) $candidate);
 }
 
+function tio2_indexing_authorized(): bool {
+    return wp_get_environment_type() === 'production'
+        && (bool) get_option('blog_public')
+        && defined('TIO2_INDEXING_AUTHORIZED')
+        && TIO2_INDEXING_AUTHORIZED === true;
+}
+
 add_action('wp_head',static function() {
     $base = tio2_public_base_url();
     $home = is_front_page();
     $products = function_exists('tio2_current_page_id') && tio2_current_page_id() === 'PRODUCT-000';
     $title = $home ? tio2_field('seo.title') : ($products ? tio2_products_field('seo.title') : 'Page not found | TiO₂ Malaysia');
-    $indexable = ($home || $products)
-        && wp_get_environment_type() === 'production'
-        && (bool) get_option('blog_public')
-        && defined('TIO2_INDEXING_AUTHORIZED')
-        && TIO2_INDEXING_AUTHORIZED === true;
+    $indexable = ($home || $products) && tio2_indexing_authorized();
     echo '<title>'.esc_html($title)."</title>\n";
     echo '<meta name="robots" content="'.($indexable?'index, follow':'noindex, nofollow').'">'.PHP_EOL;
     echo '<link rel="icon" type="image/svg+xml" href="'.esc_url(get_template_directory_uri().'/assets/brand/favicon.svg').'">'.PHP_EOL;

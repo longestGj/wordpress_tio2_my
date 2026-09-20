@@ -66,9 +66,22 @@ install -m 644 "$DEPLOY_ROOT/systemd/tio2products-backup.service" /etc/systemd/s
 install -m 644 "$DEPLOY_ROOT/systemd/tio2products-backup.timer" /etc/systemd/system/tio2products-backup.timer
 systemctl daemon-reload
 
+clear_legacy_oci_rejects() {
+  local firewall reject_type
+  for firewall in iptables ip6tables; do
+    command -v "$firewall" >/dev/null 2>&1 || continue
+    for reject_type in icmp-host-prohibited icmp6-adm-prohibited; do
+      while "$firewall" -C INPUT -j REJECT --reject-with "$reject_type" >/dev/null 2>&1; do
+        "$firewall" -D INPUT -j REJECT --reject-with "$reject_type"
+      done
+    done
+  done
+}
+
 ufw allow OpenSSH
 ufw allow 80/tcp
 ufw allow 443/tcp
+clear_legacy_oci_rejects
 ufw --force enable
 
 if [[ -x /opt/tio2products/current/scripts/backup.sh ]]; then

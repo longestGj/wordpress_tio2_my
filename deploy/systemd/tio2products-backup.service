@@ -1,0 +1,10 @@
+[Unit]
+Description=TiO2 Products local production backup
+Requires=docker.service
+After=docker.service
+
+[Service]
+Type=oneshot
+User=deploy
+Group=deploy
+ExecStart=/opt/tio2products/current/scripts/backup.sh --scheduled
